@@ -1,0 +1,12 @@
+id: knowledge-server
+name: Knowledge Server
+summary: |
+  MCP service and operations hub for querying and updating the UM790 markdown
+  knowledge base from agent workflows.
+category: vocab:lifecycle_categories:live
+status: vocab:lifecycle_categories:live
+concept_doc: gdrive-projects/Projects/Current/Knowledge-Server/10-CONCEPT/KNOWLEDGE_SERVER_CONCEPT.md
+gdrive_folder: gdrive-projects/Projects/Current/Knowledge-Server/
+code_repo: /opt/stack/services/projects/knowledge-server
+created_at: 2026-05-08T01:42:00Z
+updated_at: 2026-05-08T01:42:00Z
