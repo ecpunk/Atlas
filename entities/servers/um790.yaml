@@ -1,0 +1,28 @@
+id: um790
+name: UM790 Pro
+hostname: media
+ip: 192.168.1.150
+hardware: Minisforum UM790 Pro - AMD Ryzen 9 7940HS, 32GB RAM
+cpu: AMD Ryzen 9 7940HS
+ram_gib: 32
+storage:
+  - 1TB NVMe primary
+  - Additional storage details unknown
+gpu: Radeon 780M integrated
+os: Ubuntu 22.04
+ram_committed_gib: null
+ram_alert_floor_gib: null
+swap_gib: null
+hosts:
+  - service:knowledge-server-mcp
+  - service:thought-substrate
+  - service:turdcraft
+  - service:home-assistant
+  - service:remodel-tracker
+  - service:gmail-triage
+  - service:home-command-tablet
+  - service:serveiq-main
+  - service:serveiq-demo
+source_of_truth_doc: Servers/UM790/UM790_SOURCE_OF_TRUTH.md
+created_at: 2026-05-08T01:16:55Z
+updated_at: 2026-05-08T01:16:55Z
