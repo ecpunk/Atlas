@@ -1,0 +1,74 @@
+id: project_statuses
+name: Project Statuses
+description: |
+  Workflow-state values for project execution progress.
+purpose: |
+  Separates build workflow state from lifecycle category so project phase can be
+  tracked independently of where it sits in attention space.
+values:
+  - id: concept
+    name: Concept
+    description: Idea exists but implementation work has not started.
+    semantics: |
+      Use when project intent is defined and tracked, but no implementation
+      artifacts have been created.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: scaffolded
+    name: Scaffolded
+    description: Basic structure exists but implementation has not begun.
+    semantics: |
+      Use when folders/repos/boilerplate are created but substantive project
+      logic has not been built.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: in_progress
+    name: In Progress
+    description: Active implementation work is underway.
+    semantics: |
+      Use when the project is being built or materially advanced. This is
+      orthogonal to lifecycle category and may pair with any lifecycle state.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: active
+    name: Active
+    description: Running and actively maintained.
+    semantics: |
+      Use when the project is operational and still receiving ongoing feature,
+      quality, or maintenance work.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: installed
+    name: Installed
+    description: Running with no active maintenance expected.
+    semantics: |
+      Use when the project is deployed and available but not currently an
+      active development focus.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: parked
+    name: Parked
+    description: Work intentionally paused and may resume later.
+    semantics: |
+      Use when the project is deliberately paused without being closed out,
+      allowing future reactivation.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: archived
+    name: Archived
+    description: Work has ended and is not expected to resume.
+    semantics: |
+      Use when the project is explicitly concluded, superseded, or abandoned.
+      Historical data remains but active progression is closed.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+extension_policy: open
+created_at: 2026-05-08T04:35:55Z
+updated_at: 2026-05-08T04:35:55Z
