@@ -1,0 +1,15 @@
+id: build-and-design-navigator
+name: Build & Design Navigator
+summary: |
+  Kathy's vision for design capture, budgeting, and project presentation.
+  Multi-project, design-first. Recognized as an Engine skin. Not being built
+  until Engine spec is stable.
+category: vocab:lifecycle_categories:current
+status: vocab:project_statuses:parked
+concept_doc: gdrive-projects/Projects/Current/Build & Design Navigator/10-CONCEPT/BUILD_DESIGN_NAVIGATOR_CONCEPT.md
+gdrive_folder: gdrive-projects/Projects/Current/Build & Design Navigator/
+domain_tags:
+  - software
+  - home
+created_at: 2026-05-08T15:27:11Z
+updated_at: 2026-05-08T15:27:11Z

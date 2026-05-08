@@ -1,0 +1,15 @@
+id: stargate-archive
+name: Stargate Archive
+summary: |
+  Rip, upscale, and archive complete Stargate Blu-ray collection to 1440p x265
+  for Plex. MakeMKV + Topaz + HandBrake pipeline. Waiting on NAS build for
+  storage and GPU.
+category: vocab:lifecycle_categories:current
+status: vocab:project_statuses:parked
+concept_doc: gdrive-projects/Projects/Current/Stargate Archive/10-CONCEPT/STARGATE_ARCHIVE_CONCEPT.md
+gdrive_folder: gdrive-projects/Projects/Current/Stargate Archive/
+domain_tags:
+  - media
+  - homelab
+created_at: 2026-05-08T15:27:11Z
+updated_at: 2026-05-08T15:27:11Z

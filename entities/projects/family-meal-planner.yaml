@@ -1,0 +1,17 @@
+id: family-meal-planner
+name: Family Meal Planner
+summary: |
+  Multi-surface family meal planning platform. Recipe library (import from
+  URL/social/photo/OCR), two planning modes (calendar + flexible queue), family
+  meal requests, smart grocery list, pantry awareness, AI suggestions. Future:
+  consumer SaaS app + API tier. Concept by Jon + Kathy.
+category: vocab:lifecycle_categories:current
+status: vocab:project_statuses:concept
+concept_doc: gdrive-projects/Projects/Current/Family Meal Planner/10-CONCEPT/FAMILY_MEAL_PLANNER_CONCEPT.md
+gdrive_folder: gdrive-projects/Projects/Current/Family Meal Planner/
+domain_tags:
+  - software
+  - saas
+  - home
+created_at: 2026-05-08T15:27:11Z
+updated_at: 2026-05-08T15:27:11Z

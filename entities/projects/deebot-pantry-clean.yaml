@@ -1,0 +1,14 @@
+id: deebot-pantry-clean
+name: Deebot Pantry Clean
+summary: |
+  Archived from active Projects after production use ended. Retained under
+  Reference/Archived/Deebot Pantry Clean for historical reference.
+category: vocab:lifecycle_categories:archive
+status: vocab:project_statuses:archived
+concept_doc: gdrive-projects/Projects/Archive/Deebot Pantry Clean/10-CONCEPT/DEEBOT_PANTRY_CLEAN_CONCEPT.md
+gdrive_folder: gdrive-projects/Projects/Archive/Deebot Pantry Clean/
+domain_tags:
+  - home
+  - automation
+created_at: 2026-05-08T15:27:11Z
+updated_at: 2026-05-08T15:27:11Z

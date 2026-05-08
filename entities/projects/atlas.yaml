@@ -1,0 +1,19 @@
+id: atlas
+name: Atlas
+summary: |
+  Canonical definition store + generation pipeline + operational layer that
+  aggregates signals across the stack. Replaces hand-maintained five-file
+  operating system (Start Here, Latest, Project Index, Standards, History) with
+  views generated from a single source of truth. Owns lifecycle, schedule,
+  drift detection, and AI agent routing. Greek titan metaphor - holds the
+  structure that lets the stack scale without crushing the operator.
+category: vocab:lifecycle_categories:current
+status: vocab:project_statuses:concept
+concept_doc: gdrive-projects/Projects/Current/Atlas/10-CONCEPT/ATLAS_CONCEPT.md
+gdrive_folder: gdrive-projects/Projects/Current/Atlas/
+domain_tags:
+  - kb
+  - infrastructure
+  - operations
+created_at: 2026-05-08T15:27:11Z
+updated_at: 2026-05-08T15:27:11Z

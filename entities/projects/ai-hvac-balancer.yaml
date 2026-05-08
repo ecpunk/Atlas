@@ -1,0 +1,15 @@
+id: ai-hvac-balancer
+name: AI HVAC Balancer
+summary: |
+  Local LLM-driven HVAC balancing using multi-variable modeling - weather,
+  occupancy, thermal mass, historical patterns. Long-held idea, now feasible.
+  Depends on HA + NAS.
+category: vocab:lifecycle_categories:current
+status: vocab:project_statuses:concept
+concept_doc: gdrive-projects/Projects/Current/AI HVAC Balancer/10-CONCEPT/AI_HVAC_BALANCER_CONCEPT.md
+gdrive_folder: gdrive-projects/Projects/Current/AI HVAC Balancer/
+domain_tags:
+  - homelab
+  - ai
+created_at: 2026-05-08T15:27:11Z
+updated_at: 2026-05-08T15:27:11Z

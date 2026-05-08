@@ -1,0 +1,15 @@
+id: personal-ai-layer
+name: Personal AI Layer
+summary: |
+  Living knowledge base + local LLM layer. Eliminates context-rebuild friction.
+  Local model handles routine tasks and preps prompts for Claude. Foundation
+  all other AI projects build on.
+category: vocab:lifecycle_categories:current
+status: vocab:project_statuses:concept
+concept_doc: gdrive-projects/Projects/Current/Personal AI Layer/10-CONCEPT/PERSONAL_AI_LAYER_CONCEPT.md
+gdrive_folder: gdrive-projects/Projects/Current/Personal AI Layer/
+domain_tags:
+  - ai
+  - workflow
+created_at: 2026-05-08T15:27:11Z
+updated_at: 2026-05-08T15:27:11Z

@@ -1,0 +1,15 @@
+id: nas-build
+name: NAS Build
+summary: |
+  Replace aging QNAP with used tower workstation running TrueNAS SCALE. RAIDZ2
+  on 5x8TB. GPU required for Topaz upscaling and Ollama. Waiting on work deal
+  to close.
+category: vocab:lifecycle_categories:current
+status: vocab:project_statuses:concept
+concept_doc: gdrive-projects/Projects/Current/NAS Build/10-CONCEPT/NAS_BUILD_CONCEPT.md
+gdrive_folder: gdrive-projects/Projects/Current/NAS Build/
+domain_tags:
+  - homelab
+  - infrastructure
+created_at: 2026-05-08T15:27:11Z
+updated_at: 2026-05-08T15:27:11Z

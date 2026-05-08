@@ -1,0 +1,14 @@
+id: openclaw
+name: OpenClaw
+summary: |
+  Retired/decommissioned as a production execution runtime. Archived under
+  Reference/Archived/OpenClaw as historical training and reference material.
+category: vocab:lifecycle_categories:archive
+status: vocab:project_statuses:archived
+concept_doc: gdrive-projects/Projects/Archive/OpenClaw/10-CONCEPT/OPENCLAW_CONCEPT.md
+gdrive_folder: gdrive-projects/Projects/Archive/OpenClaw/
+domain_tags:
+  - ai
+  - automation
+created_at: 2026-05-08T15:27:11Z
+updated_at: 2026-05-08T15:27:11Z

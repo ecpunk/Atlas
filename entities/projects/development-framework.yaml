@@ -1,0 +1,16 @@
+id: development-framework
+name: Development Framework
+summary: |
+  AI-native development methodology for solo developers + AI agent teams.
+  Protects context not code, unit of work = defined idea, three save patterns,
+  context injection for cold-start agents. Will replace Start Here/Standards.md
+  over time.
+category: vocab:lifecycle_categories:current
+status: vocab:project_statuses:concept
+concept_doc: gdrive-projects/Projects/Current/Development Framework/10-CONCEPT/DEVELOPMENT_FRAMEWORK_CONCEPT.md
+gdrive_folder: gdrive-projects/Projects/Current/Development Framework/
+domain_tags:
+  - methodology
+  - platform
+created_at: 2026-05-08T15:27:11Z
+updated_at: 2026-05-08T15:27:11Z

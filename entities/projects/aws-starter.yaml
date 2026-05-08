@@ -1,0 +1,15 @@
+id: aws-starter
+name: AWS Starter
+summary: |
+  Low-cost AWS baseline for offsite backup, spend visibility, and hands-on
+  learning. S3 + Glacier Deep Archive, budget alerts, daily Cost Explorer
+  script, one Lambda. Target: $5/month.
+category: vocab:lifecycle_categories:current
+status: vocab:project_statuses:concept
+concept_doc: gdrive-projects/Projects/Current/AWS Starter/10-CONCEPT/AWS_STARTER_CONCEPT.md
+gdrive_folder: gdrive-projects/Projects/Current/AWS Starter/
+domain_tags:
+  - homelab
+  - infrastructure
+created_at: 2026-05-08T15:27:11Z
+updated_at: 2026-05-08T15:27:11Z

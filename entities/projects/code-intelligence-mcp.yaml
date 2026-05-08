@@ -1,0 +1,17 @@
+id: code-intelligence-mcp
+name: Code Intelligence MCP
+summary: |
+  Local MCP server delivering deterministic structural facts about live code
+  state to any agent. Complement to Copilot/Cursor embedding retrieval - exact
+  answers to structural queries (symbol graph, cross-repo search, git
+  archaeology). Pairs with Dev Framework Extension for focus-aware context
+  injection. Hard boundary with Cognitive Substrate - peers, not layers.
+category: vocab:lifecycle_categories:current
+status: vocab:project_statuses:concept
+concept_doc: gdrive-projects/Projects/Current/Code Intelligence MCP/10-CONCEPT/CODE_INTELLIGENCE_MCP_CONCEPT.md
+gdrive_folder: gdrive-projects/Projects/Current/Code Intelligence MCP/
+domain_tags:
+  - ai
+  - developer-tools
+created_at: 2026-05-08T15:27:11Z
+updated_at: 2026-05-08T15:27:11Z

@@ -1,0 +1,16 @@
+id: storefront
+name: Storefront
+summary: |
+  Curated software marketplace for AI-native solo developers. AI-powered
+  discovery, buyer-controlled hosting/trust, development framework as long-term
+  moat. Steam for productivity/business software. Brad collaboration.
+category: vocab:lifecycle_categories:current
+status: vocab:project_statuses:concept
+concept_doc: gdrive-projects/Projects/Current/Storefront/10-CONCEPT/STOREFRONT_CONCEPT.md
+gdrive_folder: gdrive-projects/Projects/Current/Storefront/
+domain_tags:
+  - software
+  - platform
+  - business
+created_at: 2026-05-08T15:27:11Z
+updated_at: 2026-05-08T15:27:11Z

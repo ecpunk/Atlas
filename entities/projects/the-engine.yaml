@@ -1,0 +1,15 @@
+id: the-engine
+name: The Engine
+summary: |
+  Modular app platform - build core capabilities once as modules, assemble into
+  products via manifest. Remodel Tracker, ServeIQ, and BDN are candidate skins.
+  Spec written.
+category: vocab:lifecycle_categories:current
+status: vocab:project_statuses:concept
+concept_doc: gdrive-projects/Projects/Current/The Engine/10-CONCEPT/THE_ENGINE_CONCEPT.md
+gdrive_folder: gdrive-projects/Projects/Current/The Engine/
+domain_tags:
+  - software
+  - platform
+created_at: 2026-05-08T15:27:11Z
+updated_at: 2026-05-08T15:27:11Z

@@ -1,0 +1,16 @@
+id: knowledge-base-cleanup
+name: Knowledge Base Cleanup
+summary: |
+  Restructure Jon's Projects knowledge base for Opus 4.7-era AI. Split Start
+  Here into a navigator + Operating Rules, retire OpenClaw references,
+  reconcile rclone/Operator Kernel mentions. Triggered when orientation skill
+  stalled post-retune. Phased approach, inventory already collected.
+category: vocab:lifecycle_categories:current
+status: vocab:project_statuses:concept
+concept_doc: gdrive-projects/Projects/Current/Knowledge Base Cleanup/10-CONCEPT/KNOWLEDGE_BASE_CLEANUP_CONCEPT.md
+gdrive_folder: gdrive-projects/Projects/Current/Knowledge Base Cleanup/
+domain_tags:
+  - kb
+  - infrastructure
+created_at: 2026-05-08T15:27:11Z
+updated_at: 2026-05-08T15:27:11Z
