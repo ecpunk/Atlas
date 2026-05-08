@@ -3,8 +3,11 @@ from __future__ import annotations
 
 import argparse
 import importlib
+import importlib.util
 import sys
+from dataclasses import dataclass
 from pathlib import Path
+from types import ModuleType
 from typing import Any, Callable
 
 import yaml
@@ -16,10 +19,21 @@ if str(REPO_ROOT) not in sys.path:
 from pydantic import BaseModel
 
 from schemas.vocabulary import Vocabulary
-from tools.generators import discover_generators
 
 
 Store = dict[str, dict[str, BaseModel]]
+GenerateFn = Callable[[dict], dict[str, str]]
+
+
+@dataclass(frozen=True)
+class GeneratorModule:
+    name: str
+    inputs: list[str]
+    outputs: list[str]
+    generate: GenerateFn
+    module: ModuleType
+    source: str
+    module_path: Path
 
 
 def _load_yaml(path: Path) -> Any:
@@ -58,6 +72,85 @@ def _schema_for_entity_dir(entity_dir_name: str) -> Callable[[Any], BaseModel] |
     return schema_cls.model_validate
 
 
+def _iter_generator_files(directory: Path) -> list[Path]:
+    if not directory.exists() or not directory.is_dir():
+        return []
+
+    return sorted(
+        p
+        for p in directory.iterdir()
+        if p.is_file()
+        if p.suffix == ".py"
+        if p.name != "__init__.py"
+        if not p.name.startswith("_")
+    )
+
+
+def _load_generator_from_path(module_key: str, module_path: Path, source: str) -> GeneratorModule:
+    spec = importlib.util.spec_from_file_location(module_key, module_path)
+    if spec is None or spec.loader is None:
+        raise ValueError(f"Unable to load generator module: {module_path}")
+
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    name = getattr(module, "NAME", None)
+    inputs = getattr(module, "INPUTS", None)
+    outputs = getattr(module, "OUTPUTS", None)
+    generate = getattr(module, "generate", None)
+
+    if not isinstance(name, str) or not name:
+        raise ValueError(f"Generator module {module_path} is missing NAME")
+    if not isinstance(inputs, list) or not all(isinstance(item, str) for item in inputs):
+        raise ValueError(f"Generator module {module_path} is missing INPUTS list[str]")
+    if not isinstance(outputs, list) or not all(isinstance(item, str) for item in outputs):
+        raise ValueError(f"Generator module {module_path} is missing OUTPUTS list[str]")
+    if not callable(generate):
+        raise ValueError(f"Generator module {module_path} is missing callable generate(store)")
+
+    return GeneratorModule(
+        name=name,
+        inputs=inputs,
+        outputs=outputs,
+        generate=generate,
+        module=module,
+        source=source,
+        module_path=module_path,
+    )
+
+
+def discover_generators(repo_root: Path) -> dict[str, GeneratorModule]:
+    discovered: dict[str, GeneratorModule] = {}
+
+    core_dir = repo_root / "generators"
+    for module_path in _iter_generator_files(core_dir):
+        module_key = f"atlas_core_generator_{module_path.stem}"
+        generator = _load_generator_from_path(module_key, module_path, "core")
+        if generator.name in discovered:
+            other = discovered[generator.name]
+            raise ValueError(
+                f"Duplicate generator NAME '{generator.name}' in {module_path} and {other.module_path}"
+            )
+        discovered[generator.name] = generator
+
+    extensions_root = repo_root / "extensions"
+    if extensions_root.exists() and extensions_root.is_dir():
+        for extension_dir in sorted(p for p in extensions_root.iterdir() if p.is_dir()):
+            generator_dir = extension_dir / "generators"
+            source = f"extension:{extension_dir.name}"
+            for module_path in _iter_generator_files(generator_dir):
+                module_key = f"atlas_{extension_dir.name}_generator_{module_path.stem}"
+                generator = _load_generator_from_path(module_key, module_path, source)
+                if generator.name in discovered:
+                    other = discovered[generator.name]
+                    raise ValueError(
+                        f"Duplicate generator NAME '{generator.name}' in {module_path} and {other.module_path}"
+                    )
+                discovered[generator.name] = generator
+
+    return dict(sorted(discovered.items()))
+
+
 def load_store(repo_root: Path) -> Store:
     store: Store = {"vocabulary": {}}
 
@@ -93,6 +186,7 @@ def load_store(repo_root: Path) -> Store:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run Atlas generation pipeline")
+    parser.add_argument("--list", action="store_true", help="list discovered generators and exit")
     parser.add_argument(
         "--generator",
         action="append",
@@ -111,7 +205,13 @@ def main() -> int:
 
     try:
         store = load_store(REPO_ROOT)
-        generators = discover_generators()
+        generators = discover_generators(REPO_ROOT)
+
+        if args.list:
+            print("Discovered generators:")
+            for name, generator in generators.items():
+                print(f"- {name} [{generator.source}] ({generator.module_path})")
+            return 0
 
         selected_names = args.generator if args.generator else list(generators.keys())
         missing = [name for name in selected_names if name not in generators]
@@ -119,7 +219,7 @@ def main() -> int:
             print(f"ERROR: unknown generator(s): {', '.join(missing)}", file=sys.stderr)
             return 1
 
-        collected: list[tuple[str, str, str]] = []
+        collected: list[tuple[str, str, str, str]] = []
         for name in selected_names:
             generator = generators[name]
             outputs = generator.generate(store)
@@ -129,10 +229,10 @@ def main() -> int:
             for output_path, content in outputs.items():
                 if not isinstance(output_path, str) or not isinstance(content, str):
                     raise ValueError(f"Generator {name} produced non-string output mapping")
-                collected.append((name, output_path, content))
+                collected.append((name, generator.source, output_path, content))
 
         if args.write:
-            for _, output_path, content in collected:
+            for _, _, output_path, content in collected:
                 if output_path == "-":
                     continue
                 target = Path(output_path)
@@ -141,12 +241,12 @@ def main() -> int:
             return 0
 
         print("Generated outputs summary:")
-        for generator_name, output_path, content in collected:
-            print(f"({generator_name}, {output_path}, {len(content)})")
+        for generator_name, generator_source, output_path, content in collected:
+            print(f"({generator_name} [{generator_source}], {output_path}, {len(content)})")
 
         if args.show_content:
-            for generator_name, output_path, content in collected:
-                print(f"\n--- {generator_name} -> {output_path} ---")
+            for generator_name, generator_source, output_path, content in collected:
+                print(f"\n--- {generator_name} [{generator_source}] -> {output_path} ---")
                 print(content, end="" if content.endswith("\n") else "\n")
 
         return 0
