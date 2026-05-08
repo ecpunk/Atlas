@@ -1,0 +1,58 @@
+id: lifecycle_categories
+name: Lifecycle Categories
+description: |
+  Where a project sits in its lifecycle. Determines visibility, attention priority,
+  and which views surface it.
+purpose: |
+  Lets the operator distinguish active work from parked work from finished work
+  without re-reading every project. Views (Project Index, The Latest, daily brief)
+  filter or order by category.
+values:
+  - id: current
+    name: Current
+    description: Actively developing - in a sprint or has a defined next session.
+    semantics: |
+      Surfaces in The Latest. Counted in attention budget. Expected to have
+      recent activity (commits, doc updates). Stale Current projects raise drift.
+    physical_location: gdrive-projects/Projects/Current/<name>/
+    deprecated: false
+    deprecated_reason: null
+  - id: live
+    name: Live
+    description: Deployed and running, not actively developed - maintenance only.
+    semantics: |
+      Health-monitored. Surfaces in The Latest only on health change or scheduled
+      review. No expectation of new commits.
+    physical_location: gdrive-projects/Projects/Live/<name>/
+    deprecated: false
+    deprecated_reason: null
+  - id: blocked
+    name: Blocked
+    description: Want to do it, waiting on a specific named trigger.
+    semantics: |
+      Project Index shows blocked-on column. Views surface when the blocking
+      condition resolves. Projects must declare their blocking signal explicitly.
+    physical_location: gdrive-projects/Projects/Blocked/<name>/
+    deprecated: false
+    deprecated_reason: null
+  - id: defer
+    name: Defer
+    description: Indefinite hold - still interested, no timeline.
+    semantics: |
+      Hidden from default views. Surfaces only on explicit query. No drift
+      detection (because there is no expected activity).
+    physical_location: gdrive-projects/Projects/Defer/<name>/
+    deprecated: false
+    deprecated_reason: null
+  - id: archive
+    name: Archive
+    description: Done with it - abandoned or superseded.
+    semantics: |
+      Read-only historical record. Never surfaces in active views. Counted
+      separately in metrics.
+    physical_location: gdrive-projects/Projects/Archive/<name>/
+    deprecated: false
+    deprecated_reason: null
+extension_policy: open
+created_at: 2026-05-08T00:38:33Z
+updated_at: 2026-05-08T00:38:33Z

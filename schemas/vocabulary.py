@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import datetime
 from typing import Literal, Optional
 
 from pydantic import BaseModel, Field, model_validator
@@ -28,8 +29,8 @@ class Vocabulary(BaseModel):
     purpose: str = Field(..., min_length=1)
     values: list[VocabularyValue] = Field(default_factory=list)
     extension_policy: Literal["open", "closed"]
-    created_at: str
-    updated_at: str
+    created_at: datetime
+    updated_at: datetime
 
     @model_validator(mode="after")
     def validate_model(self) -> "Vocabulary":

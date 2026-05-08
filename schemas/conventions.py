@@ -6,20 +6,10 @@ from typing import Any, Optional
 from pydantic import BaseModel, Field, model_validator
 
 
-def validate_iso8601_timestamp(value: str) -> str:
-    """Validate an ISO 8601 timestamp string."""
-    if not isinstance(value, str):
-        raise TypeError("timestamp must be a string")
-
-    candidate = value
-    if candidate.endswith("Z"):
-        candidate = candidate[:-1] + "+00:00"
-
-    try:
-        datetime.fromisoformat(candidate)
-    except ValueError as exc:
-        raise ValueError(f"invalid ISO 8601 timestamp: {value}") from exc
-
+def validate_iso8601_timestamp(value: datetime) -> datetime:
+    """Validate a parsed ISO 8601 timestamp value."""
+    if not isinstance(value, datetime):
+        raise TypeError("timestamp must be a datetime")
     return value
 
 
@@ -75,9 +65,9 @@ class Provenance(BaseModel):
     """Signal provenance metadata for origin and propagation state."""
 
     origin: str = Field(..., min_length=1)
-    timestamp: str
+    timestamp: datetime
     status: VocabRef
-    hold_down_until: Optional[str] = None
+    hold_down_until: Optional[datetime] = None
     hop_count: int = Field(..., ge=0)
 
     @model_validator(mode="after")
