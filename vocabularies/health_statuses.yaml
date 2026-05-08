@@ -1,0 +1,43 @@
+id: health_statuses
+name: Health Statuses
+description: |
+  Allowed health-state values for service health checks.
+purpose: |
+  Standardizes health reporting across services for validation, generated views,
+  and operational workflows.
+values:
+  - id: ok
+    name: OK
+    description: Health check succeeded and service is healthy.
+    semantics: |
+      Service is functioning within expected parameters.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: degraded
+    name: Degraded
+    description: Service responds but has partial impairment.
+    semantics: |
+      Service is available with reduced function, performance, or reliability.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: down
+    name: Down
+    description: Service is not responding successfully.
+    semantics: |
+      Service is unavailable and requires remediation.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: unknown
+    name: Unknown
+    description: Service health has not been checked or is indeterminate.
+    semantics: |
+      No authoritative health signal is available.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+extension_policy: closed
+created_at: 2026-05-08T01:21:06Z
+updated_at: 2026-05-08T01:21:06Z
