@@ -1,25 +1,407 @@
 id: jon-woodall-writing-style
 name: Jon Woodall Writing Style
 version: 0.1.0
-summary: A structured style guide skill for clear, direct, and high-signal writing.
-description: |
-  Defines writing constraints and tone conventions for formal external content
-  so outputs remain concise, technical, and audience-appropriate.
+summary: Consultative narrative writing style for formal external content.
+description: Applies Jon Woodall's formal consultative narrative voice to external writing while preserving clarity, trust, and actionable direction.
 context_mode: vocab:context_modes:main
 publish_targets:
-  - target_id: claude-desktop
-    output_path: /mnt/skills/user/jon-woodall-writing-style/SKILL.md
-  - target_id: copilot-vscode
-    output_path: .github/skills/jon-woodall-writing-style/SKILL.md
+- target_id: claude-desktop
+  output_path: /mnt/skills/user/jon-woodall-writing-style/SKILL.md
+- target_id: copilot-vscode
+  output_path: .github/skills/jon-woodall-writing-style/SKILL.md
 frontmatter:
-  name: Jon Woodall Writing Style
-  description: A structured style guide skill for clear, direct, and high-signal writing.
+  name: jon-woodall-writing-style
+  description: Apply Jon Woodall's consultative narrative voice when drafting or editing formal writing for an external audience — papers, patents, concept docs, external emails, LinkedIn posts, positioning documents, POC as-built documents, published documentation. Voice origins are MISO/psyops influence doctrine, Appalachian storytelling, and practitioner empathy from 25 years in cybersecurity. Core method is "earn fear, then earn trust" — validate the reader's current thinking, show them a reality they've been avoiding, redirect toward a specific action. Do NOT use for casual or internal messages, quick Slack/text replies, notes to self, or transactional communication where tone does not matter. If unsure whether writing is formal enough to warrant this skill, err toward using it — the checklists are fast and catch voice drift.
   context: null
-body: |
-  # Placeholder body
+body: '
 
-  MIGRATED FROM future plan — placeholder content for schema validation only. Real skill body lives at the operator's existing skill files and will be migrated in a future plan.
-applies_when: Drafting or editing formal external writing — papers, patents, concept docs, external emails, LinkedIn posts.
+  # Jon Woodall Writing Style
+
+
+  ## When to use this skill
+
+
+  Use automatically for:
+
+  - Papers, patents, concept docs
+
+  - External emails to customers, prospects, partners, vendors
+
+  - LinkedIn posts and articles
+
+  - Positioning and partner enablement documents
+
+  - POC as-built documents
+
+  - Published documentation meant for audiences outside the immediate team
+
+  - Any writing where the reader will form an impression of Jon or his work
+
+
+  Do NOT use for:
+
+  - Casual Slack/text messages
+
+  - Notes to self or internal scratch work
+
+  - Transactional internal emails ("can you join the call at 3")
+
+  - Meeting notes or status updates where facts matter more than voice
+
+
+  ## Core voice principle
+
+
+  Informed persuasion through consultative narrative. The reader should feel like they are sitting across from a trusted advisor who has seen this problem before — not being pitched, not being lectured, but being walked through a reality they have been avoiding. Earn fear first, then earn trust.
+
+
+  ## Voice origins (understand these to reproduce the voice)
+
+
+  Three roots. All three matter.
+
+
+  **Military deception and psychological operations.** MISO/psyops doctrine: understand the audience''s existing beliefs, meet them there, reshape their decision framework without triggering resistance. Every structural choice traces back to this. The "earn fear, then earn trust" arc is influence doctrine applied to commercial communication. Validate the audience''s current thinking before redirecting it. Never argue, never confront, never make the reader feel manipulated. The moment the reader senses they are being tricked, trust is gone permanently. No gotcha questions. No adversarial framing. No "ask your vendor if they can do THIS" tactics.
+
+
+  **Appalachian storytelling.** You don''t tell someone what to think. You tell them a story and let the lesson land on its own. Proof is always a scenario, never an assertion. Not "BEC attacks exploit organizational trust relationships" — instead, "an attacker compromises a CFO''s account, sits quietly for weeks, and waits for the CEO to travel." The reader draws the conclusion themselves, which makes it stick harder than any statistic.
+
+
+  **Practitioner empathy.** The writing never positions the reader as the problem. Even when challenging their current approach, the framing is "here''s what you''re up against" — never "here''s what you got wrong." This comes from having sat on the customer side of the table. Authenticity is not optional; it is the foundation of trust. Meet the reader where they are, show them what they have not seen, let them make the decision.
+
+
+  ## The six core principles
+
+
+  ### 1. Make it about the reader, not about you
+
+
+  Foundational principle. Every sentence that matters should be about the reader''s world — their risk, their gaps, their decisions, their consequences. The product, platform, or proposal enters only as the resolution to something the reader already feels.
+
+
+  **The test:** Read any paragraph and ask: who is the subject of the key sentences? If the answer is "us" or "our product," rewrite it so the subject is "them" or "their situation."
+
+
+  ### 2. Lead with the uncomfortable truth, not the product
+
+
+  Every piece opens by naming a problem the audience knows exists but has not confronted directly. Make the status quo feel riskier than change. The product or call to action appears only after the case for *why something needs to exist* has been fully built.
+
+
+  ### 3. Make abstract risk feel human
+
+
+  Translate technical threats and business risk into scenes the reader can picture. One vivid example is worth more than three bullet points. Ground statistics in real consequences.
+
+
+  ### 4. Name what everyone knows but nobody says
+
+
+  The most powerful sentences articulate what the audience already believes but has not put into words. These land because they make the reader feel seen rather than sold to.
+
+
+  Examples:
+
+  - "The cheapest option rarely turns out to be the least expensive."
+
+  - "If security feels like friction, human nature finds another way."
+
+
+  These are shared truths, said plainly. Not hot takes.
+
+
+  ### 5. Defer the pitch — earn the right to recommend
+
+
+  The product or recommendation appears in the final third of the piece, never the first half. Build the gap before filling it. The reader should arrive at "so what''s the answer?" on their own before you provide it.
+
+
+  ### 6. Trust the reader to draw conclusions
+
+
+  No gotcha questions. No trick comparisons. Present the landscape honestly and let the reader connect the dots. The confidence is quiet. When the argument is strong enough, the reader closes the sale in their own head.
+
+
+  ## Tone and rhythm
+
+
+  **Conversational but not casual.** Write like explaining something important to a smart peer over coffee. No jargon for jargon''s sake, no forced humor, no slang. Contractions are fine. First person is fine when drawing on experience.
+
+
+  **Direct without being aggressive.** Short declarative sentences carry the weight. Build context in 2-3 longer sentences, then land the point in a short one. The short sentence is where the reader feels something.
+
+
+  **The setup-and-land pattern.** Build evidence across longer sentences, then deliver the insight in a final short sentence or short paragraph. Example:
+
+
+  > "The FBI''s Internet Crime Complaint Center reported $2.9 billion in Business Email Compromise losses in 2023. Healthcare organizations experienced 23% more BEC attempts than other sectors. When a single breach can expose thousands of patient records, trigger OCR investigations, and cost an average of $10.93 million, the cheapest option rarely turns out to be the least expensive."
+
+
+  **The single-sentence paragraph.** Use a standalone short sentence as its own paragraph to force a pause. Creates emphasis through white space, not bold text. Use 2-3 times per piece maximum — more dilutes impact.
+
+
+  **The scene-then-verdict pattern.** Build a scenario across several sentences, then close with a verdict the reader was already forming. The reader already knew the verdict was coming — that is what makes it land. You are confirming their fear, not surprising them.
+
+
+  **Authoritative through experience, not credentials.** Reference what you have seen and done — "after 25 years in security," "I''ve seen this across industries" — but never in a way that positions the reader as less informed. Authority comes from pattern recognition, not title.
+
+
+  **Warm but honest.** Never condescending. Never assume the reader is uninformed or acting in bad faith. Even when challenging their current approach, frame with empathy: "It''s an understandable impulse" before "but here''s why it''s risky."
+
+
+  ## The bridge — the most important section to get right
+
+
+  This is the natural blind spot in this style. The problem framing is so strong that the solution section can feel like an afterthought. The bridge converts the reader''s discomfort into a specific direction. Without it, you have scared them but not moved them.
+
+
+  **Formula: validate → reframe → redirect**
+
+
+  1. **Validate** the reader''s current instinct. Acknowledge why their approach makes sense on the surface.
+
+  2. **Reframe** what they should actually be optimizing for. Shift the criteria.
+
+  3. **Redirect** toward the specific solution or action that meets the reframed criteria.
+
+
+  **Example:**
+
+
+  > "The impulse to simplify is right — managing multiple vendors, multiple SKUs, and multiple consoles is a real operational burden. [validate] But the answer isn''t trading security gaps for administrative convenience. [reframe] It''s finding a platform that delivers comprehensive protection and genuine simplicity at the same time. [redirect]"
+
+
+  **How to test the bridge:** Read the last paragraph of the problem section and the first paragraph of the solution section back to back. If there is a jarring shift in tone, or the reader has to do mental work to connect them, the bridge is missing or too weak.
+
+
+  **Common mistakes:**
+
+  - Jumping from problem to product without acknowledging the reader''s perspective
+
+  - Being so balanced that the redirect feels weak
+
+  - Burying the bridge in the middle of a long paragraph where it gets lost
+
+
+  ## Structure and flow
+
+
+  **Opening.** Set stakes immediately. Use 2-3 strong statistics early, woven into narrative (not a bullet list). Name the decision or false choice the reader is facing. If someone only reads one page, they should feel the urgency.
+
+
+  **Middle.** Walk through the problem from multiple angles — technical, operational, compliance, human. Scenario-based writing. Each section builds on the previous. Alternate between narrative paragraphs and occasional bullet lists for relief — but default to prose.
+
+
+  **Bridge.** Validate, reframe, redirect.
+
+
+  **Close.** Present the recommendation confidently without overselling. Keep features list brief — the problem framing already made the case. End with a forward-looking statement or a clear next step. The natural instinct is to let the problem speak for itself. Push through to the explicit "here''s what to do next" — one strong sentence is enough.
+
+
+  ## Formatting
+
+
+  **Default to prose.** Bullets only for:
+
+  - Specific feature lists when comparison matters
+
+  - Portal/tool enumerations where the count itself is the point
+
+  - Short reference sections
+
+
+  Everything else — arguments, scenarios, analysis — should be narrative.
+
+
+  **Headlines as hooks.** Section headers should read like the first line of a conversation, not a table of contents entry.
+
+  - Yes: "When the Platform Becomes the Attack Vector"
+
+  - Yes: "The False Choice Between Productivity and Security"
+
+  - No: "Microsoft 365 Security Vulnerabilities Overview"
+
+  - No: "Section 3: Threat Analysis"
+
+
+  **Length guidance:**
+
+  - LinkedIn articles: 800-1,200 words
+
+  - Partner enablement / positioning docs: 5-7 pages
+
+  - POC as-built: no hard limit, but executive brief (1 page) and recommended path forward (1 page) are mandatory bookends
+
+
+  ## Format-specific posture
+
+
+  Voice and principles are the same across formats. Structure and posture differ.
+
+
+  ### LinkedIn articles
+
+  - **Posture:** Peer sharing experience. First person throughout. Practitioner reflecting on what you have seen, inviting conversation.
+
+  - **Open:** Personal observation or industry tension, not a stat dump. Often starts with experience.
+
+  - **Middle:** What you are actually seeing vs. what the industry assumes. Appalachian storytelling is strongest here — personal anecdotes, things witnessed, patterns across career.
+
+  - **Reframe:** The insight or shift in thinking you want to offer. Not a product pitch — a lens.
+
+  - **The commercial:** Brief, honest, self-aware. You can literally call it "the commercial." Name the product, explain why you believe in it, 3-4 sentences.
+
+  - **Close:** Genuine question inviting real conversation. Not "thoughts?"
+
+  - **Avoid:** Opening with statistics, pitching in the first half, writing a positioning doc and posting it as an article.
+
+
+  ### Partner enablement / positioning documents
+
+  - **Posture:** Trusted advisor briefing a decision-maker. Third person or second person ("your organization"). Presenting analysis, not sharing personal reflection.
+
+  - **Structure:** Stakes (page 1) → Problem development (pages 2-4) → Bridge → Requirements and comparison → Solution and close
+
+  - **Close:** Specific, confident call to action — POV, meeting, next step.
+
+  - **Avoid:** Opening with "I," using personal anecdotes (use industry scenarios), leaving the close soft, letting the comparison table be the only place the product is mentioned.
+
+
+  ### POC as-built documents
+
+
+  **Strategic purposes — design for all four from the start:**
+
+
+  1. **Customer courtesy and reference** — technical team gets a comprehensive record for production deployment planning.
+
+  2. **Competitive benchmarking weapon** — a thorough as-built forces competing vendors to run their POC against your playbook. Every configuration, timeline, and validation result becomes the standard they must match or explain away.
+
+  3. **Executive travel document** — the purpose most often missed. The document gets forwarded to CISO, VP Infrastructure, procurement, legal. Those readers never see the POC firsthand. This document is their entire impression of the evaluation.
+
+  4. **Post-decision insurance** — after the deal closes, this becomes the proof that due diligence was done. Six months later, "why did we choose this vendor?" — this document is the answer.
+
+
+  **Structure:**
+
+  1. Executive Brief (1 page, before TOC) — what was evaluated, what was proved, what to recommend. Frame outcomes as business capabilities, not configuration checkboxes.
+
+  2. POC Overview and Objectives (1-2 pages)
+
+  3. Architecture and Configuration (technical body) — organized by functional area. Document issues honestly; calling out problems and explaining root cause builds more credibility than a clean sheet.
+
+  4. Testing and Validation (2-3 pages) — capability validation matrix mapping back to success criteria.
+
+  5. Key Learnings and Recommendations (1-2 pages)
+
+  6. Recommended Path Forward (1 page, before appendices) — 3-5 prioritized next steps with owners and timeframes.
+
+  7. Appendices
+
+
+  **Tone:** Technical body reads like engineering notes (precise, factual). Executive brief and recommended path forward carry the business voice. Honest about limitations. Confident in recommendations.
+
+
+  ## What this style is NOT
+
+
+  **Not a whitepaper.** No abstract, no methodology section, no passive voice. Sound like a person talking.
+
+
+  **Not a sales pitch.** The product earns its place through the argument. Lead with the problem landscape; let the product enter as resolution to a tension the reader already feels.
+
+
+  **Not thought leadership for its own sake.** Every piece should help someone make a better decision, not just demonstrate expertise.
+
+
+  **Not bullet-heavy.** If the whole piece could be a slide deck, it is not narrative enough. Data informs; arguments move people.
+
+
+  **Not fear-mongering.** The fear is real and sourced — never exaggerated, never manufactured. Stats are defensible. Claims are grounded.
+
+
+  ## Sourcing standards
+
+
+  - Every statistic must be traceable to a named source (FBI, IBM, Verizon DBIR, CISA, NIST)
+
+  - Prefer primary sources over aggregators
+
+  - If a number cannot be pinned to a specific report page, soften the language: "industry research consistently shows" rather than a hard percentage
+
+  - Never fabricate a citation or attribute a stat to the wrong source — credibility is the foundation of this voice
+
+
+  ## The Jon Woodall checklist
+
+
+  ### Every piece, regardless of format:
+
+  - [ ] **Gut check:** would I want to read this? If it does not have pull, nothing else matters.
+
+  - [ ] Who is the subject of the key sentences — the reader or the vendor? If vendor, rewrite.
+
+  - [ ] Does the first page/scroll make the reader uncomfortable enough to keep reading?
+
+  - [ ] Would someone who only reads the headlines understand the argument?
+
+  - [ ] Is every statistic defensible and correctly attributed?
+
+  - [ ] Does the product/recommendation appear only after the problem is fully established?
+
+  - [ ] Is there a clear bridge (validate → reframe → redirect) between problem and solution?
+
+  - [ ] Does the closing include a specific next step or call to action?
+
+  - [ ] Tone conversational but never casual — would you say this in a meeting with a CISO?
+
+  - [ ] Prose-first, with bullets only where they genuinely serve comprehension?
+
+  - [ ] Setup-and-land sentence pattern used at least 2-3 times?
+
+  - [ ] Can you read the last problem paragraph and first solution paragraph back-to-back without jarring shift?
+
+
+  ### LinkedIn articles:
+
+  - [ ] Opens with a personal observation or experience, not a statistic?
+
+  - [ ] First person used naturally throughout?
+
+  - [ ] Product mention brief, honest, in the final third?
+
+  - [ ] Ends with a genuine question inviting real conversation?
+
+
+  ### Positioning documents:
+
+  - [ ] First 1.5 pages carry enough weight to stand alone?
+
+  - [ ] Comparison table has footnotes doing competitive work?
+
+  - [ ] Specific, concrete call to action (POV, meeting, next step)?
+
+  - [ ] Can a partner use this without a Mimecast rep in the room?
+
+
+  ### POC as-built documents:
+
+  - [ ] Executive brief answers: what was evaluated, what was proved, what to recommend?
+
+  - [ ] Outcomes framed as business capabilities, not configuration checkboxes?
+
+  - [ ] Ends with Recommended Path Forward, not just a summary?
+
+  - [ ] Competitive wins surfaced in executive brief, not buried in configuration notes?
+
+  - [ ] Validation matrix comprehensive enough to set the benchmark for any competing evaluation?
+
+  - [ ] Issues and open items documented honestly with root cause or mitigation?
+
+  - [ ] Would this document answer "why did we choose this vendor?" if someone reads it six months from now?
+
+  '
+applies_when: Apply Jon Woodall's consultative narrative voice when drafting or editing formal writing for an external audience — papers, patents, concept docs, external emails, LinkedIn posts, positioning documents, POC as-built documents, published documentation. Voice origins are MISO/psyops influence doctrine, Appalachian storytelling, and practitioner empathy from 25 years in cybersecurity. Core method is "earn fear, then earn trust" — validate the reader's current thinking, show them a reality they've been avoiding, redirect toward a specific action. Do NOT use for casual or internal messages, quick Slack/text replies, notes to self, or transactional communication where tone does not matter. If unsure whether writing is formal enough to warrant this skill, err toward using it — the checklists are fast and catch voice drift.
 related_skills: []
-created_at: 2026-05-08T01:16:52Z
-updated_at: 2026-05-08T01:16:52Z
+created_at: 2026-05-08 01:16:52+00:00
+updated_at: '2026-05-08T03:21:39Z'

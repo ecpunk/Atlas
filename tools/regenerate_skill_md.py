@@ -51,6 +51,7 @@ def _render_skill_md(skill: Skill) -> str:
         frontmatter,
         sort_keys=False,
         allow_unicode=True,
+        width=10000,
     ).rstrip()
 
     body = skill.body if skill.body.endswith("\n") else f"{skill.body}\n"
