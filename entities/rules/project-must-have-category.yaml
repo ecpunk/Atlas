@@ -1,0 +1,16 @@
+id: project-must-have-category
+name: Project must have category
+description: |
+  Every project entity must declare a lifecycle category. Projects without a
+  category cannot be classified for views or audits.
+scope: vocab:rule_scopes:project
+severity: vocab:rule_severities:error
+applies_to: project where id is_not_null
+must_satisfy: project where category is_not_null
+enforcement_point: vocab:enforcement_points:all
+on_violation: |
+  Block the write or generation; log error to validation summary; fire a signal
+  of severity error.
+authored_by: operator
+created_at: 2026-05-08T01:17:26Z
+updated_at: 2026-05-08T01:17:26Z
