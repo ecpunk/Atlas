@@ -1,13 +1,16 @@
 from __future__ import annotations
 
 from collections import defaultdict
+from pathlib import Path
 
 from schemas.project import Project
 from schemas.vocabulary import Vocabulary
 
 NAME = "project_index"
 INPUTS = ["project:*"]
-OUTPUTS = ["/tmp/atlas-project-index.md"]
+OUTPUTS = [
+    "/opt/stack/services/gdrive-projects/Projects/Current/Atlas/40-OUTPUT/Project Index (generated).md"
+]
 
 
 def _flatten_summary(summary: str) -> str:
@@ -69,4 +72,7 @@ def generate(store: dict) -> dict[str, str]:
             lines.extend(_render_project(project))
 
     content = "\n".join(lines).rstrip() + "\n"
-    return {"/tmp/atlas-project-index.md": content}
+
+    output_path = OUTPUTS[0]
+    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
+    return {output_path: content}
