@@ -1,0 +1,25 @@
+id: jon-woodall-writing-style
+name: Jon Woodall Writing Style
+version: 0.1.0
+summary: A structured style guide skill for clear, direct, and high-signal writing.
+description: |
+  Defines writing constraints and tone conventions for formal external content
+  so outputs remain concise, technical, and audience-appropriate.
+context_mode: vocab:context_modes:main
+publish_targets:
+  - target_id: claude-desktop
+    output_path: /mnt/skills/user/jon-woodall-writing-style/SKILL.md
+  - target_id: copilot-vscode
+    output_path: .github/skills/jon-woodall-writing-style/SKILL.md
+frontmatter:
+  name: Jon Woodall Writing Style
+  description: A structured style guide skill for clear, direct, and high-signal writing.
+  context: null
+body: |
+  # Placeholder body
+
+  MIGRATED FROM future plan — placeholder content for schema validation only. Real skill body lives at the operator's existing skill files and will be migrated in a future plan.
+applies_when: Drafting or editing formal external writing — papers, patents, concept docs, external emails, LinkedIn posts.
+related_skills: []
+created_at: 2026-05-08T01:16:52Z
+updated_at: 2026-05-08T01:16:52Z
