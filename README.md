@@ -94,6 +94,14 @@ Optional write target:
 
 Note: This tool does not modify knowledge-server source.
 
+## Entity documentation
+
+- [Skill](docs/skill-entity.md) - populated by Plan 003
+- [Service](docs/service-entity.md) - populated by Plan 004
+- [Server](docs/server-entity.md) - populated by Plan 005
+- [Rule](docs/rule-entity.md) - populated by Plan 006
+- [Agent](docs/agent-entity.md) - populated by Plan 007
+
 ## Not yet implemented
 
 - Additional entity schemas (Service, Server, Rule, Agent)
