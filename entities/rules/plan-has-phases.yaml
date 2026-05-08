@@ -1,0 +1,22 @@
+id: plan-has-phases
+name: Plan has Phases section
+description: |
+  Plan documents must include a Phases section with numbered subsections to
+  make execution sequencing explicit.
+scope: vocab:rule_scopes:instruction_layer
+severity: vocab:rule_severities:error
+applies_to: plan_document
+check_kind: vocab:rule_check_kinds:section_present
+check_definition: |
+  Plan must contain a section named exactly "Phases" with at least one numbered
+  subsection
+fix_tier: vocab:rule_fix_tiers:propose
+fix_action: |
+  Add a "Phases" section and include at least one numbered phase subsection.
+enforcement_point: vocab:enforcement_points:generation
+on_violation: |
+  Mark the plan as non-compliant in the compliance report and identify missing
+  phase structure.
+authored_by: operator
+created_at: 2026-05-08T17:41:09Z
+updated_at: 2026-05-08T17:41:09Z

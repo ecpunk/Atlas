@@ -1,0 +1,21 @@
+id: plan-has-objective
+name: Plan has Objective section
+description: |
+  Plan documents must include an Objective section that defines what successful
+  execution produces.
+scope: vocab:rule_scopes:instruction_layer
+severity: vocab:rule_severities:error
+applies_to: plan_document
+check_kind: vocab:rule_check_kinds:section_present
+check_definition: |
+  Plan must contain a section named exactly "Objective"
+fix_tier: vocab:rule_fix_tiers:propose
+fix_action: |
+  Add an "Objective" section that states success criteria in one focused paragraph.
+enforcement_point: vocab:enforcement_points:generation
+on_violation: |
+  Mark the plan as non-compliant in the compliance report and point to
+  PLAN-TEMPLATE.md for the required section.
+authored_by: operator
+created_at: 2026-05-08T17:41:09Z
+updated_at: 2026-05-08T17:41:09Z
