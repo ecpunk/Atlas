@@ -1,16 +1,11 @@
 from __future__ import annotations
 
-import re
 from datetime import datetime
+from typing import Optional
 
 from pydantic import BaseModel, Field, field_validator, model_validator
 
 from .conventions import VocabRef, validate_iso8601_timestamp
-
-_DSL_PATTERN = re.compile(
-    r"^([a-z_][a-z0-9_]*)\s+where\s+([a-z_][a-z0-9_.]*)\s+"
-    r"(equals|not_equals|is_null|is_not_null|contains)(?:\s+(.+))?$"
-)
 
 
 class Rule(BaseModel):
@@ -24,7 +19,10 @@ class Rule(BaseModel):
     severity: VocabRef
 
     applies_to: str = Field(..., min_length=1)
-    must_satisfy: str = Field(..., min_length=1)
+    check_kind: VocabRef
+    check_definition: str = Field(..., min_length=1)
+    fix_tier: VocabRef
+    fix_action: Optional[str] = None
 
     enforcement_point: VocabRef
     on_violation: str = Field(..., min_length=1)
@@ -34,28 +32,13 @@ class Rule(BaseModel):
     created_at: datetime
     updated_at: datetime
 
-    @field_validator("applies_to", "must_satisfy")
+    @field_validator("applies_to", "check_definition")
     @classmethod
-    def validate_dsl_expression(cls, value: str) -> str:
-        expr = value.strip()
-        match = _DSL_PATTERN.fullmatch(expr)
-        if match is None:
-            raise ValueError(
-                "DSL expression must match '<entity_type> where <field_path> <op> [<value>]'"
-            )
-
-        op = match.group(3)
-        rhs = match.group(4)
-
-        if op in {"is_null", "is_not_null"}:
-            if rhs is not None:
-                raise ValueError(f"operator '{op}' must not include a value")
-            return expr
-
-        if rhs is None or not rhs.strip():
-            raise ValueError(f"operator '{op}' requires a value")
-
-        return expr
+    def normalize_non_empty_text(cls, value: str) -> str:
+        normalized = value.strip()
+        if not normalized:
+            raise ValueError("value must not be empty")
+        return normalized
 
     @model_validator(mode="after")
     def validate_model(self) -> "Rule":
@@ -68,7 +51,20 @@ class Rule(BaseModel):
         if self.severity.vocab_id != "rule_severities":
             raise ValueError("severity must reference vocab:rule_severities:<value>")
 
+        if self.check_kind.vocab_id != "rule_check_kinds":
+            raise ValueError("check_kind must reference vocab:rule_check_kinds:<value>")
+
+        if self.fix_tier.vocab_id != "rule_fix_tiers":
+            raise ValueError("fix_tier must reference vocab:rule_fix_tiers:<value>")
+
         if self.enforcement_point.vocab_id != "enforcement_points":
             raise ValueError("enforcement_point must reference vocab:enforcement_points:<value>")
+
+        if self.fix_tier.value_id == "flag" and self.fix_action is not None:
+            raise ValueError("fix_action must be null when fix_tier is vocab:rule_fix_tiers:flag")
+
+        if self.fix_tier.value_id in {"auto", "propose"}:
+            if self.fix_action is None or not self.fix_action.strip():
+                raise ValueError("fix_action is required when fix_tier is auto or propose")
 
         return self

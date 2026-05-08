@@ -5,12 +5,16 @@ description: |
   can anchor to a canonical specification.
 scope: vocab:rule_scopes:project
 severity: vocab:rule_severities:error
-applies_to: project where id is_not_null
-must_satisfy: project where concept_doc is_not_null
+applies_to: project_entity
+check_kind: vocab:rule_check_kinds:manual
+check_definition: |
+  Verify that each project declares a concept document path.
+fix_tier: vocab:rule_fix_tiers:flag
+fix_action: null
 enforcement_point: vocab:enforcement_points:all
 on_violation: |
   Block writes and generation outputs for the project until concept_doc is set;
   log an error in validation output.
 authored_by: operator
 created_at: 2026-05-08T03:42:25Z
-updated_at: 2026-05-08T03:42:25Z
+updated_at: 2026-05-08T17:39:44Z

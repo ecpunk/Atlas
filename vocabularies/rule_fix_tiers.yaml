@@ -1,0 +1,35 @@
+id: rule_fix_tiers
+name: Rule Fix Tiers
+description: |
+  Canonical remediation authority levels for rule violations.
+purpose: |
+  Defines whether a violating condition can be auto-remediated, proposed for
+  operator review, or only flagged for human judgment.
+values:
+  - id: auto
+    name: Auto
+    description: The system can apply a deterministic low-risk fix directly.
+    semantics: |
+      fix_action should describe the operation applied automatically.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: propose
+    name: Propose
+    description: The system proposes a fix and waits for operator confirmation.
+    semantics: |
+      fix_action should provide operator-readable guidance for remediation.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: flag
+    name: Flag
+    description: The system only flags the issue for human handling.
+    semantics: |
+      fix_action is null because no deterministic remediation is defined.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+extension_policy: open
+created_at: 2026-05-08T17:39:44Z
+updated_at: 2026-05-08T17:39:44Z
