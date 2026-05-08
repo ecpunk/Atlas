@@ -1,0 +1,35 @@
+id: reliability_levels
+name: Reliability Levels
+description: |
+  Trust calibration levels for agent task patterns.
+purpose: |
+  Standardizes operational confidence so automation can decide whether to run
+  autonomously, require confirmation, or only surface findings.
+values:
+  - id: high
+    name: High
+    description: Reliable for autonomous execution in the defined task pattern.
+    semantics: |
+      Autonomous use is acceptable with normal safeguards and validation.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: medium
+    name: Medium
+    description: Useful but needs human confirmation before mutation.
+    semantics: |
+      Prefer propose-confirm workflow before writing or state-changing actions.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: low
+    name: Low
+    description: Output should be treated as advisory context only.
+    semantics: |
+      Surface findings only; do not run mutation workflows from this output.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+extension_policy: closed
+created_at: 2026-05-08T01:16:55Z
+updated_at: 2026-05-08T01:16:55Z
