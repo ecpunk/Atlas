@@ -1,0 +1,21 @@
+id: home-command-tablet
+name: Home Command Tablet API
+summary: |
+  Home Command API runtime used by tablet-facing home command workflows.
+service_type: vocab:service_types:docker_container
+lifecycle: vocab:service_lifecycles:running
+host: server:um790
+deployment_path: /opt/stack/services/projects/home-command/
+port: 8094
+health_endpoint: http://127.0.0.1:8094/
+systemd_unit: null
+owned_by: project:home-command-tablet
+depends_on: []
+last_health_check: null
+last_health_status: vocab:health_statuses:unknown
+failure_modes:
+  - service naming differs from container name; verify naming alignment
+source_of_truth_doc: UM790_SOURCE_OF_TRUTH.md
+resource_budget_ram_mb: 512
+created_at: 2026-05-08T01:45:00Z
+updated_at: 2026-05-08T01:45:00Z
