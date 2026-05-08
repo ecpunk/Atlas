@@ -4,9 +4,12 @@ summary: |
   Home Command tablet API project and runtime.
   Operator to enrich.
 category: vocab:lifecycle_categories:current
-status: vocab:lifecycle_categories:current
+status: vocab:project_statuses:in_progress
 concept_doc: gdrive-projects/Projects/Current/Home Command/10-CONCEPT/HOME_COMMAND_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Current/Home Command/
 code_repo: /opt/stack/services/projects/home-command
+domain_tags:
+  - homelab
+  - home
 created_at: 2026-05-08T02:05:13Z
-updated_at: 2026-05-08T02:05:13Z
+updated_at: 2026-05-08T04:35:55Z

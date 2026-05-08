@@ -4,9 +4,12 @@ summary: |
   Home Assistant automation project and runtime on UM790.
   Operator to enrich.
 category: vocab:lifecycle_categories:live
-status: vocab:lifecycle_categories:live
+status: vocab:project_statuses:installed
 concept_doc: gdrive-projects/Projects/Live/Home Assistant/10-CONCEPT/HOME_ASSISTANT_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Live/Home Assistant/
 code_repo: /opt/stack/services/apps/homeassistant
+domain_tags:
+  - homelab
+  - automation
 created_at: 2026-05-08T02:05:13Z
-updated_at: 2026-05-08T02:05:13Z
+updated_at: 2026-05-08T04:35:55Z

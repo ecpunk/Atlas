@@ -4,9 +4,12 @@ summary: |
   Minecraft Turdcraft runtime project hosted on UM790.
   Operator to enrich.
 category: vocab:lifecycle_categories:live
-status: vocab:lifecycle_categories:live
+status: vocab:project_statuses:installed
 concept_doc: gdrive-projects/Projects/Live/Turdcraft/10-CONCEPT/TURDCRAFT_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Live/Turdcraft/
 code_repo: /opt/stack/services/apps/minecraft-turdcraft
+domain_tags:
+  - homelab
+  - gaming
 created_at: 2026-05-08T02:05:13Z
-updated_at: 2026-05-08T02:05:13Z
+updated_at: 2026-05-08T04:35:55Z
