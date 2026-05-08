@@ -1,18 +1,10 @@
-#!/usr/bin/env python3
 from __future__ import annotations
-
-import argparse
-import sys
-from pathlib import Path
-
-import yaml
-
-REPO_ROOT = Path(__file__).resolve().parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 
 from schemas.server import Server
 
+NAME = "servers_index"
+INPUTS = ["server:*"]
+OUTPUTS = ["-"]
 
 HEADER = "AUTO-GENERATED from atlas-store/entities/servers/*.yaml -- do not hand-edit."
 
@@ -29,15 +21,11 @@ def _format_gib(value: float | None) -> str:
     return str(value)
 
 
-def _load_servers(entities_root: Path) -> list[Server]:
-    servers: list[Server] = []
-    for yaml_path in sorted(entities_root.glob("*.yaml")):
-        data = yaml.safe_load(yaml_path.read_text(encoding="utf-8"))
-        servers.append(Server.model_validate(data))
-    return sorted(servers, key=lambda item: item.id)
+def generate(store: dict) -> dict[str, str]:
+    server_store = store.get("server", {})
+    servers = [item for item in server_store.values() if isinstance(item, Server)]
+    servers.sort(key=lambda item: item.id)
 
-
-def generate_markdown(servers: list[Server]) -> str:
     lines: list[str] = ["# Servers", "", HEADER, ""]
 
     for server in servers:
@@ -61,26 +49,5 @@ def generate_markdown(servers: list[Server]) -> str:
         lines.append(f"- **Source of truth:** {source_doc}")
         lines.append("")
 
-    return "\n".join(lines).rstrip() + "\n"
-
-
-def main() -> int:
-    parser = argparse.ArgumentParser(description="Regenerate Atlas servers markdown index")
-    parser.add_argument("--write", type=Path, default=None, help="optional output markdown path")
-    args = parser.parse_args()
-
-    servers_dir = REPO_ROOT / "entities" / "servers"
-    servers = _load_servers(servers_dir)
-    output = generate_markdown(servers)
-
-    print(output, end="")
-
-    if args.write is not None:
-        args.write.parent.mkdir(parents=True, exist_ok=True)
-        args.write.write_text(output, encoding="utf-8")
-
-    return 0
-
-
-if __name__ == "__main__":
-    sys.exit(main())
+    content = "\n".join(lines).rstrip() + "\n"
+    return {"-": content}

@@ -1,39 +1,23 @@
-#!/usr/bin/env python3
 from __future__ import annotations
-
-import argparse
-import sys
-from pathlib import Path
-
-import yaml
-
-REPO_ROOT = Path(__file__).resolve().parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 
 from schemas.agent import Agent
 from schemas.conventions import VocabRef
 from schemas.vocabulary import Vocabulary
 
+NAME = "agents_index"
+INPUTS = ["agent:*"]
+OUTPUTS = ["-"]
+
 HEADER = "AUTO-GENERATED from atlas-store/entities/agents/*.yaml - do not hand-edit."
 
 
-def _iter_yaml_files(root: Path) -> list[Path]:
-    return sorted(
-        path
-        for path in root.rglob("*")
-        if path.is_file() and path.suffix.lower() in {".yaml", ".yml"}
-    )
-
-
-def _load_vocab_display_map(vocab_root: Path) -> dict[tuple[str, str], str]:
+def _build_vocab_display_map(vocab_store: dict) -> dict[tuple[str, str], str]:
     display_map: dict[tuple[str, str], str] = {}
 
-    for vocab_path in _iter_yaml_files(vocab_root):
-        data = yaml.safe_load(vocab_path.read_text(encoding="utf-8"))
-        vocab = Vocabulary.model_validate(data)
-        for value in vocab.values:
-            display_map[(vocab.id, value.id)] = value.name
+    for vocab in vocab_store.values():
+        if isinstance(vocab, Vocabulary):
+            for value in vocab.values:
+                display_map[(vocab.id, value.id)] = value.name
 
     return display_map
 
@@ -84,37 +68,14 @@ def _format_agent(agent: Agent, display_map: dict[tuple[str, str], str]) -> str:
     return "\n".join(lines)
 
 
-def generate_agents_index(repo_root: Path) -> str:
-    entities_root = repo_root / "entities" / "agents"
-    vocab_root = repo_root / "vocabularies"
-    display_map = _load_vocab_display_map(vocab_root)
+def generate(store: dict) -> dict[str, str]:
+    display_map = _build_vocab_display_map(store.get("vocabulary", {}))
 
-    agents: list[Agent] = []
-    for entity_path in _iter_yaml_files(entities_root):
-        data = yaml.safe_load(entity_path.read_text(encoding="utf-8"))
-        agents.append(Agent.model_validate(data))
-
+    agent_store = store.get("agent", {})
+    agents = [item for item in agent_store.values() if isinstance(item, Agent)]
     agents.sort(key=lambda item: item.id)
 
     sections = ["# Agents", "", HEADER, ""]
     sections.append("\n\n".join(_format_agent(agent, display_map) for agent in agents))
-    return "\n".join(sections).rstrip() + "\n"
-
-
-def main() -> int:
-    parser = argparse.ArgumentParser(description="Regenerate markdown index for Atlas agent entities")
-    parser.add_argument("--write", type=Path, default=None, help="optional output file path")
-    args = parser.parse_args()
-
-    output = generate_agents_index(REPO_ROOT)
-    print(output, end="")
-
-    if args.write is not None:
-        args.write.parent.mkdir(parents=True, exist_ok=True)
-        args.write.write_text(output, encoding="utf-8")
-
-    return 0
-
-
-if __name__ == "__main__":
-    sys.exit(main())
+    content = "\n".join(sections).rstrip() + "\n"
+    return {"-": content}
