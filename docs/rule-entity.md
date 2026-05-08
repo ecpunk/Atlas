@@ -16,8 +16,11 @@ Fields:
 | `description` | `str` | What the rule asserts and why |
 | `scope` | `VocabRef` | Must reference `vocab:rule_scopes:<value>` |
 | `severity` | `VocabRef` | Must reference `vocab:rule_severities:<value>` |
-| `applies_to` | `str` | v1 DSL expression, single-condition |
-| `must_satisfy` | `str` | v1 DSL expression, single-condition |
+| `applies_to` | `str` | Target artifact/entity class (for example `plan_document`) |
+| `check_kind` | `VocabRef` | Must reference `vocab:rule_check_kinds:<value>` |
+| `check_definition` | `str` | Check-specific definition text (keys, section names, thresholds) |
+| `fix_tier` | `VocabRef` | Must reference `vocab:rule_fix_tiers:<value>` |
+| `fix_action` | `str \| null` | Required for `auto`/`propose`; null for `flag` |
 | `enforcement_point` | `VocabRef` | Must reference `vocab:enforcement_points:<value>` |
 | `on_violation` | `str` | Free text behavior (block, warn, log, signal) |
 | `authored_by` | `str` | Rule author identifier |
@@ -25,8 +28,8 @@ Fields:
 | `updated_at` | `datetime` | ISO 8601 UTC |
 
 The model validates:
-- Rule-specific vocabulary IDs for `scope`, `severity`, and `enforcement_point`
-- Basic DSL shape for `applies_to` and `must_satisfy`
+- Rule-specific vocabulary IDs for `scope`, `severity`, `check_kind`, `fix_tier`, and `enforcement_point`
+- `fix_action` nullability by fix tier (`flag` => null, `auto`/`propose` => required)
 - Timestamp fields as datetimes
 
 ## File Layout
@@ -34,9 +37,11 @@ The model validates:
 - `schemas/rule.py`
 - `vocabularies/rule_scopes.yaml`
 - `vocabularies/rule_severities.yaml`
+- `vocabularies/rule_check_kinds.yaml`
+- `vocabularies/rule_fix_tiers.yaml`
 - `vocabularies/enforcement_points.yaml`
 - `entities/rules/project-must-have-category.yaml`
-- `tools/regenerate_rules_doc.py`
+- `generators/rules_doc.py`
 
 ## Worked Example
 
@@ -46,37 +51,15 @@ Reference rule:
 
 This rule enforces that every project has a lifecycle category.
 
-## DSL Format (v1)
+## Check Kinds (v1)
 
-v1 uses a minimal single-condition DSL. It is stored as plain strings and is not
-yet parsed/evaluated into executable logic.
+`check_kind` selects how the consuming generator evaluates `check_definition`.
 
-Format:
-
-`<entity_type> where <field_path> <op> [<value>]`
-
-Supported operators:
-
-| Operator | Value Required | Meaning |
-|----------|----------------|---------|
-| `equals` | yes | Field value equals provided value |
-| `not_equals` | yes | Field value does not equal provided value |
-| `contains` | yes | Field contains provided value |
-| `is_null` | no | Field is null or missing |
-| `is_not_null` | no | Field is present/non-null |
-
-Examples:
-
-- `project where id is_not_null`
-- `project where category is_not_null`
-- `service where service_type equals vocab:service_types:mcp_http`
-- `server where name contains UM790`
-
-Out of scope in v1:
-
-- Logical composition (`and`, `or`, nested conditions)
-- Rule composition (rules depending on other rules)
-- Full parser/evaluator semantics beyond shape validation
+- `section_present`
+- `frontmatter_field_present`
+- `length_warning`
+- `template_reference_present`
+- `manual`
 
 ## How To Add A Rule
 
@@ -84,8 +67,10 @@ Out of scope in v1:
 2. Use Rule vocab references:
 	- `scope: vocab:rule_scopes:<value>`
 	- `severity: vocab:rule_severities:<value>`
+	- `check_kind: vocab:rule_check_kinds:<value>`
+	- `fix_tier: vocab:rule_fix_tiers:<value>`
 	- `enforcement_point: vocab:enforcement_points:<value>`
-3. Set `applies_to` and `must_satisfy` using the v1 DSL format.
+3. Set `applies_to`, `check_definition`, and `fix_action` (or null for `flag`).
 4. Run validation:
 
 	```bash
@@ -95,18 +80,14 @@ Out of scope in v1:
 5. Regenerate rules documentation summary:
 
 	```bash
-	.venv/bin/python tools/regenerate_rules_doc.py
+	.venv/bin/python tools/pipeline.py --generator rules_doc
 	```
 
-6. Optional: write generated summary to a file:
-
-	```bash
-	.venv/bin/python tools/regenerate_rules_doc.py --write /tmp/rules.md
-	```
+6. Optional: include `--show-content` to print generated markdown in terminal output.
 
 ## Resolved Open Questions
 
-- Query DSL: custom minimal DSL for v1 with one condition and fixed operators.
+- Check execution model: check-kind + check-definition, with manual checks supported.
 - Rule composition: deferred to a future plan.
 - Standards principles vs guidance: not classified here; Rule entity represents
   structural assertions only.
@@ -121,6 +102,6 @@ In scope now:
 
 Future work:
 
-- DSL parser and evaluator runtime
+- Additional check kinds for semantic checks
 - Cross-rule composition and dependency semantics
 - Mapping authored policy/guidance into machine-evaluable rule categories
