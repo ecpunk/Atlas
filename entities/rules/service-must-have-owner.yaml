@@ -1,0 +1,16 @@
+id: service-must-have-owner
+name: Service must have owner
+description: |
+  Every service must declare an owning project so accountability, change
+  coordination, and escalation paths are explicit.
+scope: vocab:rule_scopes:service
+severity: vocab:rule_severities:error
+applies_to: service where id is_not_null
+must_satisfy: service where owned_by is_not_null
+enforcement_point: vocab:enforcement_points:all
+on_violation: |
+  Block writes and generation outputs for the service until owned_by is set;
+  log an error in validation output.
+authored_by: operator
+created_at: 2026-05-08T03:42:25Z
+updated_at: 2026-05-08T03:42:25Z
