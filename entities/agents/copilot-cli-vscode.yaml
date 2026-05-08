@@ -1,0 +1,46 @@
+id: copilot-cli-vscode
+name: GitHub Copilot CLI in VS Code
+model_family: gpt-5.3-codex
+interface: vocab:agent_interfaces:vscode_extension
+primary_lane: vocab:agent_lanes:implementation
+secondary_lanes:
+  - vocab:agent_lanes:discovery
+can_read:
+  - um790_filesystem
+  - gdrive_files_via_fuse_mount
+  - code_repo
+  - web
+can_write:
+  - um790_filesystem
+  - code_repo
+  - gdrive_files_via_fuse_mount
+can_execute:
+  - shell_via_remote_ssh
+  - docker
+  - systemd_via_sudo
+  - mcp_servers
+trust_calibration:
+  - task_pattern: discovery and read-only investigation
+    reliability: vocab:reliability_levels:high
+    notes: validated 2026-05-04 with knowledge-server diagnosis
+  - task_pattern: mechanical implementation against detailed plan
+    reliability: vocab:reliability_levels:high
+    notes: validated Plan 001 execution 2026-05-08
+  - task_pattern: open-ended diagnostic prompts
+    reliability: vocab:reliability_levels:high
+    notes: beats prescriptive checklists
+  - task_pattern: architectural reasoning under uncertainty
+    reliability: vocab:reliability_levels:medium
+    notes: prefer Opus 4.7 tier for novel architecture; Codex sufficient for extending validated patterns
+session_duration_typical_minutes: 30
+known_failure_modes:
+  - silent timeout on FUSE-mount read stalls
+  - over-engineering when prompts are prescriptive
+  - assumes implementation when prompts are ambiguous (mitigated by Implementation Gate pattern)
+known_strengths:
+  - discovery-first when prompted to investigate before acting
+  - accurate hard-stop reporting on real failures
+  - clean git commit hygiene with descriptive messages
+telemetry_source: null
+created_at: 2026-05-08T01:17:52Z
+updated_at: 2026-05-08T01:17:52Z
