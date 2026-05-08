@@ -1,0 +1,12 @@
+id: remodel-tracker
+name: Remodel Tracker
+summary: |
+  Remodel Tracker application project for renovation workflows.
+  Operator to enrich.
+category: vocab:lifecycle_categories:live
+status: vocab:lifecycle_categories:live
+concept_doc: gdrive-projects/Projects/Live/Remodel Tracker/10-CONCEPT/REMODEL_TRACKER_CONCEPT.md
+gdrive_folder: gdrive-projects/Projects/Live/Remodel Tracker/
+code_repo: /opt/stack/services/projects/Remodel_Tracker
+created_at: 2026-05-08T02:05:13Z
+updated_at: 2026-05-08T02:05:13Z

@@ -1,0 +1,12 @@
+id: serveiq-demo
+name: ServeIQ Demo
+summary: |
+  Demo ServeIQ runtime project definition for the demo deployment.
+  Operator to enrich.
+category: vocab:lifecycle_categories:live
+status: vocab:lifecycle_categories:live
+concept_doc: gdrive-projects/Projects/Live/ServeIQ/10-CONCEPT/SERVEIQ_CONCEPT.md
+gdrive_folder: gdrive-projects/Projects/Live/ServeIQ/
+code_repo: /opt/stack/services/apps/serveiq
+created_at: 2026-05-08T02:05:13Z
+updated_at: 2026-05-08T02:05:13Z
