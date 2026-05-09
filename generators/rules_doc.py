@@ -104,4 +104,4 @@ def generate(store: dict) -> dict[str, str]:
         )
 
     content = "\n".join(lines).rstrip() + "\n"
-    return {"-": content}
+    return {OUTPUTS[0]: content}

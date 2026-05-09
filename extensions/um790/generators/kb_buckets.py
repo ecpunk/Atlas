@@ -39,4 +39,4 @@ def generate(store: dict) -> dict[str, str]:
 
     payload = _generate_payload(vocab)
     content = f"{HEADER}\n{json.dumps(payload, indent=2, sort_keys=True)}\n"
-    return {"-": content}
+    return {OUTPUTS[0]: content}

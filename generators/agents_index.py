@@ -78,4 +78,4 @@ def generate(store: dict) -> dict[str, str]:
     sections = ["# Agents", "", HEADER, ""]
     sections.append("\n\n".join(_format_agent(agent, display_map) for agent in agents))
     content = "\n".join(sections).rstrip() + "\n"
-    return {"-": content}
+    return {OUTPUTS[0]: content}
