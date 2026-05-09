@@ -12,7 +12,6 @@ from schemas.rule import Rule
 from schemas.vocabulary import Vocabulary
 
 NAME = "entity_check"
-REQUIRES_LLM = True
 INPUTS = ["rule:*"]
 OUTPUTS = [
     "/opt/stack/services/gdrive-projects/Projects/Current/Atlas/40-OUTPUT/Entity Compliance Report.md"

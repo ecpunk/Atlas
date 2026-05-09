@@ -1,0 +1,22 @@
+id: plan-genesis-alignment-clean
+name: Plan Genesis Alignment Check has no Yes answers
+description: |
+  The Genesis Alignment Check section must exist and must not contain any
+  affirmative "Yes" answers. A Yes answer means the plan author flagged a
+  potential violation and should have stopped to reconsider before authoring.
+scope: vocab:rule_scopes:instruction_layer
+severity: vocab:rule_severities:error
+applies_to: plan_document
+check_kind: vocab:rule_check_kinds:section_present
+check_definition: |
+  Plan must contain a section named exactly "Why this plan exists (Genesis
+  alignment)" or "Genesis Alignment Check" with no Yes answers
+fix_tier: vocab:rule_fix_tiers:flag
+fix_action: null
+enforcement_point: vocab:enforcement_points:generation
+on_violation: |
+  Flag the plan for operator review in the compliance report; do not
+  auto-remediate.
+authored_by: operator
+created_at: 2026-05-09T15:00:00Z
+updated_at: 2026-05-09T15:00:00Z

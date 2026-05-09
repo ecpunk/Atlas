@@ -7,10 +7,8 @@ import re
 import yaml
 
 from schemas.rule import Rule
-from tools.llm_client import evaluate_rule, get_cost_summary
 
 NAME = "plan_check"
-REQUIRES_LLM = True
 INPUTS = ["rule:*"]
 OUTPUTS = [
     "/opt/stack/services/gdrive-projects/Projects/Current/Atlas/40-OUTPUT/Plan Compliance Report.md"
@@ -183,6 +181,14 @@ def _parse_check(rule: Rule, plan_text: str, lines: list[str]) -> CheckResult:
             if not (has_numbered_subsection or has_numbered_list):
                 return ("fail", "Section exists but has no numbered subsection.", section_text.strip())
 
+        if "no yes answers" in lower_definition:
+            # Match lines like: "1. ... **Yes**" or "- **Yes**" (bold or plain)
+            yes_pattern = re.compile(r"(?mi)^\s*(?:\d+\.|-|\*).*?\*{0,2}\byes\b\*{0,2}\s*$")
+            yes_lines = [l for l in section_lines if yes_pattern.match(l)]
+            if yes_lines:
+                detail = f"Genesis Alignment Check contains {len(yes_lines)} 'Yes' answer(s)."
+                return ("fail", detail, "\n".join(yes_lines))
+
         evidence = lines[matched_bounds[0]].strip()
         return ("pass", f'Section "{matched}" is present.', evidence)
 
@@ -210,45 +216,6 @@ def _parse_check(rule: Rule, plan_text: str, lines: list[str]) -> CheckResult:
 
         return ("pass", "Required reference is present.", required)
 
-    if kind == "llm_evaluated":
-        llm_result = evaluate_rule(
-            system_prompt=rule.check_definition,
-            user_content=plan_text,
-            rule_id=rule.id,
-        )
-
-        model = str(llm_result.get("model", "unknown"))
-        cost_capped = bool(llm_result.get("cost_capped", False))
-        tokens_in = int(llm_result.get("tokens_in", 0) or 0)
-        tokens_out = int(llm_result.get("tokens_out", 0) or 0)
-        evidence_text = str(llm_result.get("evidence", "")).strip() or "(none)"
-        suggested_fix = llm_result.get("suggested_fix")
-        evidence = (
-            f"model={model}; cost_capped={cost_capped}; tokens_in={tokens_in}; tokens_out={tokens_out}\n"
-            f"{evidence_text}"
-        )
-
-        if cost_capped:
-            summary = get_cost_summary()
-            est_usd = float(summary.get("est_usd", 0.0) or 0.0)
-            max_usd = float(summary.get("max_usd", 0.0) or 0.0)
-            detail = f"LLM evaluation stopped at cost cap (${est_usd:.2f}/${max_usd:.2f})."
-            return ("warn", detail, evidence)
-
-        if bool(llm_result.get("error", False)):
-            return ("warn", "LLM evaluation error.", evidence)
-
-        if bool(llm_result.get("fires", False)):
-            detail = "LLM flagged potential Genesis alignment violation."
-            if isinstance(suggested_fix, str) and suggested_fix.strip():
-                detail += " Suggested fix: " + suggested_fix.strip()
-            return ("fail", detail, evidence)
-
-        detail = "LLM check passed."
-        if isinstance(suggested_fix, str) and suggested_fix.strip():
-            detail += " Suggested fix: " + suggested_fix.strip()
-        return ("pass", detail, evidence)
-
     return (
         "fail",
         f"Unsupported check_kind: {kind}",
@@ -258,20 +225,6 @@ def _parse_check(rule: Rule, plan_text: str, lines: list[str]) -> CheckResult:
 
 def _render_report(results: dict[str, list[tuple[Rule, CheckResult]]]) -> str:
     generated_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-    llm_models: set[str] = set()
-    cost_summary = get_cost_summary()
-    cost_cap_triggered = False
-
-    for _, plan_results in results.items():
-        for rule, result in plan_results:
-            if rule.check_kind.value_id != "llm_evaluated":
-                continue
-            if "cost cap" in result[1].lower():
-                cost_cap_triggered = True
-            evidence = result[2]
-            model_match = re.search(r"model=([^;\n]+)", evidence)
-            if model_match:
-                llm_models.add(model_match.group(1).strip())
 
     lines: list[str] = [
         "# Plan Compliance Report",
@@ -280,29 +233,8 @@ def _render_report(results: dict[str, list[tuple[Rule, CheckResult]]]) -> str:
         "",
         f"Generated at: {generated_at}",
         f"Plans scanned: {len(results)}",
+        "",
     ]
-
-    if llm_models:
-        lines.extend(
-            [
-                "- Note: LLM-evaluated outcomes are non-deterministic and reflect a single run.",
-                f"- LLM models observed: {', '.join(sorted(llm_models))}",
-            ]
-        )
-
-    if cost_cap_triggered:
-        lines.extend(
-            [
-                (
-                    "- RUN INCOMPLETE: cost cap reached after "
-                    f"${float(cost_summary.get('est_usd', 0.0) or 0.0):.2f} of "
-                    f"${float(cost_summary.get('max_usd', 0.0) or 0.0):.2f}."
-                ),
-                "- LLM checks after cap were skipped intentionally to enforce spend bounds.",
-            ]
-        )
-
-    lines.append("")
 
     for plan_name, plan_results in results.items():
         pass_count = sum(1 for _, item in plan_results if item[0] == "pass")
