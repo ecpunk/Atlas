@@ -13,7 +13,7 @@ systemd_unit: atlas-mcp.service
 owned_by: project:atlas
 depends_on: []
 last_health_check: null
-last_health_status: vocab:health_statuses:unknown
+last_health_status: vocab:health_statuses:ok
 failure_modes:
   - store load fails if atlas-store entities contain schema validation errors
   - port conflict if leftover test process is running on 8105 (systemctl restart atlas-mcp)
