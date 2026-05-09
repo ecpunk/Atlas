@@ -6,6 +6,7 @@ summary: |
   script, one Lambda. Target: $5/month.
 category: vocab:lifecycle_categories:current
 status: vocab:project_statuses:concept
+concept_doc: docs/kb/Projects/AWS Starter/10-CONCEPT/AWS_STARTER_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Current/AWS Starter/
 domain_tags:
   - homelab

@@ -7,6 +7,7 @@ summary: |
   over time.
 category: vocab:lifecycle_categories:current
 status: vocab:project_statuses:concept
+concept_doc: docs/kb/Projects/Development Framework/10-CONCEPT/DEVELOPMENT_FRAMEWORK_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Current/Development Framework/
 domain_tags:
   - methodology

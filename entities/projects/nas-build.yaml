@@ -6,6 +6,7 @@ summary: |
   to close.
 category: vocab:lifecycle_categories:current
 status: vocab:project_statuses:concept
+concept_doc: docs/kb/Projects/NAS Build/10-CONCEPT/NAS_BUILD_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Current/NAS Build/
 domain_tags:
   - homelab

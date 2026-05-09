@@ -6,6 +6,7 @@ summary: |
   data.
 category: vocab:lifecycle_categories:current
 status: vocab:project_statuses:active
+concept_doc: docs/kb/Projects/PAT Patent/10-CONCEPT/PAT_PATENT_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Current/PAT Patent/
 domain_tags:
   - ip

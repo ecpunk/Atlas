@@ -6,7 +6,7 @@ summary: |
   moat. Steam for productivity/business software. Brad collaboration.
 category: vocab:lifecycle_categories:current
 status: vocab:project_statuses:concept
-concept_doc: projects/storefront/CONCEPT.md
+concept_doc: docs/kb/Projects/Storefront/10-CONCEPT/STOREFRONT_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Current/Storefront/
 domain_tags:
   - software

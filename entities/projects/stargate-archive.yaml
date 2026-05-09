@@ -6,6 +6,7 @@ summary: |
   storage and GPU.
 category: vocab:lifecycle_categories:current
 status: vocab:project_statuses:parked
+concept_doc: docs/kb/Projects/Stargate Archive/10-CONCEPT/STARGATE_ARCHIVE_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Current/Stargate Archive/
 domain_tags:
   - media

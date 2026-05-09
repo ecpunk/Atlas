@@ -8,6 +8,7 @@ summary: |
   Domain: serveiq.app.
 category: vocab:lifecycle_categories:current
 status: vocab:project_statuses:in_progress
+concept_doc: docs/kb/Projects/ServeIQ/10-CONCEPT/SERVEIQ_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Current/ServeIQ/
 domain_tags:
   - software
