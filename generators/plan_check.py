@@ -10,6 +10,7 @@ from schemas.rule import Rule
 from tools.llm_client import evaluate_rule, get_cost_summary
 
 NAME = "plan_check"
+REQUIRES_LLM = True
 INPUTS = ["rule:*"]
 OUTPUTS = [
     "/opt/stack/services/gdrive-projects/Projects/Current/Atlas/40-OUTPUT/Plan Compliance Report.md"

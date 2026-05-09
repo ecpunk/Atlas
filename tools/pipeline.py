@@ -34,6 +34,7 @@ class GeneratorModule:
     module: ModuleType
     source: str
     module_path: Path
+    requires_llm: bool = False
 
 
 def _load_yaml(path: Path) -> Any:
@@ -98,6 +99,7 @@ def _load_generator_from_path(module_key: str, module_path: Path, source: str) -
     inputs = getattr(module, "INPUTS", None)
     outputs = getattr(module, "OUTPUTS", None)
     generate = getattr(module, "generate", None)
+    requires_llm = bool(getattr(module, "REQUIRES_LLM", False))
 
     if not isinstance(name, str) or not name:
         raise ValueError(f"Generator module {module_path} is missing NAME")
@@ -116,6 +118,7 @@ def _load_generator_from_path(module_key: str, module_path: Path, source: str) -
         module=module,
         source=source,
         module_path=module_path,
+        requires_llm=requires_llm,
     )
 
 
@@ -197,6 +200,11 @@ def main() -> int:
     mode_group.add_argument("--write", action="store_true", help="write outputs to target paths")
     mode_group.add_argument("--dry-run", action="store_true", help="explicit alias for no-write mode")
     parser.add_argument(
+        "--allow-llm",
+        action="store_true",
+        help="explicitly authorize LLM API calls; required when running LLM-enabled generators",
+    )
+    parser.add_argument(
         "--show-content",
         action="store_true",
         help="print generated content for each output",
@@ -218,6 +226,19 @@ def main() -> int:
         if missing:
             print(f"ERROR: unknown generator(s): {', '.join(missing)}", file=sys.stderr)
             return 1
+
+        # LLM gate: fail fast if any selected generator requires LLM and --allow-llm was not passed
+        if not args.allow_llm:
+            llm_generators = [
+                name for name in selected_names if generators[name].requires_llm
+            ]
+            if llm_generators:
+                print(
+                    f"ERROR: generator(s) {', '.join(llm_generators)} require LLM API calls. "
+                    "Pass --allow-llm to authorize. This flag prevents accidental spend.",
+                    file=sys.stderr,
+                )
+                return 1
 
         collected: list[tuple[str, str, str, str]] = []
         for name in selected_names:
