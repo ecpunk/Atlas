@@ -14,6 +14,11 @@ from dotenv import load_dotenv
 load_dotenv(Path(__file__).parent.parent / ".env")
 
 _FALLBACK_MODELS = ("claude-sonnet-4-6", "claude-sonnet-4-5")
+_MODEL_PRICING_USD_PER_MTOKEN = {
+    "claude-sonnet-4-6": {"input": 3.0, "output": 15.0},
+    "claude-sonnet-4-5": {"input": 3.0, "output": 15.0},
+}
+_DEFAULT_MAX_USD = 1.00
 
 _LOGGER = logging.getLogger("atlas.llm_client")
 if not _LOGGER.handlers:
@@ -21,6 +26,37 @@ if not _LOGGER.handlers:
     _HANDLER.setFormatter(logging.Formatter("%(levelname)s %(name)s %(message)s"))
     _LOGGER.addHandler(_HANDLER)
 _LOGGER.setLevel(logging.INFO)
+
+
+def _load_max_usd() -> float:
+    raw_value = (os.environ.get("ATLAS_LLM_MAX_USD") or "").strip()
+    if not raw_value:
+        return _DEFAULT_MAX_USD
+
+    try:
+        parsed = float(raw_value)
+    except ValueError:
+        _LOGGER.warning(
+            "Invalid ATLAS_LLM_MAX_USD=%r; falling back to %.2f",
+            raw_value,
+            _DEFAULT_MAX_USD,
+        )
+        return _DEFAULT_MAX_USD
+
+    if parsed <= 0:
+        _LOGGER.warning(
+            "Non-positive ATLAS_LLM_MAX_USD=%.4f; falling back to %.2f",
+            parsed,
+            _DEFAULT_MAX_USD,
+        )
+        return _DEFAULT_MAX_USD
+
+    return parsed
+
+
+_ATLAS_LLM_MAX_USD = _load_max_usd()
+_cost_tracker: dict[str, int | float] = {"tokens_in": 0, "tokens_out": 0, "est_usd": 0.0}
+_LOGGER.info("Loaded ATLAS_LLM_MAX_USD=%.2f", _ATLAS_LLM_MAX_USD)
 
 
 def _model_candidates() -> list[str]:
@@ -75,25 +111,78 @@ def _parse_response_json(text: str) -> dict[str, Any]:
     }
 
 
+def _pricing_for_model(model: str) -> dict[str, float]:
+    return _MODEL_PRICING_USD_PER_MTOKEN.get(model, _MODEL_PRICING_USD_PER_MTOKEN[_FALLBACK_MODELS[0]])
+
+
+def _estimate_cost(tokens_in: int, tokens_out: int, model: str) -> float:
+    pricing = _pricing_for_model(model)
+    input_cost = (max(tokens_in, 0) / 1_000_000) * pricing["input"]
+    output_cost = (max(tokens_out, 0) / 1_000_000) * pricing["output"]
+    return input_cost + output_cost
+
+
+def _estimate_call_cost(input_tokens_estimate: int, model: str) -> float:
+    pricing = _pricing_for_model(model)
+    return (max(input_tokens_estimate, 0) / 1_000_000) * pricing["input"]
+
+
+def get_cost_summary() -> dict[str, int | float]:
+    return {
+        "tokens_in": int(_cost_tracker["tokens_in"]),
+        "tokens_out": int(_cost_tracker["tokens_out"]),
+        "est_usd": float(_cost_tracker["est_usd"]),
+        "max_usd": float(_ATLAS_LLM_MAX_USD),
+    }
+
+
 def evaluate_rule(system_prompt: str, user_content: str, rule_id: str) -> dict[str, Any]:
+    models = _model_candidates()
     api_key = (os.environ.get("ANTHROPIC_API_KEY") or "").strip()
     if not api_key:
         result = {
             "fires": False,
             "evidence": "LLM error: ANTHROPIC_API_KEY not set",
             "suggested_fix": None,
-            "model": _model_candidates()[0],
+            "model": models[0],
             "tokens_in": 0,
             "tokens_out": 0,
             "error": True,
+            "cost_capped": False,
         }
         _LOGGER.info("rule_id=%s fires=%s error=%s model=%s", rule_id, False, True, result["model"])
         return result
 
+    estimated_input_tokens = int((len(system_prompt) + len(user_content)) / 4)
     client = Anthropic(api_key=api_key)
     last_error: Exception | None = None
 
-    for model in _model_candidates():
+    for model in models:
+        projected_cost = float(_cost_tracker["est_usd"]) + _estimate_call_cost(estimated_input_tokens, model)
+        if projected_cost > _ATLAS_LLM_MAX_USD:
+            result = {
+                "fires": False,
+                "evidence": (
+                    "Cost cap exceeded: "
+                    f"${float(_cost_tracker['est_usd']):.2f} accumulated, cap ${_ATLAS_LLM_MAX_USD:.2f}"
+                ),
+                "suggested_fix": None,
+                "model": model,
+                "tokens_in": 0,
+                "tokens_out": 0,
+                "error": True,
+                "cost_capped": True,
+            }
+            _LOGGER.info(
+                "rule_id=%s fires=%s error=%s cost_capped=%s model=%s",
+                rule_id,
+                False,
+                True,
+                True,
+                model,
+            )
+            return result
+
         try:
             response = client.messages.create(
                 model=model,
@@ -106,6 +195,11 @@ def evaluate_rule(system_prompt: str, user_content: str, rule_id: str) -> dict[s
             usage = getattr(response, "usage", None)
             tokens_in = int(getattr(usage, "input_tokens", 0) or 0)
             tokens_out = int(getattr(usage, "output_tokens", 0) or 0)
+            call_est_usd = _estimate_cost(tokens_in, tokens_out, model)
+
+            _cost_tracker["tokens_in"] = int(_cost_tracker["tokens_in"]) + tokens_in
+            _cost_tracker["tokens_out"] = int(_cost_tracker["tokens_out"]) + tokens_out
+            _cost_tracker["est_usd"] = float(_cost_tracker["est_usd"]) + call_est_usd
 
             result = {
                 "fires": bool(parsed["fires"]),
@@ -115,6 +209,7 @@ def evaluate_rule(system_prompt: str, user_content: str, rule_id: str) -> dict[s
                 "tokens_in": tokens_in,
                 "tokens_out": tokens_out,
                 "error": False,
+                "cost_capped": False,
             }
             _LOGGER.info(
                 "rule_id=%s fires=%s error=%s model=%s",
@@ -128,7 +223,7 @@ def evaluate_rule(system_prompt: str, user_content: str, rule_id: str) -> dict[s
             last_error = exc
 
     message = f"LLM error: {last_error}" if last_error is not None else "LLM error: unknown error"
-    model_name = _model_candidates()[0]
+    model_name = models[0]
     result = {
         "fires": False,
         "evidence": message,
@@ -137,6 +232,7 @@ def evaluate_rule(system_prompt: str, user_content: str, rule_id: str) -> dict[s
         "tokens_in": 0,
         "tokens_out": 0,
         "error": True,
+        "cost_capped": False,
     }
     _LOGGER.info("rule_id=%s fires=%s error=%s model=%s", rule_id, False, True, model_name)
     return result

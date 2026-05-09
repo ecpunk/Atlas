@@ -7,7 +7,7 @@ import re
 import yaml
 
 from schemas.rule import Rule
-from tools.llm_client import evaluate_rule
+from tools.llm_client import evaluate_rule, get_cost_summary
 
 NAME = "plan_check"
 INPUTS = ["rule:*"]
@@ -217,11 +217,22 @@ def _parse_check(rule: Rule, plan_text: str, lines: list[str]) -> CheckResult:
         )
 
         model = str(llm_result.get("model", "unknown"))
+        cost_capped = bool(llm_result.get("cost_capped", False))
         tokens_in = int(llm_result.get("tokens_in", 0) or 0)
         tokens_out = int(llm_result.get("tokens_out", 0) or 0)
         evidence_text = str(llm_result.get("evidence", "")).strip() or "(none)"
         suggested_fix = llm_result.get("suggested_fix")
-        evidence = f"model={model}; tokens_in={tokens_in}; tokens_out={tokens_out}\n{evidence_text}"
+        evidence = (
+            f"model={model}; cost_capped={cost_capped}; tokens_in={tokens_in}; tokens_out={tokens_out}\n"
+            f"{evidence_text}"
+        )
+
+        if cost_capped:
+            summary = get_cost_summary()
+            est_usd = float(summary.get("est_usd", 0.0) or 0.0)
+            max_usd = float(summary.get("max_usd", 0.0) or 0.0)
+            detail = f"LLM evaluation stopped at cost cap (${est_usd:.2f}/${max_usd:.2f})."
+            return ("warn", detail, evidence)
 
         if bool(llm_result.get("error", False)):
             return ("warn", "LLM evaluation error.", evidence)
@@ -247,11 +258,15 @@ def _parse_check(rule: Rule, plan_text: str, lines: list[str]) -> CheckResult:
 def _render_report(results: dict[str, list[tuple[Rule, CheckResult]]]) -> str:
     generated_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     llm_models: set[str] = set()
+    cost_summary = get_cost_summary()
+    cost_cap_triggered = False
 
     for _, plan_results in results.items():
         for rule, result in plan_results:
             if rule.check_kind.value_id != "llm_evaluated":
                 continue
+            if "cost cap" in result[1].lower():
+                cost_cap_triggered = True
             evidence = result[2]
             model_match = re.search(r"model=([^;\n]+)", evidence)
             if model_match:
@@ -271,6 +286,18 @@ def _render_report(results: dict[str, list[tuple[Rule, CheckResult]]]) -> str:
             [
                 "- Note: LLM-evaluated outcomes are non-deterministic and reflect a single run.",
                 f"- LLM models observed: {', '.join(sorted(llm_models))}",
+            ]
+        )
+
+    if cost_cap_triggered:
+        lines.extend(
+            [
+                (
+                    "- RUN INCOMPLETE: cost cap reached after "
+                    f"${float(cost_summary.get('est_usd', 0.0) or 0.0):.2f} of "
+                    f"${float(cost_summary.get('max_usd', 0.0) or 0.0):.2f}."
+                ),
+                "- LLM checks after cap were skipped intentionally to enforce spend bounds.",
             ]
         )
 
