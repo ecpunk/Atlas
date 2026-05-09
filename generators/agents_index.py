@@ -6,7 +6,7 @@ from schemas.vocabulary import Vocabulary
 
 NAME = "agents_index"
 INPUTS = ["agent:*"]
-OUTPUTS = ["-"]
+OUTPUTS = ["/opt/stack/services/gdrive-projects/Projects/Current/Atlas/40-OUTPUT/Agents Index.md"]
 
 HEADER = "AUTO-GENERATED from atlas-store/entities/agents/*.yaml - do not hand-edit."
 

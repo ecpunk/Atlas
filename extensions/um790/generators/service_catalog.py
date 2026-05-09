@@ -5,7 +5,7 @@ from schemas.vocabulary import Vocabulary
 
 NAME = "service_catalog"
 INPUTS = ["service:*"]
-OUTPUTS = ["-"]
+OUTPUTS = ["/opt/stack/services/gdrive-projects/Projects/Current/Atlas/40-OUTPUT/Service Catalog.md"]
 
 HEADER = "AUTO-GENERATED from atlas-store/entities/services/*.yaml - do not hand-edit."
 

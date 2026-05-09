@@ -6,7 +6,7 @@ from schemas.vocabulary import Vocabulary
 
 NAME = "kb_buckets"
 INPUTS = ["vocabulary:lifecycle_categories"]
-OUTPUTS = ["-"]
+OUTPUTS = ["/opt/stack/services/gdrive-projects/Projects/Current/Atlas/40-OUTPUT/KB Buckets.json"]
 
 HEADER = "# AUTO-GENERATED from atlas-store/vocabularies/lifecycle_categories.yaml - do not hand-edit"
 
