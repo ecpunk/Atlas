@@ -14,7 +14,7 @@ OUTPUTS = [
     "/opt/stack/services/gdrive-projects/Projects/Current/Atlas/40-OUTPUT/Plan Compliance Report.md"
 ]
 
-_PLAN_ROOT = Path("/opt/stack/services/gdrive-projects/Projects/Current/Atlas/20-DESIGN")
+_PLAN_ROOT = Path("/opt/stack/services/docs/kb/Projects/Atlas/20-DESIGN")
 _PLAN_PATTERN = "PLAN-*.md"
 
 
@@ -295,5 +295,4 @@ def generate(store: dict) -> dict[str, str]:
 
     content = _render_report(results)
     output_path = OUTPUTS[0]
-    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     return {output_path: content}

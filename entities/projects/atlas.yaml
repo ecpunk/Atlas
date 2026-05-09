@@ -15,5 +15,53 @@ domain_tags:
   - kb
   - infrastructure
   - operations
+
+phases:
+  - id: "1"
+    name: Schemas
+    status: done
+    notes: "Pydantic schemas, ADRs, worked examples."
+  - id: "2"
+    name: Store
+    status: done
+    notes: "Version-controlled YAML in atlas-store/. 79 entities. validate.py 0 failures."
+  - id: "3"
+    name: Read API
+    status: done
+    notes: "FastMCP port 8105, 19 tools. Wired to Copilot via .vscode/mcp.json. atlas-mcp.service active."
+  - id: "4"
+    name: First migration
+    status: done
+    notes: "Lifecycle categories vocabulary in store. Generation tooling built."
+  - id: "5"
+    name: Subsequent migrations
+    status: done
+    notes: "Service catalog, project metadata, audit dimensions, agent definitions, naming conventions."
+  - id: "6"
+    name: Write API
+    status: done
+    notes: "add_project, update_project, add_service, update_service, retire_service — propose-confirm pattern."
+  - id: "7"
+    name: Generation pipeline
+    status: partial
+    notes: |
+      Post-commit hook live. All generators write to git-backed docs/kb/Projects/Atlas/40-OUTPUT/.
+      atlas_status generator added. plan_check.py _PLAN_ROOT updated to docs/kb/.
+      service_catalog schema alignment deferred.
+  - id: "8"
+    name: Operational layer
+    status: not_started
+    notes: "Daily brief, drift detection, schedule mgmt, intelligent escalation, loop closure, resource budget enforcement."
+
+open_items:
+  - id: "1"
+    description: "9 projects have local concept docs but no atlas-store entity: CNC Air Blaster, Cognitive Substrate, Dev Framework Extension, Hardware Information, Home Command, Jarvis, Module Library, Operator Kernel, Paradigm Shift."
+    created: "2026-05-09"
+  - id: "2"
+    description: "house-remodel.yaml: gdrive_folder field is a stub (schema requires non-empty string). No concept doc authored."
+    created: "2026-05-09"
+
+last_done: "Phase 1 complete: Atlas state moved into store (phases/open_items schema, atlas.yaml populated, atlas_status generator, pipeline to docs/kb/, ATLAS.md §1/§3 retired)."
+next_action: "Phase 2: update copilot-instructions.md session-start protocol to use get_project('atlas') instead of loading ATLAS.md."
 created_at: 2026-05-08T15:27:11Z
-updated_at: 2026-05-08T15:27:11Z
+updated_at: 2026-05-09T01:00:00Z

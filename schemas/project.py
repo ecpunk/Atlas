@@ -8,6 +8,23 @@ from pydantic import BaseModel, Field, model_validator
 from .conventions import TypedRef, VocabRef, validate_iso8601_timestamp
 
 
+class PhaseEntry(BaseModel):
+    """A single phase in a project's build plan."""
+
+    id: str = Field(..., min_length=1)
+    name: str = Field(..., min_length=1)
+    status: str = Field(..., min_length=1)  # e.g. "done", "partial", "not_started"
+    notes: Optional[str] = None
+
+
+class OpenItem(BaseModel):
+    """A tracked open item against a project."""
+
+    id: str = Field(..., min_length=1)
+    description: str = Field(..., min_length=1)
+    created: Optional[str] = None  # ISO date string
+
+
 class Project(BaseModel):
     """Project entity model for Atlas canonical project metadata."""
 
@@ -35,6 +52,9 @@ class Project(BaseModel):
     related_services: list[TypedRef] = Field(default_factory=list)
 
     domain_tags: list[str] = Field(default_factory=list)
+
+    phases: list[PhaseEntry] = Field(default_factory=list)
+    open_items: list[OpenItem] = Field(default_factory=list)
 
     last_touched: Optional[str] = None
     last_session: Optional[str] = None

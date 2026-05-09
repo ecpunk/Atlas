@@ -77,5 +77,4 @@ def generate(store: dict) -> dict[str, str]:
     content = "\n".join(lines).rstrip() + "\n"
 
     output_path = OUTPUTS[0]
-    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     return {output_path: content}

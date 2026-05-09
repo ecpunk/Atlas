@@ -391,5 +391,4 @@ def generate(store: dict) -> dict[str, str]:
 
     content = _render_report(results)
     output_path = OUTPUTS[0]
-    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     return {output_path: content}
