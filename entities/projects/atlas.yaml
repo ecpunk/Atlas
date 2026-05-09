@@ -9,7 +9,7 @@ summary: |
   structure that lets the stack scale without crushing the operator.
 category: vocab:lifecycle_categories:current
 status: vocab:project_statuses:concept
-concept_doc: gdrive-projects/Projects/Current/Atlas/10-CONCEPT/ATLAS_CONCEPT.md
+concept_doc: docs/kb/Projects/Atlas/10-CONCEPT/ATLAS_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Current/Atlas/
 domain_tags:
   - kb

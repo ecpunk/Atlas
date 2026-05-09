@@ -18,6 +18,7 @@ last_health_check: null
 last_health_status: vocab:health_statuses:unknown
 failure_modes:
   - shell_exec timeout if UM790_OPS_TOOL_TIMEOUT_SECONDS is too low for the command
+source_of_truth_doc: UM790_SOURCE_OF_TRUTH.md
   - docker_action on non-existent container returns non-zero exit but does not raise
 tools:
   - shell_exec

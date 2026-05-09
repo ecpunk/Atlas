@@ -5,7 +5,7 @@ summary: |
   Operator to enrich.
 category: vocab:lifecycle_categories:current
 status: vocab:project_statuses:in_progress
-concept_doc: gdrive-projects/Projects/Current/Thought Substrate/10-CONCEPT/THOUGHT_SUBSTRATE_CONCEPT.md
+concept_doc: projects/thought-substrate/10-CONCEPT/THOUGHT_SUBSTRATE_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Current/Thought Substrate/
 code_repo: /opt/stack/services/projects/thought-substrate
 domain_tags:

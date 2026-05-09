@@ -92,7 +92,7 @@ def _write_and_commit(entity_dir: str, entity_id: str, data: dict[str, Any], mes
     return result
 
 
-
+def _api_key() -> str:
     env_key = os.environ.get("ATLAS_MCP_API_KEY", "").strip()
     if env_key:
         return env_key
@@ -133,7 +133,7 @@ Read tools:
 Bridge / output tools:
 - get_output(name): read a generated output file from atlas-store/outputs/ (e.g. "Service Catalog.md")
 - get_kb_doc(name): read a knowledge base doc from services/docs/kb/ (e.g. "Start Here.md")
-- check_drift(service_id?): run reality probes against running services; returns drift report
+- check_drift(service_id?, force?): reality probes — reads cached result by default; force=True runs live
 
 Write tools (propose-confirm pattern — preview first, then confirm=True to apply):
 - add_project(id, name, summary, category, status, concept_doc, gdrive_folder): add new project (autonomous)
@@ -596,18 +596,51 @@ def get_kb_doc(name: str) -> str:
 
 
 @mcp.tool()
-def check_drift(service_id: str = "") -> list[dict[str, Any]]:
+def check_drift(service_id: str = "", force: bool = False) -> list[dict[str, Any]]:
     """Run reality probes against running services and report drift.
+
+    By default reads the cached probe result written by the atlas-probe systemd
+    timer (automations/state/atlas_probe_latest.json). Set force=True to run
+    live probes and refresh the cache.
 
     Returns a list of per-service probe results. Each result has:
     - service_id, name, lifecycle
     - probes: list of {type, expected, actual, pass}
     - drift: bool — True if any probe failed
 
-    Pass service_id to probe a single service; omit for all non-retired services.
+    Pass service_id to filter to one service; omit for all non-retired services.
     """
+    PROBE_CACHE = Path("/opt/stack/services/automations/state/atlas_probe_latest.json")
+
+    if not force and PROBE_CACHE.exists() and not service_id:
+        try:
+            import json as _json
+            return _json.loads(PROBE_CACHE.read_text(encoding="utf-8")).get("results", [])
+        except Exception:
+            pass  # fall through to live run
+
     import tools.probe_runner as _probe_runner  # local import avoids startup overhead
-    return _probe_runner.run_probes(service_id)
+    results = _probe_runner.run_probes(service_id)
+
+    # Update cache on live run (only when probing all services)
+    if not service_id:
+        try:
+            import json as _json
+            from datetime import datetime as _dt, timezone as _tz
+            PROBE_CACHE.parent.mkdir(parents=True, exist_ok=True)
+            PROBE_CACHE.write_text(
+                _json.dumps({
+                    "generated_at": _dt.now(_tz.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                    "total": len(results),
+                    "drifted": sum(1 for r in results if r["drift"]),
+                    "results": results,
+                }, indent=2),
+                encoding="utf-8",
+            )
+        except Exception:
+            pass  # cache write failure is non-fatal
+
+    return results
 
 
 if __name__ == "__main__":
