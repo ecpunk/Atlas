@@ -42,6 +42,33 @@ values:
     physical_location: null
     deprecated: false
     deprecated_reason: null
+  - id: field_present
+    name: Field Present
+    description: Rule passes when the target field has a non-empty value.
+    semantics: |
+      check_definition provides the field name, or a mapping with a field key.
+      Null, empty string, and empty collection values fail.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: field_value
+    name: Field Value
+    description: Rule passes when a target field matches an expected value.
+    semantics: |
+      check_definition provides field and value, with optional mode equals or
+      contains.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: vocab_ref_valid
+    name: Vocabulary Reference Valid
+    description: Rule passes when a field contains a valid vocabulary reference.
+    semantics: |
+      check_definition provides the field to evaluate. The field must parse as
+      vocab:<vocab_id>:<value_id> and resolve to an existing vocabulary entry.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
   - id: manual
     name: Manual
     description: Rule requires human judgment and is not machine-evaluated.
