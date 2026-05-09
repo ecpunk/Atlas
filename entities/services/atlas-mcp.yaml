@@ -1,0 +1,23 @@
+id: atlas-mcp
+name: Atlas MCP
+summary: |
+  Read-only MCP server exposing the Atlas canonical entity store. Provides
+  get/list tools for projects, services, servers, agents, rules, and vocabularies.
+service_type: vocab:service_types:mcp_http
+lifecycle: vocab:service_lifecycles:running
+host: server:um790
+deployment_path: /opt/stack/atlas-store/tools/mcp_server.py
+port: 8105
+health_endpoint: http://127.0.0.1:8105/mcp
+systemd_unit: atlas-mcp.service
+owned_by: project:atlas
+depends_on: []
+last_health_check: null
+last_health_status: vocab:health_statuses:unknown
+failure_modes:
+  - store load fails if atlas-store entities contain schema validation errors
+  - port conflict if leftover test process is running on 8105 (systemctl restart atlas-mcp)
+source_of_truth_doc: UM790_SOURCE_OF_TRUTH.md
+resource_budget_ram_mb: 256
+created_at: 2026-05-09T00:00:00Z
+updated_at: 2026-05-09T00:00:00Z

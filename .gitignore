@@ -3,4 +3,6 @@ __pycache__/
 *.pyc
 .env
 .atlas-spend.json
+.secrets/
+logs/
 
