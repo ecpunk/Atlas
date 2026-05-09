@@ -4,7 +4,7 @@ summary: |
   Systemd-managed rclone mount that presents Google Drive content at /mnt/gdrive
   for local knowledge workflows.
 service_type: vocab:service_types:systemd_unit
-lifecycle: vocab:service_lifecycles:running
+lifecycle: vocab:service_lifecycles:retired
 host: server:um790
 deployment_path: /usr/bin/rclone
 port: null
@@ -19,4 +19,4 @@ failure_modes:
 source_of_truth_doc: UM790_SOURCE_OF_TRUTH.md
 resource_budget_ram_mb: null
 created_at: 2026-05-08T01:45:00Z
-updated_at: 2026-05-08T01:45:00Z
+updated_at: 2026-05-09T17:33:58Z

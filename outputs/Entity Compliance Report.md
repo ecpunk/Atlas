@@ -2,7 +2,7 @@
 
 AUTO-GENERATED from atlas-store Rule entities. Do not hand-edit.
 
-Generated at: 2026-05-09T16:40:23Z
+Generated at: 2026-05-09T17:31:21Z
 Entity types scanned: 2
 Rules applied: 8
 
@@ -48,43 +48,43 @@ Rules applied: 8
 | PASS | vac-orchestrator | Field 'category' is present. | category=vocab:lifecycle_categories:archive |
 
 ### Project must have concept doc (`project-must-have-concept-doc`)
-- Summary: 32 pass, 0 fail
+- Summary: 5 pass, 27 fail
 - Suggested action: n/a
 
 | Outcome | Entity | Detail | Evidence |
 |---------|--------|--------|----------|
-| PASS | ai-hvac-balancer | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/AI HVAC Balancer/10-CONCEPT/AI_HVAC_BALANCER_CONCEPT.md |
+| FAIL | ai-hvac-balancer | Field 'concept_doc' is empty. | concept_doc=null |
 | PASS | atlas | Field 'concept_doc' is present. | concept_doc=docs/kb/Projects/Atlas/10-CONCEPT/ATLAS_CONCEPT.md |
-| PASS | aws-starter | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/AWS Starter/10-CONCEPT/AWS_STARTER_CONCEPT.md |
-| PASS | build-and-design-navigator | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/Build & Design Navigator/10-CONCEPT/BUILD_DESIGN_NAVIGATOR_CONCEPT.md |
-| PASS | code-intelligence-mcp | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/Code Intelligence MCP/10-CONCEPT/CODE_INTELLIGENCE_MCP_CONCEPT.md |
-| PASS | deebot-pantry-clean | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Archive/Deebot Pantry Clean/10-CONCEPT/DEEBOT_PANTRY_CLEAN_CONCEPT.md |
-| PASS | development-framework | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/Development Framework/10-CONCEPT/DEVELOPMENT_FRAMEWORK_CONCEPT.md |
-| PASS | family-meal-planner | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/Family Meal Planner/10-CONCEPT/FAMILY_MEAL_PLANNER_CONCEPT.md |
-| PASS | gmail-triage | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Live/Gmail Triage/10-CONCEPT/GMAIL_TRIAGE_CONCEPT.md |
-| PASS | health-investigation | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/Health Investigation/10-CONCEPT/HEALTH_INVESTIGATION_CONCEPT.md |
-| PASS | home-assistant | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Live/Home Assistant/10-CONCEPT/HOME_ASSISTANT_CONCEPT.md |
-| PASS | home-command-tablet | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/Home Command/10-CONCEPT/HOME_COMMAND_CONCEPT.md |
-| PASS | house-remodel | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/House Remodel/10-CONCEPT/HOUSE_REMODEL_CONCEPT.md |
-| PASS | jc4mp-server | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Archive/JC4MP Server/10-CONCEPT/JC4MP_SERVER_CONCEPT.md |
-| PASS | knowledge-base-cleanup | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/Knowledge Base Cleanup/10-CONCEPT/KNOWLEDGE_BASE_CLEANUP_CONCEPT.md |
-| PASS | knowledge-server | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/Knowledge-Server/10-CONCEPT/KNOWLEDGE_SERVER_CONCEPT.md |
-| PASS | nas-build | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/NAS Build/10-CONCEPT/NAS_BUILD_CONCEPT.md |
-| PASS | openclaw | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Archive/OpenClaw/10-CONCEPT/OPENCLAW_CONCEPT.md |
-| PASS | pat-patent | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/PAT Patent/10-CONCEPT/PAT_PATENT_CONCEPT.md |
-| PASS | personal-ai-layer | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/Personal AI Layer/10-CONCEPT/PERSONAL_AI_LAYER_CONCEPT.md |
-| PASS | remodel-tracker | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Live/Remodel Tracker/10-CONCEPT/REMODEL_TRACKER_CONCEPT.md |
-| PASS | serveiq | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/ServeIQ/10-CONCEPT/SERVEIQ_CONCEPT.md |
-| PASS | serveiq-demo | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Live/ServeIQ/10-CONCEPT/SERVEIQ_CONCEPT.md |
-| PASS | serveiq-main | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Live/ServeIQ/10-CONCEPT/SERVEIQ_CONCEPT.md |
-| PASS | smart-irrigation | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Archive/Smart Irrigation/10-CONCEPT/SMART_IRRIGATION_CONCEPT.md |
-| PASS | stargate-archive | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/Stargate Archive/10-CONCEPT/STARGATE_ARCHIVE_CONCEPT.md |
-| PASS | storefront | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/Storefront/10-CONCEPT/STOREFRONT_CONCEPT.md |
-| PASS | the-engine | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/The Engine/10-CONCEPT/THE_ENGINE_CONCEPT.md |
+| FAIL | aws-starter | Field 'concept_doc' is empty. | concept_doc=null |
+| FAIL | build-and-design-navigator | Field 'concept_doc' is empty. | concept_doc=null |
+| FAIL | code-intelligence-mcp | Field 'concept_doc' is empty. | concept_doc=null |
+| FAIL | deebot-pantry-clean | Field 'concept_doc' is empty. | concept_doc=null |
+| FAIL | development-framework | Field 'concept_doc' is empty. | concept_doc=null |
+| FAIL | family-meal-planner | Field 'concept_doc' is empty. | concept_doc=null |
+| FAIL | gmail-triage | Field 'concept_doc' is empty. | concept_doc=null |
+| FAIL | health-investigation | Field 'concept_doc' is empty. | concept_doc=null |
+| FAIL | home-assistant | Field 'concept_doc' is empty. | concept_doc=null |
+| FAIL | home-command-tablet | Field 'concept_doc' is empty. | concept_doc=null |
+| FAIL | house-remodel | Field 'concept_doc' is empty. | concept_doc=null |
+| FAIL | jc4mp-server | Field 'concept_doc' is empty. | concept_doc=null |
+| FAIL | knowledge-base-cleanup | Field 'concept_doc' is empty. | concept_doc=null |
+| FAIL | knowledge-server | Field 'concept_doc' is empty. | concept_doc=null |
+| FAIL | nas-build | Field 'concept_doc' is empty. | concept_doc=null |
+| PASS | openclaw | Field 'concept_doc' is present. | concept_doc=projects/openclaw/10-CONCEPT/OPENCLAW_CONCEPT.md |
+| FAIL | pat-patent | Field 'concept_doc' is empty. | concept_doc=null |
+| FAIL | personal-ai-layer | Field 'concept_doc' is empty. | concept_doc=null |
+| FAIL | remodel-tracker | Field 'concept_doc' is empty. | concept_doc=null |
+| FAIL | serveiq | Field 'concept_doc' is empty. | concept_doc=null |
+| FAIL | serveiq-demo | Field 'concept_doc' is empty. | concept_doc=null |
+| FAIL | serveiq-main | Field 'concept_doc' is empty. | concept_doc=null |
+| FAIL | smart-irrigation | Field 'concept_doc' is empty. | concept_doc=null |
+| FAIL | stargate-archive | Field 'concept_doc' is empty. | concept_doc=null |
+| PASS | storefront | Field 'concept_doc' is present. | concept_doc=projects/storefront/CONCEPT.md |
+| FAIL | the-engine | Field 'concept_doc' is empty. | concept_doc=null |
 | PASS | thought-substrate | Field 'concept_doc' is present. | concept_doc=projects/thought-substrate/10-CONCEPT/THOUGHT_SUBSTRATE_CONCEPT.md |
-| PASS | turdcraft | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Live/Turdcraft/10-CONCEPT/TURDCRAFT_CONCEPT.md |
+| FAIL | turdcraft | Field 'concept_doc' is empty. | concept_doc=null |
 | PASS | um790-ops-mcp | Field 'concept_doc' is present. | concept_doc=/opt/stack/services/projects/um790-ops-mcp/README.md |
-| PASS | vac-orchestrator | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Archive/Vac Orchestrator/10-CONCEPT/VAC_ORCHESTRATOR_CONCEPT.md |
+| FAIL | vac-orchestrator | Field 'concept_doc' is empty. | concept_doc=null |
 
 ### Project must have Drive folder (`project-must-have-gdrive-folder`)
 - Summary: 32 pass, 0 fail

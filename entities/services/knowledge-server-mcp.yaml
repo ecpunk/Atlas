@@ -4,7 +4,7 @@ summary: |
   MCP service that provides read and write access to the markdown knowledge base
   so cross-agent workflows can discover, retrieve, and update project docs.
 service_type: vocab:service_types:mcp_http
-lifecycle: vocab:service_lifecycles:running
+lifecycle: vocab:service_lifecycles:retired
 host: server:um790
 deployment_path: /opt/stack/services/projects/knowledge-server/
 port: 8092
@@ -21,4 +21,4 @@ failure_modes:
 source_of_truth_doc: Projects/Current/Knowledge Base Cleanup/00-PROJECT-MANAGEMENT/SOURCE_OF_TRUTH.md
 resource_budget_ram_mb: null
 created_at: 2026-05-08T01:21:50Z
-updated_at: 2026-05-08T01:21:50Z
+updated_at: 2026-05-09T17:33:58Z
