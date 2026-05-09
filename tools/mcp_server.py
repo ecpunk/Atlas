@@ -644,4 +644,48 @@ def check_drift(service_id: str = "", force: bool = False) -> list[dict[str, Any
 
 
 if __name__ == "__main__":
-    mcp.run(transport="streamable-http")
+    import uvicorn
+    from starlette.middleware.base import BaseHTTPMiddleware
+    from starlette.middleware.cors import CORSMiddleware
+    from starlette.requests import Request
+    from starlette.responses import JSONResponse
+
+    expected_api_key = _api_key()
+
+    class ApiKeyMiddleware(BaseHTTPMiddleware):
+        async def dispatch(self, request: Request, call_next):
+            if request.method == "OPTIONS":
+                return await call_next(request)
+            if request.url.path.startswith("/.well-known/"):
+                return await call_next(request)
+            client_host = request.client.host if request.client else ""
+            if client_host in ("127.0.0.1", "::1"):
+                return await call_next(request)
+            if not expected_api_key:
+                return await call_next(request)  # no key configured — open
+            provided = request.headers.get("x-api-key", "")
+            if provided != expected_api_key:
+                return JSONResponse({"error": "Unauthorized"}, status_code=401)
+            return await call_next(request)
+
+    host = os.environ.get("ATLAS_MCP_HOST", DEFAULT_HOST)
+    port = int(os.environ.get("ATLAS_MCP_PORT", str(DEFAULT_PORT)))
+
+    app = mcp.streamable_http_app()
+    app.add_middleware(ApiKeyMiddleware)
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_methods=["GET", "POST", "OPTIONS"],
+        allow_headers=[
+            "accept",
+            "content-type",
+            "mcp-protocol-version",
+            "mcp-session-id",
+            "last-event-id",
+            "x-api-key",
+        ],
+        expose_headers=["mcp-session-id", "mcp-protocol-version"],
+    )
+
+    uvicorn.run(app, host=host, port=port)
