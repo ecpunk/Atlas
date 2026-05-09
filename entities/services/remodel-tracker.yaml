@@ -16,7 +16,6 @@ last_health_check: null
 last_health_status: vocab:health_statuses:unknown
 failure_modes:
   - container unavailable when local sqlite lock persists after crash
-source_of_truth_doc: UM790_SOURCE_OF_TRUTH.md
 resource_budget_ram_mb: 512
 created_at: 2026-05-08T01:45:00Z
 updated_at: 2026-05-08T01:45:00Z

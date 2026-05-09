@@ -159,9 +159,23 @@ def _resolve_vocab_ref(value: Any) -> VocabRef | None:
 
 
 def _entity_store_key(applies_to: str) -> str:
+    # Handle service_entity:mcp_http -> service
+    if "_entity:" in applies_to:
+        return applies_to.split("_entity:")[0]
     if applies_to.endswith(_ENTITY_SUFFIX):
         return applies_to[: -len(_ENTITY_SUFFIX)]
     return applies_to
+
+
+def _entity_scope_filter(applies_to: str) -> str | None:
+    """Return the scope qualifier (e.g. 'mcp_http') or None for all-entity rules."""
+    if "_entity:" in applies_to:
+        return applies_to.split("_entity:", 1)[1]
+    return None
+
+
+def _is_entity_rule(applies_to: str) -> bool:
+    return applies_to.endswith(_ENTITY_SUFFIX) or "_entity:" in applies_to
 
 
 def _check_field_present(entity: BaseModel, check_definition: str) -> CheckResult:
@@ -292,6 +306,12 @@ def _evaluate_rule(rule: Rule, entity: BaseModel, vocab_store: dict[str, Any]) -
         return _check_field_value(entity, rule.check_definition)
     if kind == "vocab_ref_valid":
         return _check_vocab_ref_valid(entity, rule.check_definition, vocab_store)
+    if kind in {"llm_evaluated", "manual"}:
+        return (
+            "skip",
+            f"Check kind '{kind}' requires human or LLM review — not machine-evaluated here.",
+            f"check_kind={kind}",
+        )
 
     return (
         "fail",
@@ -326,12 +346,13 @@ def _render_report(results: dict[str, list[tuple[Rule, list[RuleOutcome]]]]) -> 
         for rule, outcomes in results[applies_to]:
             pass_count = sum(1 for status, _, _, _ in outcomes if status == "pass")
             fail_count = sum(1 for status, _, _, _ in outcomes if status == "fail")
+            skip_count = sum(1 for status, _, _, _ in outcomes if status == "skip")
             action = rule.fix_action if rule.fix_action else "n/a"
 
             lines.extend(
                 [
                     f"### {rule.name} (`{rule.id}`)",
-                    f"- Summary: {pass_count} pass, {fail_count} fail",
+                    f"- Summary: {pass_count} pass, {fail_count} fail, {skip_count} skip",
                     f"- Suggested action: {action}",
                     "",
                 ]
@@ -368,7 +389,7 @@ def generate(store: dict) -> dict[str, str]:
     rule_store = store.get("rule", {})
     rules = [item for item in rule_store.values() if isinstance(item, Rule)]
     entity_rules = sorted(
-        [rule for rule in rules if rule.applies_to.endswith(_ENTITY_SUFFIX)],
+        [rule for rule in rules if _is_entity_rule(rule.applies_to)],
         key=lambda item: (item.applies_to, item.id),
     )
 
@@ -380,6 +401,14 @@ def generate(store: dict) -> dict[str, str]:
         entity_store = store.get(entity_key, {})
         entities = [item for item in entity_store.values() if isinstance(item, BaseModel)]
         entities.sort(key=lambda item: getattr(item, "id", ""))
+
+        scope_filter = _entity_scope_filter(rule.applies_to)
+        if scope_filter is not None:
+            entities = [
+                e for e in entities
+                if isinstance(getattr(e, "service_type", None), VocabRef)
+                and e.service_type.value_id == scope_filter
+            ]
 
         outcomes: list[RuleOutcome] = []
         for entity in entities:

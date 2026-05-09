@@ -8,6 +8,16 @@ from pydantic import BaseModel, Field, model_validator
 from .conventions import TypedRef, VocabRef, validate_iso8601_timestamp
 
 
+class ServiceAuth(BaseModel):
+    """Authentication configuration for a service endpoint."""
+
+    mechanism: str  # e.g., "api_key", "oauth", "none"
+    header: Optional[str] = None
+    env_var: Optional[str] = None
+    key_file: Optional[str] = None
+    notes: Optional[str] = None
+
+
 class Service(BaseModel):
     """Service entity model for Atlas runtime service metadata."""
 
@@ -22,6 +32,8 @@ class Service(BaseModel):
     port: Optional[int] = None
     health_endpoint: Optional[str] = None
     systemd_unit: Optional[str] = None
+    network_binding: Optional[str] = None  # "localhost", "lan", "tailscale", "public"
+    auth: Optional[ServiceAuth] = None
 
     owned_by: TypedRef
     depends_on: list[TypedRef] = Field(default_factory=list)
@@ -30,7 +42,6 @@ class Service(BaseModel):
     last_health_status: Optional[VocabRef] = None
 
     failure_modes: list[str] = Field(default_factory=list)
-    source_of_truth_doc: Optional[str] = None
     resource_budget_ram_mb: Optional[int] = Field(default=None, ge=0)
 
     created_at: datetime

@@ -8,15 +8,21 @@ lifecycle: vocab:service_lifecycles:running
 host: server:um790
 deployment_path: /opt/stack/services/projects/thought-substrate/approaches/vector-local/
 port: 8099
-health_endpoint: http://127.0.0.1:8099/mcp
+health_endpoint: http://192.168.1.150:8099/mcp
 systemd_unit: thought-substrate-mcp.service
+network_binding: lan
+auth:
+  mechanism: api_key
+  header: X-API-Key
+  env_var: THOUGHT_SUBSTRATE_API_KEY
+  key_file: /opt/stack/services/projects/thought-substrate/approaches/vector-local/.secrets/api_key.txt
+  notes: Localhost bypasses auth check. Remote clients must supply the header.
 owned_by: project:thought-substrate
 depends_on: []
 last_health_check: null
 last_health_status: vocab:health_statuses:unknown
 failure_modes:
   - index drift if capture pipeline stalls
-source_of_truth_doc: UM790_SOURCE_OF_TRUTH.md
 resource_budget_ram_mb: null
 created_at: 2026-05-08T01:45:00Z
-updated_at: 2026-05-08T01:45:00Z
+updated_at: 2026-05-09T00:00:00Z

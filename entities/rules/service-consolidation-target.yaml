@@ -1,0 +1,32 @@
+id: service-consolidation-target
+name: Service entity may be a consolidation target
+description: |
+  Flags service entities whose summary is stub-level while detailed
+  operational content likely exists in external documents (SOT, runbooks,
+  READMEs). This is the drift->consolidation signal: if the entity is thin
+  and prose exists elsewhere, consolidate the prose into the entity and
+  replace external references with "See Atlas entity."
+scope: vocab:rule_scopes:service
+severity: vocab:rule_severities:warn
+applies_to: service_entity
+check_kind: vocab:rule_check_kinds:llm_evaluated
+check_definition: |
+  Evaluate whether this service entity is a consolidation target.
+  A consolidation target is an entity whose summary reads as a stub (one or
+  two generic sentences with no operational detail) while it is plausible that
+  more detailed content exists in external documents such as UM790_SOURCE_OF_TRUTH.md,
+  a service README, or a runbook.
+  Return fires=true if the entity appears to be a consolidation target.
+  Provide evidence citing what is thin and what external source likely has richer content.
+  Suggest: consolidate external prose into this entity, then replace the external
+  reference with "See Atlas entity via get_service('<id>')."
+fix_tier: vocab:rule_fix_tiers:flag
+fix_action: null
+enforcement_point: vocab:enforcement_points:scheduled_audit
+on_violation: |
+  Consolidate prose from the external source into this entity's summary or
+  failure_modes. Replace the external section with a pointer to
+  get_service("<id>"). Resolve on next touch per agent-task-closure rule.
+authored_by: operator
+created_at: 2026-05-09T00:00:00Z
+updated_at: 2026-05-09T00:00:00Z

@@ -1,0 +1,20 @@
+id: service-failure-modes-present
+name: Service must document failure modes
+description: |
+  Every service must list at least one failure mode so operators and agents
+  can handle degraded states without guessing. An empty list indicates
+  undocumented failure surface, not zero failure modes.
+scope: vocab:rule_scopes:service
+severity: vocab:rule_severities:warn
+applies_to: service_entity
+check_kind: vocab:rule_check_kinds:field_present
+check_definition: failure_modes
+fix_tier: vocab:rule_fix_tiers:flag
+fix_action: null
+enforcement_point: vocab:enforcement_points:scheduled_audit
+on_violation: |
+  Add at least one failure_modes entry describing a realistic degraded state
+  and its remediation path. Emit a warning in Entity Compliance Report.
+authored_by: operator
+created_at: 2026-05-09T00:00:00Z
+updated_at: 2026-05-09T00:00:00Z

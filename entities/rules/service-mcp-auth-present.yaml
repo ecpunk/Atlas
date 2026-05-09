@@ -1,0 +1,20 @@
+id: service-mcp-auth-present
+name: MCP service must declare auth
+description: |
+  Every mcp_http service must declare an auth block so operators and agents
+  can determine how to connect without consulting external documentation.
+scope: vocab:rule_scopes:service
+severity: vocab:rule_severities:error
+applies_to: service_entity:mcp_http
+check_kind: vocab:rule_check_kinds:field_present
+check_definition: auth
+fix_tier: vocab:rule_fix_tiers:flag
+fix_action: null
+enforcement_point: vocab:enforcement_points:all
+on_violation: |
+  Add an auth: block to the service entity with mechanism, header, env_var,
+  and key_file populated. Use mechanism: none if the service is truly open.
+  Surface as error in Entity Compliance Report until resolved.
+authored_by: operator
+created_at: 2026-05-09T00:00:00Z
+updated_at: 2026-05-09T00:00:00Z
