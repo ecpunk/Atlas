@@ -1,8 +1,10 @@
 id: atlas-mcp
 name: Atlas MCP
 summary: |
-  Read-only MCP server exposing the Atlas canonical entity store. Provides
-  get/list tools for projects, services, servers, agents, rules, and vocabularies.
+  MCP server exposing the Atlas canonical entity store. 16 tools: 11 read
+  (get/list for projects, services, servers, agents, rules, vocabularies,
+  stack_summary) and 5 write (add_project, update_project, add_service,
+  update_service, retire_service). Write tools use propose-confirm pattern.
 service_type: vocab:service_types:mcp_http
 lifecycle: vocab:service_lifecycles:running
 host: server:um790
