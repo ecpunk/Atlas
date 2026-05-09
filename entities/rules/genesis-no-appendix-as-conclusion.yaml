@@ -1,0 +1,28 @@
+id: genesis-no-appendix-as-conclusion
+name: "Genesis check: no appendix as conclusion"
+description:  |
+  Flags plans that treat Genesis appendix inferences as settled conclusions.
+scope:  vocab:rule_scopes:instruction_layer
+severity:  vocab:rule_severities:warn
+applies_to:  plan_document
+check_kind:  vocab:rule_check_kinds:llm_evaluated
+check_definition:  |
+  You are evaluating a plan document for Atlas, a canonical entity store. Apply
+  this single check to the plan content provided. Respond with JSON only:
+  {"fires":  bool, "evidence": string, "suggested_fix": string or null}.
+  Does this plan rely on a Genesis Appendix inference as if it were a settled
+  conclusion? Genesis Appendix flags four claims as plausible but untested:  (a)
+  identity-vs-location is systemic across the stack; (b) the five existing
+  files can be fully replaced by generated views; (c) substrate is a peer
+  system; (d) conversations should be first-class artifacts. Set fires=true if
+  the plan assumes any of these is settled rather than treating it as a
+  hypothesis.
+fix_tier:  vocab:rule_fix_tiers:flag
+fix_action:  null
+enforcement_point:  vocab:enforcement_points:generation
+on_violation:  |
+  Flag the plan for operator review in the compliance report; do not
+  auto-remediate.
+authored_by:  operator
+created_at:  2026-05-09T01:44:07Z
+updated_at:  2026-05-09T01:44:07Z
