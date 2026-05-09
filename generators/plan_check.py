@@ -7,6 +7,7 @@ import re
 import yaml
 
 from schemas.rule import Rule
+from tools.llm_client import evaluate_rule
 
 NAME = "plan_check"
 INPUTS = ["rule:*"]
@@ -208,6 +209,34 @@ def _parse_check(rule: Rule, plan_text: str, lines: list[str]) -> CheckResult:
 
         return ("pass", "Required reference is present.", required)
 
+    if kind == "llm_evaluated":
+        llm_result = evaluate_rule(
+            system_prompt=rule.check_definition,
+            user_content=plan_text,
+            rule_id=rule.id,
+        )
+
+        model = str(llm_result.get("model", "unknown"))
+        tokens_in = int(llm_result.get("tokens_in", 0) or 0)
+        tokens_out = int(llm_result.get("tokens_out", 0) or 0)
+        evidence_text = str(llm_result.get("evidence", "")).strip() or "(none)"
+        suggested_fix = llm_result.get("suggested_fix")
+        evidence = f"model={model}; tokens_in={tokens_in}; tokens_out={tokens_out}\n{evidence_text}"
+
+        if bool(llm_result.get("error", False)):
+            return ("warn", "LLM evaluation error.", evidence)
+
+        if bool(llm_result.get("fires", False)):
+            detail = "LLM flagged potential Genesis alignment violation."
+            if isinstance(suggested_fix, str) and suggested_fix.strip():
+                detail += " Suggested fix: " + suggested_fix.strip()
+            return ("fail", detail, evidence)
+
+        detail = "LLM check passed."
+        if isinstance(suggested_fix, str) and suggested_fix.strip():
+            detail += " Suggested fix: " + suggested_fix.strip()
+        return ("pass", detail, evidence)
+
     return (
         "fail",
         f"Unsupported check_kind: {kind}",
@@ -217,6 +246,16 @@ def _parse_check(rule: Rule, plan_text: str, lines: list[str]) -> CheckResult:
 
 def _render_report(results: dict[str, list[tuple[Rule, CheckResult]]]) -> str:
     generated_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    llm_models: set[str] = set()
+
+    for _, plan_results in results.items():
+        for rule, result in plan_results:
+            if rule.check_kind.value_id != "llm_evaluated":
+                continue
+            evidence = result[2]
+            model_match = re.search(r"model=([^;\n]+)", evidence)
+            if model_match:
+                llm_models.add(model_match.group(1).strip())
 
     lines: list[str] = [
         "# Plan Compliance Report",
@@ -225,8 +264,17 @@ def _render_report(results: dict[str, list[tuple[Rule, CheckResult]]]) -> str:
         "",
         f"Generated at: {generated_at}",
         f"Plans scanned: {len(results)}",
-        "",
     ]
+
+    if llm_models:
+        lines.extend(
+            [
+                "- Note: LLM-evaluated outcomes are non-deterministic and reflect a single run.",
+                f"- LLM models observed: {', '.join(sorted(llm_models))}",
+            ]
+        )
+
+    lines.append("")
 
     for plan_name, plan_results in results.items():
         pass_count = sum(1 for _, item in plan_results if item[0] == "pass")

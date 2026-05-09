@@ -69,6 +69,16 @@ values:
     physical_location: null
     deprecated: false
     deprecated_reason: null
+  - id: llm_evaluated
+    name: LLM Evaluated
+    description: Rule is evaluated by an LLM prompt against target content.
+    semantics: |
+      check_definition contains the prompt text used as system context. The
+      target content is passed as user input. Result is JSON with fires,
+      evidence, and suggested_fix fields.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
   - id: manual
     name: Manual
     description: Rule requires human judgment and is not machine-evaluated.
