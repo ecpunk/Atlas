@@ -1,0 +1,38 @@
+# AUTO-GENERATED from atlas-store/vocabularies/lifecycle_categories.yaml - do not hand-edit
+{
+  "extension_policy": "open",
+  "values": [
+    {
+      "description": "Actively developing - in a sprint or has a defined next session.",
+      "id": "current",
+      "name": "Current",
+      "physical_location": "gdrive-projects/Projects/Current/<name>/"
+    },
+    {
+      "description": "Deployed and running, not actively developed - maintenance only.",
+      "id": "live",
+      "name": "Live",
+      "physical_location": "gdrive-projects/Projects/Live/<name>/"
+    },
+    {
+      "description": "Want to do it, waiting on a specific named trigger.",
+      "id": "blocked",
+      "name": "Blocked",
+      "physical_location": "gdrive-projects/Projects/Blocked/<name>/"
+    },
+    {
+      "description": "Indefinite hold - still interested, no timeline.",
+      "id": "defer",
+      "name": "Defer",
+      "physical_location": "gdrive-projects/Projects/Defer/<name>/"
+    },
+    {
+      "description": "Done with it - abandoned or superseded.",
+      "id": "archive",
+      "name": "Archive",
+      "physical_location": "gdrive-projects/Projects/Archive/<name>/"
+    }
+  ],
+  "vocabulary_id": "lifecycle_categories",
+  "vocabulary_name": "Lifecycle Categories"
+}

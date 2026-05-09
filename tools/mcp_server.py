@@ -130,6 +130,11 @@ Read tools:
 - get_agent(id) / list_agents(): agent definitions
 - stack_summary(): entity counts — use this for orientation
 
+Bridge / output tools:
+- get_output(name): read a generated output file from atlas-store/outputs/ (e.g. "Service Catalog.md")
+- get_kb_doc(name): read a knowledge base doc from services/docs/kb/ (e.g. "Start Here.md")
+- check_drift(service_id?): run reality probes against running services; returns drift report
+
 Write tools (propose-confirm pattern — preview first, then confirm=True to apply):
 - add_project(id, name, summary, category, status, concept_doc, gdrive_folder): add new project (autonomous)
 - update_project(id, confirm?, status?, category?, summary?, ...): update project fields
@@ -544,6 +549,65 @@ def retire_service(id: str, confirm: bool = False) -> dict[str, Any]:
         }
 
     return _write_and_commit("services", id, after, f"chore: retire service {id} via Atlas Write API")
+
+
+DEFAULT_OUTPUTS_DIR = REPO_ROOT / "outputs"
+DEFAULT_KB_DOC_ROOT = Path("/opt/stack/services/docs/kb")
+
+
+@mcp.tool()
+def get_output(name: str) -> str:
+    """Read a generated output file from atlas-store/outputs/.
+
+    Pass the filename exactly as it appears (e.g. 'Service Catalog.md',
+    'Rules.md', 'Project Index (generated).md'). Returns the file content.
+    """
+    outputs_dir = Path(os.environ.get("ATLAS_OUTPUT_DIR", str(DEFAULT_OUTPUTS_DIR)))
+    target = (outputs_dir / name).resolve()
+    # Guard against path traversal
+    if not str(target).startswith(str(outputs_dir.resolve())):
+        raise ValueError(f"Invalid output name: {name!r}")
+    if not target.exists():
+        raise FileNotFoundError(
+            f"Output '{name}' not found in {outputs_dir}. "
+            f"Run pipeline.py --write with ATLAS_OUTPUT_DIR set to regenerate."
+        )
+    return target.read_text(encoding="utf-8")
+
+
+@mcp.tool()
+def get_kb_doc(name: str) -> str:
+    """Read a knowledge base document from services/docs/kb/.
+
+    Pass a relative path such as 'Start Here.md', 'Standards.md', or
+    'Projects/atlas/10-CONCEPT/ATLAS_CONCEPT.md'. Returns the file content.
+    """
+    kb_root = Path(os.environ.get("ATLAS_KB_DOC_ROOT", str(DEFAULT_KB_DOC_ROOT)))
+    target = (kb_root / name).resolve()
+    # Guard against path traversal
+    if not str(target).startswith(str(kb_root.resolve())):
+        raise ValueError(f"Invalid doc name: {name!r}")
+    if not target.exists():
+        raise FileNotFoundError(
+            f"KB doc '{name}' not found under {kb_root}. "
+            "Run Track A3 migration to populate services/docs/kb/."
+        )
+    return target.read_text(encoding="utf-8")
+
+
+@mcp.tool()
+def check_drift(service_id: str = "") -> list[dict[str, Any]]:
+    """Run reality probes against running services and report drift.
+
+    Returns a list of per-service probe results. Each result has:
+    - service_id, name, lifecycle
+    - probes: list of {type, expected, actual, pass}
+    - drift: bool — True if any probe failed
+
+    Pass service_id to probe a single service; omit for all non-retired services.
+    """
+    import tools.probe_runner as _probe_runner  # local import avoids startup overhead
+    return _probe_runner.run_probes(service_id)
 
 
 if __name__ == "__main__":

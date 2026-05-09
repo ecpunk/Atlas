@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import importlib
 import importlib.util
+import os
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -13,6 +14,22 @@ from typing import Any, Callable
 import yaml
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+
+# When set, any output path under GDRIVE_OUTPUT_PREFIX is rewritten to
+# $ATLAS_OUTPUT_DIR/<filename>. Allows migrating outputs off the FUSE mount
+# without modifying individual generator modules.
+GDRIVE_OUTPUT_PREFIX = "/opt/stack/services/gdrive-projects/Projects/Current/Atlas/40-OUTPUT/"
+
+
+def _rewrite_output_path(output_path: str) -> str:
+    """Rewrite a gdrive 40-OUTPUT path to ATLAS_OUTPUT_DIR if the env var is set."""
+    atlas_output_dir = os.environ.get("ATLAS_OUTPUT_DIR", "").strip()
+    if not atlas_output_dir:
+        return output_path
+    if output_path.startswith(GDRIVE_OUTPUT_PREFIX):
+        filename = output_path[len(GDRIVE_OUTPUT_PREFIX):]
+        return str(Path(atlas_output_dir) / filename)
+    return output_path
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
@@ -181,7 +198,7 @@ def main() -> int:
             for output_path, content in outputs.items():
                 if not isinstance(output_path, str) or not isinstance(content, str):
                     raise ValueError(f"Generator {name} produced non-string output mapping")
-                collected.append((name, generator.source, output_path, content))
+                collected.append((name, generator.source, _rewrite_output_path(output_path), content))
 
         if args.write:
             for _, _, output_path, content in collected:
@@ -190,6 +207,7 @@ def main() -> int:
                 target = Path(output_path)
                 target.parent.mkdir(parents=True, exist_ok=True)
                 target.write_text(content, encoding="utf-8")
+                print(f"wrote: {output_path}")
             return 0
 
         print("Generated outputs summary:")
