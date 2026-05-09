@@ -1,0 +1,36 @@
+id: bulk-migration-catalog-verify
+name: Bulk Migration Catalog and Verify
+description: |
+  Any bulk file migration must produce (1) a pre-copy inventory of the source
+  and (2) a post-copy hash manifest of the destination before the operation is
+  considered complete. Applies to rclone copy, mass file moves, backup restores,
+  or any operation touching bulk files across system boundaries.
+  
+  Inventory: capture source listing before copy (rclone lsjson --recursive or
+  equivalent). Manifest: hash all destination files after copy (md5sum, sha256sum,
+  or rclone check --checksum). Both artifacts must be committed to the services repo
+  alongside the migrated content.
+scope: vocab:rule_scopes:operational
+severity: vocab:rule_severities:error
+applies_to: bulk_migration
+check_kind: vocab:rule_check_kinds:artifact_present
+check_definition: |
+  Migration operation must produce both:
+  - Pre-copy inventory file (format: JSON or plaintext listing)
+  - Post-copy hash manifest (format: md5sum or sha256sum output)
+  Both committed to version control before migration is declared complete.
+fix_tier: vocab:rule_fix_tiers:block
+fix_action: |
+  Do not commit migrated content without both artifacts present.
+  Generate missing artifacts before committing.
+enforcement_point: vocab:enforcement_points:task_closure
+on_violation: |
+  Block task closure. Generate the missing artifact(s) then retry.
+inaugural_instance: |
+  gdrive full migration 2026-05-09:
+  - Inventory: docs/kb/GDRIVE_MIGRATION_INVENTORY.json (345KB, 32 projects)
+  - Manifest: docs/kb/GDRIVE_MIGRATION_MANIFEST.md5 (293 files)
+  - Committed: services repo 70bbfa1
+authored_by: operator
+created_at: 2026-05-09T00:00:00Z
+updated_at: 2026-05-09T00:00:00Z

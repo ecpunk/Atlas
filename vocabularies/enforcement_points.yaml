@@ -34,6 +34,13 @@ values:
     physical_location: null
     deprecated: false
     deprecated_reason: null
+  - id: task_closure
+    name: Task Closure
+    description: Rule is enforced when an agent declares a task complete.
+    semantics: Checked at the Task Closure checklist step before declaring done.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
 extension_policy: open
 created_at: 2026-05-08T01:16:38Z
 updated_at: 2026-05-08T01:16:38Z

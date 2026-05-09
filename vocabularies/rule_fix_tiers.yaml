@@ -30,6 +30,15 @@ values:
     physical_location: null
     deprecated: false
     deprecated_reason: null
+  - id: block
+    name: Block
+    description: Violation blocks the operation; work cannot proceed until resolved.
+    semantics: |
+      Hard stop — the triggered action must not proceed until the violation is cleared.
+      fix_action should provide exact remediation steps.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
 extension_policy: open
 created_at: 2026-05-08T17:39:44Z
 updated_at: 2026-05-08T17:39:44Z

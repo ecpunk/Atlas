@@ -87,6 +87,15 @@ values:
     physical_location: null
     deprecated: false
     deprecated_reason: null
+  - id: artifact_present
+    name: Artifact Present
+    description: Rule verifies that one or more required artifact files exist and are committed.
+    semantics: |
+      Used for rules that require physical files (manifests, inventories) to exist
+      before an operation is considered complete.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
 extension_policy: open
 created_at: 2026-05-08T17:39:44Z
 updated_at: 2026-05-08T17:39:44Z

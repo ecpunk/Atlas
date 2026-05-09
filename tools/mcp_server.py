@@ -337,8 +337,8 @@ def add_project(
 
     category: vocab value_id, e.g. 'current', 'live', 'blocked', 'defer', 'archive'
     status: vocab value_id, e.g. 'concept', 'active', 'paused', 'complete'
-    concept_doc: path relative to services root, e.g. 'gdrive-projects/Projects/Current/Foo/10-CONCEPT/FOO_CONCEPT.md'
-    gdrive_folder: path relative to services root, e.g. 'gdrive-projects/Projects/Current/Foo/'
+    concept_doc: path relative to services root, e.g. 'docs/kb/Projects/Foo/10-CONCEPT/FOO_CONCEPT.md'
+    gdrive_folder: gdrive path, e.g. "gdrive:Jon's Projects/Projects/Current/Foo/" (optional; Drive retired as authoring surface 2026-05-09)
     """
     store = _get_store()
     if id in store.get("project", {}):
