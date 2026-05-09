@@ -1,0 +1,9 @@
+id: example-project
+name: Example Project
+summary: Minimal project entity example for Atlas framework users.
+category: project_category:internal_tooling
+status: project_status:active
+concept_doc: /path/to/PROJECT_CONCEPT.md
+gdrive_folder: /path/to/project-folder
+related_services:
+  - service:example-service

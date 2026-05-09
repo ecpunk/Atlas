@@ -1,0 +1,23 @@
+id: plan-has-acceptance-criteria
+name: Plan has Acceptance criteria section
+description: |
+  Plan documents must include Acceptance criteria with at least one checkbox so
+  completion can be evaluated deterministically.
+scope: vocab:rule_scopes:instruction_layer
+severity: vocab:rule_severities:error
+applies_to: plan_document
+check_kind: vocab:rule_check_kinds:section_present
+check_definition: |
+  Plan must contain a section named exactly "Acceptance criteria" with at least
+  one checkbox
+fix_tier: vocab:rule_fix_tiers:propose
+fix_action: |
+  Add an "Acceptance criteria" section containing at least one markdown
+  checkbox item.
+enforcement_point: vocab:enforcement_points:generation
+on_violation: |
+  Mark the plan as non-compliant in the compliance report and identify the
+  missing section or checkbox structure.
+authored_by: operator
+created_at: 2026-05-08T17:41:09Z
+updated_at: 2026-05-08T17:41:09Z

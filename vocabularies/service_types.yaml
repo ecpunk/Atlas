@@ -1,0 +1,62 @@
+id: service_types
+name: Service Types
+description: |
+  Runtime implementation categories for services in Atlas.
+purpose: |
+  Distinguishes how a service is delivered and operated so generated catalogs
+  and automation can reason about runtime surfaces.
+values:
+  - id: mcp_http
+    name: MCP over HTTP
+    description: Service exposes a Model Context Protocol endpoint over HTTP.
+    semantics: |
+      Supports remote MCP clients over a network boundary. Health is typically
+      verified via an HTTP endpoint.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: mcp_stdio
+    name: MCP over STDIO
+    description: Service exposes Model Context Protocol over process stdio.
+    semantics: |
+      Runs as a local process invoked by a host client. No network port is
+      required.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: fastapi
+    name: FastAPI Service
+    description: Python web service implemented with FastAPI.
+    semantics: |
+      Provides HTTP routes and optional OpenAPI docs; often fronted by systemd
+      or container orchestration.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: docker_container
+    name: Docker Container
+    description: Service runtime is primarily managed as a Docker container.
+    semantics: |
+      Lifecycle is tied to a container runtime surface and image deployment.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: systemd_unit
+    name: systemd Unit
+    description: Service is managed directly by a systemd unit.
+    semantics: |
+      Service availability and restart behavior are controlled through systemd.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: nginx_vhost
+    name: NGINX Virtual Host
+    description: Service is delivered as an NGINX vhost or reverse proxy surface.
+    semantics: |
+      Primarily concerns HTTP routing and edge exposure for upstream services.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+extension_policy: open
+created_at: 2026-05-08T01:21:06Z
+updated_at: 2026-05-08T01:21:06Z

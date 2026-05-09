@@ -1,0 +1,28 @@
+id: genesis-no-new-state-store
+name: "Genesis check: no new state store"
+description:  |
+  Flags plans that create a new place where stack state is encoded outside the
+  canonical Atlas store.
+scope:  vocab:rule_scopes:instruction_layer
+severity:  vocab:rule_severities:warn
+applies_to:  plan_document
+check_kind:  vocab:rule_check_kinds:llm_evaluated
+check_definition:  |
+  You are evaluating a plan document for Atlas, a canonical entity store. Apply
+  this single check to the plan content provided. Respond with JSON only:
+  {"fires":  bool, "evidence": string, "suggested_fix": string or null}.
+  Does this plan create a new place where stack state is encoded outside the
+  canonical Atlas store? Examples of violations:  introducing new entity types
+  that mirror existing audit findings, creating status/issue/finding entities
+  that duplicate canonical state, or storing data in a new location instead of
+  canonicalizing it. Set fires=true only if the plan introduces such a new
+  location. Quote the specific text as evidence.
+fix_tier:  vocab:rule_fix_tiers:flag
+fix_action:  null
+enforcement_point:  vocab:enforcement_points:generation
+on_violation:  |
+  Flag the plan for operator review in the compliance report; do not
+  auto-remediate.
+authored_by:  operator
+created_at:  2026-05-09T01:44:07Z
+updated_at:  2026-05-09T01:44:07Z

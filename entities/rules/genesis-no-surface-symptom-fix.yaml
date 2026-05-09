@@ -1,0 +1,27 @@
+id: genesis-no-surface-symptom-fix
+name: "Genesis check: no surface symptom fix"
+description:  |
+  Flags plans that fix surface-level identity-vs-location symptoms instead of
+  defining canonical entities.
+scope:  vocab:rule_scopes:instruction_layer
+severity:  vocab:rule_severities:warn
+applies_to:  plan_document
+check_kind:  vocab:rule_check_kinds:llm_evaluated
+check_definition:  |
+  You are evaluating a plan document for Atlas, a canonical entity store. Apply
+  this single check to the plan content provided. Respond with JSON only:
+  {"fires":  bool, "evidence": string, "suggested_fix": string or null}.
+  Does this plan address a symptom of identity-vs-location at the surface
+  (e.g., consolidating five overlapping scripts) instead of defining the
+  canonical entity those scripts each fragment-encode? Set fires=true if the
+  plan tries to consolidate downstream artifacts rather than defining the
+  canonical entity that should produce them.
+fix_tier:  vocab:rule_fix_tiers:flag
+fix_action:  null
+enforcement_point:  vocab:enforcement_points:generation
+on_violation:  |
+  Flag the plan for operator review in the compliance report; do not
+  auto-remediate.
+authored_by:  operator
+created_at:  2026-05-09T01:44:07Z
+updated_at:  2026-05-09T01:44:07Z

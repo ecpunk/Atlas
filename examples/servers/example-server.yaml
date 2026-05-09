@@ -1,0 +1,8 @@
+id: example-server
+name: Example Server
+hostname: example.local
+ip: 10.0.0.10
+hardware:
+  cpu: 4 cores
+  ram_gb: 16
+  storage: 256GB SSD

@@ -1,0 +1,43 @@
+id: service_lifecycles
+name: Service Lifecycles
+description: |
+  Lifecycle posture for a service in the operating stack.
+purpose: |
+  Distinguishes active runtime services from maintained, degraded, or retired
+  services so views and audits can prioritize attention correctly.
+values:
+  - id: running
+    name: Running
+    description: Service is active and expected to be available.
+    semantics: |
+      Included in operational views and routine health checks.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: maintained
+    name: Maintained
+    description: Service is not currently critical but remains supported.
+    semantics: |
+      Kept deployable and documented, with periodic verification.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: degraded
+    name: Degraded
+    description: Service is active but known to be impaired.
+    semantics: |
+      Requires operator attention and should surface in health-oriented views.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: retired
+    name: Retired
+    description: Service is no longer in active use.
+    semantics: |
+      Retained only for historical context or migration references.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+extension_policy: open
+created_at: 2026-05-08T01:21:06Z
+updated_at: 2026-05-08T01:21:06Z

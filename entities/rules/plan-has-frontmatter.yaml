@@ -1,0 +1,23 @@
+id: plan-has-frontmatter
+name: Plan has required frontmatter
+description: |
+  Plan documents must include required frontmatter keys to preserve consistent
+  metadata for execution and reporting.
+scope: vocab:rule_scopes:instruction_layer
+severity: vocab:rule_severities:error
+applies_to: plan_document
+check_kind: vocab:rule_check_kinds:frontmatter_field_present
+check_definition: |
+  Plan must have these frontmatter keys: Status, Plan number, Phase,
+  Authored by, Recommended model, Surface, Run order
+fix_tier: vocab:rule_fix_tiers:propose
+fix_action: |
+  Add the missing frontmatter key-value pairs. See PLAN-TEMPLATE.md for the
+  standard frontmatter block.
+enforcement_point: vocab:enforcement_points:generation
+on_violation: |
+  Mark the plan as non-compliant in the plan compliance report and surface
+  missing frontmatter keys with remediation guidance.
+authored_by: operator
+created_at: 2026-05-08T17:41:09Z
+updated_at: 2026-05-08T17:41:09Z

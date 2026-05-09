@@ -1,0 +1,32 @@
+id: rule_severities
+name: Rule Severities
+description: |
+  Severity levels that determine how rule violations are surfaced and escalated.
+purpose: |
+  Standardizes operational response to rule violations across validation,
+  generation, and enforcement workflows.
+values:
+  - id: info
+    name: Info
+    description: Informational violation with no blocking behavior.
+    semantics: Surface for visibility only; does not block writes or generation.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: warn
+    name: Warn
+    description: Warning-level violation that should be reviewed promptly.
+    semantics: Surface in summaries and alerts; may allow continuation with caution.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: error
+    name: Error
+    description: High-severity violation representing an invalid state.
+    semantics: Must be treated as blocking at enforcement points configured to enforce errors.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+extension_policy: closed
+created_at: 2026-05-08T01:16:38Z
+updated_at: 2026-05-08T01:16:38Z

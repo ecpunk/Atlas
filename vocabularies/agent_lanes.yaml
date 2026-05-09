@@ -1,0 +1,59 @@
+id: agent_lanes
+name: Agent Lanes
+description: |
+  Operational lanes that define an agent's primary and secondary usage modes.
+purpose: |
+  Encodes lane doctrine so orchestration can choose the right agent behavior for
+  planning, execution, investigation, composition, or review work.
+values:
+  - id: planning
+    name: Planning
+    description: Build plans, structure decisions, and sequence work.
+    semantics: |
+      Use when synthesizing direction, dependencies, and execution order.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: implementation
+    name: Implementation
+    description: Execute known changes directly in code, config, and automation.
+    semantics: |
+      Prefer for deterministic build and change tasks against clear specs.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: discovery
+    name: Discovery
+    description: Investigate current state before acting.
+    semantics: |
+      Prefer read-first diagnosis and verification of real system conditions.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: specialty
+    name: Specialty
+    description: Handle narrow domain workflows requiring specific expertise.
+    semantics: |
+      Use for constrained tasks that need domain-tuned prompts and logic.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: composition
+    name: Composition
+    description: Integrate outputs across tools, docs, and subsystems.
+    semantics: |
+      Focuses on joining partial results into coherent, operator-usable outputs.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: review
+    name: Review
+    description: Evaluate changes for correctness, risk, and regressions.
+    semantics: |
+      Prioritizes bug/risk detection and evidence-backed acceptance criteria.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+extension_policy: open
+created_at: 2026-05-08T01:16:55Z
+updated_at: 2026-05-08T01:16:55Z

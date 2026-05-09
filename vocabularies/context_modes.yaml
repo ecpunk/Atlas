@@ -1,0 +1,29 @@
+id: context_modes
+name: Skill Context Modes
+description: |
+  Execution context modes for skill invocation.
+purpose: |
+  Controls whether a skill runs in the main agent context or in a forked
+  subagent context for tool-call isolation.
+values:
+  - id: main
+    name: Main
+    description: Skill executes in the main agent context.
+    semantics: |
+      Default execution mode. Tool calls and context remain in the active
+      conversation flow.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: fork
+    name: Fork
+    description: Skill executes in a subagent context.
+    semantics: |
+      Isolated execution mode for skills that should run in a separate
+      context, matching SKILL.md frontmatter context: fork behavior.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+extension_policy: closed
+created_at: 2026-05-08T01:15:57Z
+updated_at: 2026-05-08T01:15:57Z

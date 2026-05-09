@@ -1,0 +1,59 @@
+id: agent_interfaces
+name: Agent Interfaces
+description: |
+  Interaction surfaces through which an agent is accessed and operated.
+purpose: |
+  Distinguishes runtime and interaction boundaries so capabilities, constraints,
+  and operational expectations can be interpreted correctly.
+values:
+  - id: desktop_app
+    name: Desktop App
+    description: Agent runs in a native desktop application.
+    semantics: |
+      Session state and controls live in an installed desktop client.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: vscode_extension
+    name: VS Code Extension
+    description: Agent is exposed through a Visual Studio Code extension surface.
+    semantics: |
+      Operates in the editor workflow and can act on the open workspace.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: cli
+    name: CLI
+    description: Agent is accessed from a command-line interface.
+    semantics: |
+      Tooling is terminal-driven and optimized for scriptable invocation.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: web
+    name: Web
+    description: Agent is accessed through a browser-based web interface.
+    semantics: |
+      Execution and state are mediated through a hosted web application.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: mobile
+    name: Mobile
+    description: Agent is accessed from a phone or tablet app.
+    semantics: |
+      Interaction is touch-first and constrained by mobile runtime boundaries.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: api
+    name: API
+    description: Agent is consumed programmatically via API endpoints.
+    semantics: |
+      Integration occurs through service calls rather than human-facing UI.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+extension_policy: open
+created_at: 2026-05-08T01:16:55Z
+updated_at: 2026-05-08T01:16:55Z

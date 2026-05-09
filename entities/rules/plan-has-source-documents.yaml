@@ -1,0 +1,22 @@
+id: plan-has-source-documents
+name: Plan has Source documents section
+description: |
+  Plan documents must include Source documents so execution is anchored to
+  explicit authoritative inputs.
+scope: vocab:rule_scopes:instruction_layer
+severity: vocab:rule_severities:error
+applies_to: plan_document
+check_kind: vocab:rule_check_kinds:section_present
+check_definition: |
+  Plan must contain a section named exactly "Source documents"
+fix_tier: vocab:rule_fix_tiers:propose
+fix_action: |
+  Add a "Source documents" section with explicit file paths used in the
+  Implementation Gate.
+enforcement_point: vocab:enforcement_points:generation
+on_violation: |
+  Mark the plan as non-compliant in the compliance report and show the missing
+  section.
+authored_by: operator
+created_at: 2026-05-08T17:41:09Z
+updated_at: 2026-05-08T17:41:09Z

@@ -1,0 +1,5 @@
+id: example-agent
+name: Example Agent
+model_family: claude-sonnet
+interface: interface_type:chat
+primary_lane: lane_type:implementation

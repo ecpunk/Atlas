@@ -1,0 +1,9 @@
+id: example-service
+name: Example Service
+summary: Minimal service entity example.
+service_type: service_type:application
+lifecycle: lifecycle_state:active
+host: server:example-server
+deployment_path: /srv/example-service
+owned_by: project:example-project
+resource_budget_ram_mb: 512

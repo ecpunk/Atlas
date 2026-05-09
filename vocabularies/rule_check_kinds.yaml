@@ -1,0 +1,92 @@
+id: rule_check_kinds
+name: Rule Check Kinds
+description: |
+  Canonical check implementation kinds for rule evaluation. These values define
+  how the rule engine evaluates a rule against a target artifact.
+purpose: |
+  Keeps rule evaluation semantics normalized so generators and validators can
+  apply rules consistently without ad hoc branching by rule ID.
+values:
+  - id: section_present
+    name: Section Present
+    description: Rule passes when the required markdown section heading exists.
+    semantics: |
+      Heading matching is exact unless a specific rule definition explicitly
+      allows alternatives.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: frontmatter_field_present
+    name: Frontmatter Field Present
+    description: Rule passes when all required frontmatter keys are present.
+    semantics: |
+      Rules using this check kind declare the required key set in
+      check_definition.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: length_warning
+    name: Length Warning
+    description: Rule warns when content length exceeds a configured threshold.
+    semantics: |
+      Thresholds are declared in check_definition and interpreted by the
+      consuming generator.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: template_reference_present
+    name: Template Reference Present
+    description: Rule passes when a required template/path reference appears.
+    semantics: |
+      check_definition declares the required reference and matching behavior.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: field_present
+    name: Field Present
+    description: Rule passes when the target field has a non-empty value.
+    semantics: |
+      check_definition provides the field name, or a mapping with a field key.
+      Null, empty string, and empty collection values fail.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: field_value
+    name: Field Value
+    description: Rule passes when a target field matches an expected value.
+    semantics: |
+      check_definition provides field and value, with optional mode equals or
+      contains.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: vocab_ref_valid
+    name: Vocabulary Reference Valid
+    description: Rule passes when a field contains a valid vocabulary reference.
+    semantics: |
+      check_definition provides the field to evaluate. The field must parse as
+      vocab:<vocab_id>:<value_id> and resolve to an existing vocabulary entry.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: llm_evaluated
+    name: LLM Evaluated
+    description: Rule is evaluated by an LLM prompt against target content.
+    semantics: |
+      check_definition contains the prompt text used as system context. The
+      target content is passed as user input. Result is JSON with fires,
+      evidence, and suggested_fix fields.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: manual
+    name: Manual
+    description: Rule requires human judgment and is not machine-evaluated.
+    semantics: |
+      Automated generators report manual checks as requires-human-judgment.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+extension_policy: open
+created_at: 2026-05-08T17:39:44Z
+updated_at: 2026-05-08T17:39:44Z

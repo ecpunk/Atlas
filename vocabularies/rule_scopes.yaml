@@ -1,0 +1,53 @@
+id: rule_scopes
+name: Rule Scopes
+description: |
+  Structural scope categories that declare which Atlas entity domain a rule targets.
+purpose: |
+  Ensures every rule states the operational domain it governs so enforcement and
+  reporting can group and filter rules consistently.
+values:
+  - id: project
+    name: Project
+    description: Rule targets project entities.
+    semantics: Applies to project metadata structure and required project fields.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: service
+    name: Service
+    description: Rule targets service entities.
+    semantics: Applies to runtime service declarations and operational constraints.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: server
+    name: Server
+    description: Rule targets server entities.
+    semantics: Applies to host inventory, capacity, and server-level requirements.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: vocabulary
+    name: Vocabulary
+    description: Rule targets vocabulary definitions.
+    semantics: Applies to controlled value catalogs and vocabulary governance.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: instruction_layer
+    name: Instruction Layer
+    description: Rule targets instruction and policy layer artifacts.
+    semantics: Applies to instruction structures that shape operational behavior.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: cross_entity
+    name: Cross Entity
+    description: Rule spans relationships across multiple entity types.
+    semantics: Applies to invariants that require evaluating references across domains.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+extension_policy: open
+created_at: 2026-05-08T01:16:38Z
+updated_at: 2026-05-08T01:16:38Z

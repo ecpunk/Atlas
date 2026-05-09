@@ -1,0 +1,26 @@
+# Build / runtime artifacts
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+.env
+40-OUTPUT/
+
+# Operator data (placed by clone owner; never committed upstream)
+entities/projects/*
+entities/services/*
+entities/servers/*
+entities/skills/*
+entities/agents/*
+
+# Re-include placeholder files so the directory structure persists
+!entities/projects/.gitkeep
+!entities/projects/README.md
+!entities/services/.gitkeep
+!entities/services/README.md
+!entities/servers/.gitkeep
+!entities/servers/README.md
+!entities/skills/.gitkeep
+!entities/skills/README.md
+!entities/agents/.gitkeep
+!entities/agents/README.md

@@ -1,0 +1,39 @@
+id: enforcement_points
+name: Enforcement Points
+description: |
+  Execution stages where Atlas may enforce rule assertions.
+purpose: |
+  Allows each rule to declare where it is evaluated so enforcement behavior is
+  explicit and consistent across system surfaces.
+values:
+  - id: write_api
+    name: Write API
+    description: Rule is enforced during write API mutation paths.
+    semantics: Validate rule during entity write operations before persistence.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: generation
+    name: Generation
+    description: Rule is enforced during view or artifact generation.
+    semantics: Validate rule while building generated outputs from store state.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: scheduled_audit
+    name: Scheduled Audit
+    description: Rule is enforced in scheduled audit runs.
+    semantics: Validate rule in periodic drift and compliance checks.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+  - id: all
+    name: All
+    description: Rule is enforced at every enforcement point.
+    semantics: Apply validation at write API, generation, and scheduled audits.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
+extension_policy: open
+created_at: 2026-05-08T01:16:38Z
+updated_at: 2026-05-08T01:16:38Z

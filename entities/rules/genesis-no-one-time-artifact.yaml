@@ -1,0 +1,29 @@
+id: genesis-no-one-time-artifact
+name: "Genesis check: no one-time artifact"
+description:  |
+  Flags plans that produce one-time analysis artifacts not regenerated from
+  canonical entities.
+scope:  vocab:rule_scopes:instruction_layer
+severity:  vocab:rule_severities:warn
+applies_to:  plan_document
+check_kind:  vocab:rule_check_kinds:llm_evaluated
+check_definition:  |
+  You are evaluating a plan document for Atlas, a canonical entity store. Apply
+  this single check to the plan content provided. Respond with JSON only:
+  {"fires":  bool, "evidence": string, "suggested_fix": string or null}.
+  Does this plan add a one-time analysis artifact that won't be regenerated
+  from canonical data? Atlas's value depends on every artifact being a
+  regenerated view. Set fires=true if the plan produces a deliverable file that
+  won't be reproduced by a later pipeline run from canonical entities. Note:
+  status reports, diff documents, and other one-time evidence artifacts
+  produced by plans are NOT violations — they're operator artifacts, not
+  canonical store contents.
+fix_tier:  vocab:rule_fix_tiers:flag
+fix_action:  null
+enforcement_point:  vocab:enforcement_points:generation
+on_violation:  |
+  Flag the plan for operator review in the compliance report; do not
+  auto-remediate.
+authored_by:  operator
+created_at:  2026-05-09T01:44:07Z
+updated_at:  2026-05-09T01:44:07Z

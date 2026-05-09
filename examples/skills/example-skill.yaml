@@ -1,0 +1,13 @@
+id: example-skill
+name: Example Skill
+version: 1.0.0
+summary: Minimal skill entity example.
+description: Demonstrates the expected structure for a Skill entity.
+context_mode: context_mode:full
+frontmatter:
+  name: example-skill
+  description: Demonstration skill frontmatter.
+body: |
+  # Example Skill
+
+  This is a minimal example skill body.
