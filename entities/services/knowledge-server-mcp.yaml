@@ -10,6 +10,13 @@ deployment_path: /opt/stack/services/projects/knowledge-server/
 port: 8092
 health_endpoint: http://127.0.0.1:8092/mcp
 systemd_unit: knowledge-server-mcp.service
+network_binding: localhost
+auth:
+  mechanism: api_key
+  header: X-API-Key
+  env_var: null
+  key_file: null
+  notes: Retired 2026-05-09. Auth was localhost-only; service is no longer running.
 owned_by: project:knowledge-server
 depends_on:
   - service:rclone-gdrive
