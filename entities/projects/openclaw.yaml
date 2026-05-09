@@ -5,7 +5,7 @@ summary: |
   Reference/Archived/OpenClaw as historical training and reference material.
 category: vocab:lifecycle_categories:archive
 status: vocab:project_statuses:archived
-concept_doc: gdrive-projects/Projects/Archive/OpenClaw/10-CONCEPT/OPENCLAW_CONCEPT.md
+concept_doc: projects/openclaw/10-CONCEPT/OPENCLAW_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Archive/OpenClaw/
 domain_tags:
   - ai

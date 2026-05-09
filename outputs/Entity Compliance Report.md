@@ -2,7 +2,7 @@
 
 AUTO-GENERATED from atlas-store Rule entities. Do not hand-edit.
 
-Generated at: 2026-05-09T16:05:56Z
+Generated at: 2026-05-09T16:40:23Z
 Entity types scanned: 2
 Rules applied: 8
 
@@ -54,7 +54,7 @@ Rules applied: 8
 | Outcome | Entity | Detail | Evidence |
 |---------|--------|--------|----------|
 | PASS | ai-hvac-balancer | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/AI HVAC Balancer/10-CONCEPT/AI_HVAC_BALANCER_CONCEPT.md |
-| PASS | atlas | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/Atlas/10-CONCEPT/ATLAS_CONCEPT.md |
+| PASS | atlas | Field 'concept_doc' is present. | concept_doc=docs/kb/Projects/Atlas/10-CONCEPT/ATLAS_CONCEPT.md |
 | PASS | aws-starter | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/AWS Starter/10-CONCEPT/AWS_STARTER_CONCEPT.md |
 | PASS | build-and-design-navigator | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/Build & Design Navigator/10-CONCEPT/BUILD_DESIGN_NAVIGATOR_CONCEPT.md |
 | PASS | code-intelligence-mcp | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/Code Intelligence MCP/10-CONCEPT/CODE_INTELLIGENCE_MCP_CONCEPT.md |
@@ -81,7 +81,7 @@ Rules applied: 8
 | PASS | stargate-archive | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/Stargate Archive/10-CONCEPT/STARGATE_ARCHIVE_CONCEPT.md |
 | PASS | storefront | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/Storefront/10-CONCEPT/STOREFRONT_CONCEPT.md |
 | PASS | the-engine | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/The Engine/10-CONCEPT/THE_ENGINE_CONCEPT.md |
-| PASS | thought-substrate | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Current/Thought Substrate/10-CONCEPT/THOUGHT_SUBSTRATE_CONCEPT.md |
+| PASS | thought-substrate | Field 'concept_doc' is present. | concept_doc=projects/thought-substrate/10-CONCEPT/THOUGHT_SUBSTRATE_CONCEPT.md |
 | PASS | turdcraft | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Live/Turdcraft/10-CONCEPT/TURDCRAFT_CONCEPT.md |
 | PASS | um790-ops-mcp | Field 'concept_doc' is present. | concept_doc=/opt/stack/services/projects/um790-ops-mcp/README.md |
 | PASS | vac-orchestrator | Field 'concept_doc' is present. | concept_doc=gdrive-projects/Projects/Archive/Vac Orchestrator/10-CONCEPT/VAC_ORCHESTRATOR_CONCEPT.md |
@@ -224,7 +224,7 @@ Rules applied: 8
 | PASS | um790-ops-mcp | Field 'owned_by' is present. | owned_by=project:um790-ops-mcp |
 
 ### Service should have source-of-truth doc (`service-should-have-source-of-truth-doc`)
-- Summary: 11 pass, 1 fail
+- Summary: 12 pass, 0 fail
 - Suggested action: n/a
 
 | Outcome | Entity | Detail | Evidence |
@@ -240,4 +240,4 @@ Rules applied: 8
 | PASS | serveiq-main | Field 'source_of_truth_doc' is present. | source_of_truth_doc=UM790_SOURCE_OF_TRUTH.md |
 | PASS | thought-substrate | Field 'source_of_truth_doc' is present. | source_of_truth_doc=UM790_SOURCE_OF_TRUTH.md |
 | PASS | turdcraft | Field 'source_of_truth_doc' is present. | source_of_truth_doc=UM790_SOURCE_OF_TRUTH.md |
-| FAIL | um790-ops-mcp | Field 'source_of_truth_doc' is empty. | source_of_truth_doc=null |
+| PASS | um790-ops-mcp | Field 'source_of_truth_doc' is present. | source_of_truth_doc=UM790_SOURCE_OF_TRUTH.md - docker_action on non-existent container returns non-zero exit but does not raise |

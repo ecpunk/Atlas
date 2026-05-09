@@ -2,7 +2,7 @@
 
 AUTO-GENERATED from atlas-store Rule entities. Do not hand-edit.
 
-Generated at: 2026-05-09T16:06:01Z
+Generated at: 2026-05-09T16:40:33Z
 Plans scanned: 25
 
 ## PLAN-001-schema-implementation-and-first-slice.md

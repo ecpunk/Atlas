@@ -6,7 +6,6 @@ summary: |
   until Engine spec is stable.
 category: vocab:lifecycle_categories:current
 status: vocab:project_statuses:parked
-concept_doc: gdrive-projects/Projects/Current/Build & Design Navigator/10-CONCEPT/BUILD_DESIGN_NAVIGATOR_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Current/Build & Design Navigator/
 domain_tags:
   - software

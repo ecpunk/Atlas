@@ -24,7 +24,7 @@ class Project(BaseModel):
     key_insights: list[str] = Field(default_factory=list)
     blocked_on: Optional[str] = None
 
-    concept_doc: str = Field(..., min_length=1)
+    concept_doc: str | None = Field(None)
     gdrive_folder: str = Field(..., min_length=1)
     code_repo: Optional[str] = None
     local_paths: list[str] = Field(default_factory=list)

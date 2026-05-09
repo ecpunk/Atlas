@@ -5,7 +5,6 @@ summary: |
   knowledge base from agent workflows.
 category: vocab:lifecycle_categories:live
 status: vocab:project_statuses:installed
-concept_doc: gdrive-projects/Projects/Current/Knowledge-Server/10-CONCEPT/KNOWLEDGE_SERVER_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Current/Knowledge-Server/
 code_repo: /opt/stack/services/projects/knowledge-server
 created_at: 2026-05-08T01:42:00Z

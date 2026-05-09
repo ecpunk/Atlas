@@ -5,7 +5,6 @@ summary: |
   Operator to enrich.
 category: vocab:lifecycle_categories:live
 status: vocab:project_statuses:in_progress
-concept_doc: gdrive-projects/Projects/Live/Remodel Tracker/10-CONCEPT/REMODEL_TRACKER_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Live/Remodel Tracker/
 code_repo: /opt/stack/services/projects/Remodel_Tracker
 domain_tags:

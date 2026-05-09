@@ -11,7 +11,7 @@ AUTO-GENERATED from atlas-store/entities/services/*.yaml - do not hand-edit.
 - **Health:** http://127.0.0.1:8105/mcp
 - **Owned by:** `atlas`
 - **Depends on:** none
-- **Summary:** MCP server exposing the Atlas canonical entity store. 16 tools: 11 read (get/list for projects, services, servers, agents, rules, vocabularies, stack_summary) and 5 write (add_project, update_project, add_service, update_service, retire_service). Write tools use propose-confirm pattern.
+- **Summary:** MCP server exposing the Atlas canonical entity store. 19 tools: 11 read (get/list for projects, services, servers, agents, rules, vocabularies, stack_summary), 5 write (add_project, update_project, add_service, update_service, retire_service — propose-confirm), 3 bridge (get_output, get_kb_doc, check_drift). Write tools use propose-confirm pattern. check_drift runs reality probes against non-retired service entities. get_output reads atlas-store/outputs/; get_kb_doc reads services/docs/kb/.
 
 ## Gmail Triage (`gmail-triage`)
 

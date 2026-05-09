@@ -6,7 +6,6 @@ summary: |
   Depends on HA + NAS.
 category: vocab:lifecycle_categories:current
 status: vocab:project_statuses:concept
-concept_doc: gdrive-projects/Projects/Current/AI HVAC Balancer/10-CONCEPT/AI_HVAC_BALANCER_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Current/AI HVAC Balancer/
 domain_tags:
   - homelab
