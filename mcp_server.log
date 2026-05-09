@@ -1,0 +1,39 @@
+INFO:     Started server process [456653]
+INFO:     Waiting for application startup.
+[05/09/26 04:36:37] INFO     StreamableHTTP       streamable_http_manager.py:128
+                             session manager                                    
+                             started                                            
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8105 (Press CTRL+C to quit)
+INFO:     127.0.0.1:52006 - "POST / HTTP/1.1" 404 Not Found
+[05/09/26 04:36:49] INFO     Created new          streamable_http_manager.py:255
+                             transport with                                     
+                             session ID:                                        
+                             3a00ff1ef9ee46d9b6c4                               
+                             9988bf2ce8f7                                       
+INFO:     127.0.0.1:52014 - "POST /mcp HTTP/1.1" 400 Bad Request
+[05/09/26 04:42:32] INFO     Created new          streamable_http_manager.py:255
+                             transport with                                     
+                             session ID:                                        
+                             c17aad0df7d549809e14                               
+                             62347cf31ee2                                       
+INFO:     127.0.0.1:46908 - "GET /mcp HTTP/1.1" 406 Not Acceptable
+[05/09/26 04:42:36] INFO     Created new          streamable_http_manager.py:255
+                             transport with                                     
+                             session ID:                                        
+                             46efafd9c58a45f0bcbf                               
+                             b8e4719acdcf                                       
+INFO:     127.0.0.1:46918 - "GET /mcp HTTP/1.1" 406 Not Acceptable
+[05/09/26 04:42:45] INFO     Created new          streamable_http_manager.py:255
+                             transport with                                     
+                             session ID:                                        
+                             109f37189c2a489babcc                               
+                             1b3211b21820                                       
+INFO:     127.0.0.1:60478 - "GET /mcp HTTP/1.1" 406 Not Acceptable
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+[05/09/26 04:43:04] INFO     StreamableHTTP       streamable_http_manager.py:132
+                             session manager                                    
+                             shutting down                                      
+INFO:     Application shutdown complete.
+INFO:     Finished server process [456653]

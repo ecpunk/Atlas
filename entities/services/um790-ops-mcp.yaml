@@ -1,0 +1,30 @@
+id: um790-ops-mcp
+name: UM790 Ops MCP
+summary: |
+  MCP service providing local operations tooling: shell execution, docker
+  lifecycle management, service health, logs. Intended as the permanent home
+  for ops tools migrated out of knowledge-server as part of the pre-Atlas
+  compensation retirement track.
+service_type: vocab:service_types:mcp_http
+lifecycle: vocab:service_lifecycles:running
+host: server:um790
+deployment_path: /opt/stack/services/projects/um790-ops-mcp/
+port: 8103
+health_endpoint: http://127.0.0.1:8103/mcp
+systemd_unit: um790-ops-mcp.service
+owned_by: project:um790-ops-mcp
+depends_on: []
+last_health_check: null
+last_health_status: vocab:health_statuses:unknown
+failure_modes:
+  - shell_exec timeout if UM790_OPS_TOOL_TIMEOUT_SECONDS is too low for the command
+  - docker_action on non-existent container returns non-zero exit but does not raise
+tools:
+  - shell_exec
+  - docker_action
+  - server_status
+  - service_logs
+  - docker_status
+resource_budget_ram_mb: null
+created_at: 2026-05-09T14:30:00Z
+updated_at: 2026-05-09T14:30:00Z
