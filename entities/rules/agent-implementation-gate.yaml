@@ -1,0 +1,43 @@
+id: agent-implementation-gate
+name: Agent Implementation Gate
+description: |
+  Before writing any implementation file, the agent must have read the concept
+  doc or spec for the current project. Applies to all surfaces.
+
+  Rules:
+  1. Before writing any implementation file — read the concept doc or spec.
+     If none exists, stop and tell the operator. Do not implement from general
+     knowledge.
+  2. Before writing each component — re-read the specific section of the spec
+     that governs that component. Do not rely on memory.
+  3. After writing each file — re-read the relevant spec section and verify
+     the implementation matches. Fix immediately if it does not.
+  4. Never invent architecture, auth patterns, API shapes, or conventions not
+     in the spec. If the spec is silent, stop and ask.
+  5. Never pattern-match from another project without confirming the spec
+     authorizes that pattern for the current project.
+  6. Never justify an implementation decision by referencing another project.
+     Every decision traces back to the current project's spec.
+
+  When starting implementation: acknowledge this gate explicitly before writing
+  any code.
+scope: vocab:rule_scopes:agent_behavior
+severity: vocab:rule_severities:error
+applies_to: agent_session
+check_kind: vocab:rule_check_kinds:process_gate
+check_definition: |
+  Before any implementation file: concept doc or spec must be read.
+  Before each component: relevant spec section must be re-read from disk.
+  After each file: verify written content matches spec section read from disk.
+  No architecture, patterns, or conventions invented beyond what the spec defines.
+fix_tier: vocab:rule_fix_tiers:block
+fix_action: |
+  Stop. Read the concept doc or relevant spec section before continuing.
+  If no spec exists, surface this to the operator before writing any code.
+enforcement_point: vocab:enforcement_points:pre_action
+on_violation: |
+  Block. Do not write any code until the spec has been read and the gate
+  is acknowledged.
+authored_by: operator
+created_at: 2026-05-09T02:00:00Z
+updated_at: 2026-05-09T02:00:00Z

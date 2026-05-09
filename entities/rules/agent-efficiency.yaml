@@ -1,0 +1,35 @@
+id: agent-efficiency
+name: Agent Efficiency
+description: |
+  Operational efficiency invariants for AI agents. Prevents wasted context,
+  unnecessary reads, and sequential operations where parallelism is safe.
+  Applies to all surfaces.
+
+  Rules:
+  - Investigate from logs first (journalctl, docker logs). Only read source
+    code if logs do not explain the failure.
+  - Do not read files tangential to the current task.
+  - Run independent subtasks in parallel when they do not share resources.
+  - Do not over-explore when sufficient context exists to act. Multiple
+    searches returning overlapping results means context is sufficient.
+  - Batch independent reads rather than searching speculatively.
+  - Do not retry the same failing approach twice. After two failures, try an
+    alternative strategy.
+scope: vocab:rule_scopes:agent_behavior
+severity: vocab:rule_severities:warn
+applies_to: agent_session
+check_kind: vocab:rule_check_kinds:process_gate
+check_definition: |
+  Investigation starts with logs before source code.
+  Independent operations run in parallel.
+  Tangential file reads are avoided.
+  Approach changes after two failures.
+fix_tier: vocab:rule_fix_tiers:flag
+fix_action: null
+enforcement_point: vocab:enforcement_points:all
+on_violation: |
+  Flag inefficiency. Adjust approach: check logs first, parallelize independent
+  reads, stop reading tangential files.
+authored_by: operator
+created_at: 2026-05-09T02:00:00Z
+updated_at: 2026-05-09T02:00:00Z

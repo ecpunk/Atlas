@@ -1,0 +1,35 @@
+id: agent-task-closure
+name: Agent Task Closure
+description: |
+  Before declaring any task complete, the agent must run the Task Closure
+  checklist. "Done" means the code works AND the docs reflect it.
+  Applies to all surfaces.
+
+  Checklist — evaluate each before declaring done:
+  1. UM790_SOURCE_OF_TRUTH.md — update if services, topology, or completed
+     tasks changed, or new scripts/automations were deployed.
+  2. Concept doc (*_CONCEPT.md) — update if architecture changed, design
+     decisions were made, or phases completed.
+  3. README.md — update if interface, behavior, or setup steps changed.
+  4. CHANGELOG.md — update if user-facing behavior changed.
+  5. docs/ guides/runbook — update if operational procedures changed.
+
+  If none of the five apply, state that explicitly. Do not silently skip.
+scope: vocab:rule_scopes:agent_behavior
+severity: vocab:rule_severities:error
+applies_to: agent_session
+check_kind: vocab:rule_check_kinds:process_gate
+check_definition: |
+  Before task_complete: evaluate all five checklist items.
+  Each that applies must be updated before declaring done.
+  If none apply, state explicitly that none apply.
+fix_tier: vocab:rule_fix_tiers:block
+fix_action: |
+  Do not declare the task complete. Run the five-point checklist.
+  Update each applicable doc, then re-evaluate.
+enforcement_point: vocab:enforcement_points:task_closure
+on_violation: |
+  Block task_complete. Apply the checklist and update docs before continuing.
+authored_by: operator
+created_at: 2026-05-09T02:00:00Z
+updated_at: 2026-05-09T02:00:00Z

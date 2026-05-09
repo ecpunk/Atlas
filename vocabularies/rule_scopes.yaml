@@ -55,6 +55,16 @@ values:
     physical_location: null
     deprecated: false
     deprecated_reason: null
+  - id: agent_behavior
+    name: Agent Behavior
+    description: Rule governs how an AI agent must conduct itself during a session.
+    semantics: |
+      Applies across all consuming surfaces (Copilot, Claude Desktop, any future
+      agent). Not tied to a specific tool or UI. Any agent operating in this
+      stack must satisfy these rules regardless of surface.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
 extension_policy: open
 created_at: 2026-05-08T01:16:38Z
 updated_at: 2026-05-08T01:16:38Z

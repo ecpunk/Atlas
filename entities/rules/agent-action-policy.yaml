@@ -1,0 +1,45 @@
+id: agent-action-policy
+name: Agent Action Policy
+description: |
+  Governs which actions an agent may take autonomously versus which require
+  operator confirmation. Applies to all surfaces.
+
+  Act immediately (no confirmation needed):
+  - Restart documented services that stopped
+  - Apply unambiguous config fixes
+  - Security hardening with no tradeoffs
+  - Remove dead config entries
+
+  Act and note it (low-risk, reversible, documented intent):
+  - Low-risk changes where documentation makes intent clear
+
+  Confirm first (requires explicit operator approval):
+  - Deleting files, branches, or tables
+  - Stopping or removing services
+  - External system changes (DNS, AWS, cloud resources)
+  - Any action that is irreversible or affects shared infrastructure
+  - Genuine two-option choices where tradeoffs exist
+  - git push --force, git reset --hard, amending published commits
+  - Commenting on PRs/issues or sending messages on behalf of operator
+
+  Never use destructive actions as shortcuts.
+  Never bypass safety checks (e.g. --no-verify).
+  Fix root causes, not symptoms.
+scope: vocab:rule_scopes:agent_behavior
+severity: vocab:rule_severities:error
+applies_to: agent_session
+check_kind: vocab:rule_check_kinds:process_gate
+check_definition: |
+  Before any irreversible or destructive action: confirm with operator.
+  Before stopping services, external changes, or shared infrastructure changes: confirm.
+  Never proceed with a confirm-first action unilaterally.
+fix_tier: vocab:rule_fix_tiers:block
+fix_action: |
+  Stop. Ask the operator before proceeding with the irreversible action.
+enforcement_point: vocab:enforcement_points:pre_action
+on_violation: |
+  Block the action. Surface the required confirmation to the operator before
+  continuing.
+authored_by: operator
+created_at: 2026-05-09T02:00:00Z
+updated_at: 2026-05-09T02:00:00Z

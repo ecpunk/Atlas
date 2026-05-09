@@ -96,6 +96,16 @@ values:
     physical_location: null
     deprecated: false
     deprecated_reason: null
+  - id: process_gate
+    name: Process Gate
+    description: Rule encodes a required agent behavior or process discipline step.
+    semantics: |
+      Not machine-evaluated against a schema. Represents a behavioral invariant
+      that any consuming agent must follow. check_definition describes the
+      required behavior. Enforced at the declared enforcement_point.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
 extension_policy: open
 created_at: 2026-05-08T17:39:44Z
 updated_at: 2026-05-08T17:39:44Z

@@ -1,0 +1,37 @@
+id: agent-behavior
+name: Agent Behavior Rules
+description: |
+  Core behavioral invariants for any AI agent operating in this stack.
+  Applies across all surfaces (Copilot, Claude Desktop, any future agent).
+
+  Rules:
+  - Documentation opens and closes every task. Open: read existing docs (SOT,
+    READMEs, compose files, concept docs) before acting. Close: run Task
+    Closure before declaring done.
+  - Discover first, act second. Verify state before making changes.
+  - Choose where information lives based on who needs it and how it travels.
+  - Never guess paths, service names, or configs. Read them.
+  - Never assume operator preferences — ask only when documentation does not
+    resolve the question.
+  - After every file write, read back and confirm content landed.
+  - Refactor continuously. If something has drifted or outgrown its home, fix
+    the structure as you go.
+scope: vocab:rule_scopes:agent_behavior
+severity: vocab:rule_severities:error
+applies_to: agent_session
+check_kind: vocab:rule_check_kinds:process_gate
+check_definition: |
+  Before acting: read relevant existing docs to determine intent.
+  Never assume system state. Verify, do not guess.
+  After writes: read back to confirm. Do not proceed if write is unverified.
+fix_tier: vocab:rule_fix_tiers:block
+fix_action: |
+  Stop. Read the relevant existing docs. Verify system state.
+  Confirm the write landed before continuing.
+enforcement_point: vocab:enforcement_points:all
+on_violation: |
+  Stop the current action. Perform the missing discovery or verification step
+  before continuing.
+authored_by: operator
+created_at: 2026-05-09T02:00:00Z
+updated_at: 2026-05-09T02:00:00Z

@@ -1,0 +1,35 @@
+id: agent-documentation-discipline
+name: Agent Documentation Discipline
+description: |
+  Every service the agent creates or modifies must meet the documentation
+  standard. Applies to all surfaces.
+
+  Rules:
+  - Every service must document: Purpose, Setup, Invocation, Dependencies,
+    Failure Modes, Last Verified.
+  - New services must scaffold from /opt/stack/services/templates/.
+  - Existing services that do not meet the full standard must be brought to
+    full coverage the next time that service is modified for any reason.
+  - DOCUMENTATION_INVENTORY.md must be regenerated weekly; HIGH RISK gaps
+    must be resolved on the next touch of the impacted service.
+  - FAILURE MODES is mandatory for any service with a systemd unit, a
+    container runtime surface, or an external endpoint.
+scope: vocab:rule_scopes:agent_behavior
+severity: vocab:rule_severities:error
+applies_to: agent_session
+check_kind: vocab:rule_check_kinds:process_gate
+check_definition: |
+  Any service created or modified must have all six documentation fields
+  present before the task is declared done.
+  New services must use the template scaffold.
+  FAILURE MODES is mandatory for systemd, container, or external endpoint services.
+fix_tier: vocab:rule_fix_tiers:block
+fix_action: |
+  Add missing documentation sections before declaring the task done.
+  Use /opt/stack/services/templates/ for scaffold.
+enforcement_point: vocab:enforcement_points:task_closure
+on_violation: |
+  Block task closure until missing documentation is added.
+authored_by: operator
+created_at: 2026-05-09T02:00:00Z
+updated_at: 2026-05-09T02:00:00Z
