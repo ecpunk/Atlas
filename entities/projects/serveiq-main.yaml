@@ -8,8 +8,9 @@ status: vocab:project_statuses:installed
 concept_doc: docs/kb/Projects/ServeIQ Main/10-CONCEPT/SERVEIQ_MAIN_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Live/ServeIQ/
 code_repo: /opt/stack/services/apps/serveiq
+remote: local-monorepo:/opt/stack/services
 domain_tags:
   - software
   - saas
 created_at: 2026-05-08T02:05:13Z
-updated_at: 2026-05-08T04:35:55Z
+updated_at: 2026-05-10T19:10:29Z

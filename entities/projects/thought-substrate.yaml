@@ -8,8 +8,9 @@ status: vocab:project_statuses:in_progress
 concept_doc: docs/kb/Projects/Thought Substrate/10-CONCEPT/THOUGHT_SUBSTRATE_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Current/Thought Substrate/
 code_repo: /opt/stack/services/projects/thought-substrate
+remote: local-monorepo:/opt/stack/services
 domain_tags:
   - ai
   - research
 created_at: 2026-05-08T02:05:13Z
-updated_at: 2026-05-08T04:35:55Z
+updated_at: 2026-05-10T19:10:29Z

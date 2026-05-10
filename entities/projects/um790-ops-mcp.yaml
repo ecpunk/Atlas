@@ -9,9 +9,10 @@ status: vocab:project_statuses:active
 concept_doc: "/opt/stack/services/projects/um790-ops-mcp/README.md"
 gdrive_folder: "Projects/Live/UM790-Ops-MCP/"
 code_repo: /opt/stack/services/projects/um790-ops-mcp
+remote: local-monorepo:/opt/stack/services
 created_at: 2026-05-09T14:30:00Z
 domain_tags:
   - infrastructure
   - mcp
   - operations
-updated_at: 2026-05-09T14:30:00Z
+updated_at: 2026-05-10T19:10:29Z

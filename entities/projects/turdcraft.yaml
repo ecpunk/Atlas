@@ -8,8 +8,9 @@ status: vocab:project_statuses:installed
 concept_doc: docs/kb/Projects/Turdcraft/10-CONCEPT/TURDCRAFT_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Live/Turdcraft/
 code_repo: /opt/stack/services/apps/minecraft-turdcraft
+remote: local-monorepo:/opt/stack/services
 domain_tags:
   - homelab
   - gaming
 created_at: 2026-05-08T02:05:13Z
-updated_at: 2026-05-08T04:35:55Z
+updated_at: 2026-05-10T19:10:29Z
