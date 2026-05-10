@@ -36,11 +36,11 @@ _ACTIVE_LIFECYCLES = {"running", "degraded"}
 
 
 def _type_id(service: Service) -> str:
-    return service.service_type.ref.split(":")[-1] if service.service_type else ""
+    return service.service_type.value_id if service.service_type else ""
 
 
 def _lifecycle_id(service: Service) -> str:
-    return service.lifecycle.ref.split(":")[-1] if service.lifecycle else ""
+    return service.lifecycle.value_id if service.lifecycle else ""
 
 
 def _score(service: Service) -> dict:
