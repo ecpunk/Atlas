@@ -1,0 +1,21 @@
+id: project-repo-must-have-remote
+name: Project repo must declare remote
+description: |
+  If a project declares code_repo, it must also declare remote so Atlas can
+  track publication and synchronization state.
+scope: vocab:rule_scopes:project
+severity: vocab:rule_severities:warn
+applies_to: project_entity
+check_kind: vocab:rule_check_kinds:field_present_if_present
+check_definition: |
+  trigger_field: code_repo
+  required_field: remote
+fix_tier: vocab:rule_fix_tiers:flag
+fix_action: null
+enforcement_point: vocab:enforcement_points:all
+on_violation: |
+  Flag the project in compliance output and require remote metadata to be
+  added before treating repo synchronization state as complete.
+authored_by: operator
+created_at: 2026-05-10T20:20:00Z
+updated_at: 2026-05-10T20:20:00Z

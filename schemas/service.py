@@ -34,6 +34,7 @@ class Service(BaseModel):
     systemd_unit: Optional[str] = None
     network_binding: Optional[str] = None  # "localhost", "lan", "tailscale", "public"
     auth: Optional[ServiceAuth] = None
+    remote: Optional[str] = None
 
     owned_by: TypedRef
     depends_on: list[TypedRef] = Field(default_factory=list)

@@ -44,6 +44,7 @@ def generate(store: dict) -> dict[str, str]:
         )
         port = str(service.port) if service.port is not None else "n/a"
         health = service.health_endpoint if service.health_endpoint else "n/a"
+        remote = service.remote if service.remote else "n/a"
         depends = ", ".join(ref.id for ref in service.depends_on) if service.depends_on else "none"
         summary = " ".join(service.summary.split())
 
@@ -56,6 +57,7 @@ def generate(store: dict) -> dict[str, str]:
                 f"- **Host:** `{service.host.id}`",
                 f"- **Port:** {port}",
                 f"- **Health:** {health}",
+                f"- **Remote:** {remote}",
                 f"- **Owned by:** `{service.owned_by.id}`",
                 f"- **Depends on:** {depends}",
                 f"- **Summary:** {summary}",

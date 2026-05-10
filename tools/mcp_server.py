@@ -332,6 +332,7 @@ def add_project(
     concept_doc: str,
     gdrive_folder: str,
     code_repo: str = "",
+    remote: str = "",
 ) -> dict[str, Any]:
     """Add a new project entity to the Atlas store. Autonomous — writes and commits immediately.
 
@@ -358,6 +359,8 @@ def add_project(
     }
     if code_repo:
         data["code_repo"] = code_repo
+    if remote:
+        data["remote"] = remote
 
     return _write_and_commit("projects", id, data, f"feat: add project {id} via Atlas Write API")
 
@@ -374,6 +377,7 @@ def update_project(
     next_action: str = "",
     blocked_on: str = "",
     code_repo: str = "",
+    remote: str = "",
 ) -> dict[str, Any]:
     """Update fields on an existing project entity.
 
@@ -406,6 +410,8 @@ def update_project(
         after["blocked_on"] = blocked_on
     if code_repo:
         after["code_repo"] = code_repo
+    if remote:
+        after["remote"] = remote
     after["updated_at"] = _now_iso()
 
     if not confirm:
@@ -433,6 +439,7 @@ def add_service(
     owned_by: str = "",
     health_endpoint: str = "",
     systemd_unit: str = "",
+    remote: str = "",
 ) -> dict[str, Any]:
     """Add a new service entity to the Atlas store. Autonomous — writes and commits immediately.
 
@@ -464,6 +471,8 @@ def add_service(
         data["health_endpoint"] = health_endpoint
     if systemd_unit:
         data["systemd_unit"] = systemd_unit
+    if remote:
+        data["remote"] = remote
 
     return _write_and_commit("services", id, data, f"feat: add service {id} via Atlas Write API")
 
@@ -478,6 +487,7 @@ def update_service(
     systemd_unit: str = "",
     source_of_truth_doc: str = "",
     summary: str = "",
+    remote: str = "",
 ) -> dict[str, Any]:
     """Update fields on an existing service entity.
 
@@ -506,6 +516,8 @@ def update_service(
         after["source_of_truth_doc"] = source_of_truth_doc
     if summary:
         after["summary"] = summary
+    if remote:
+        after["remote"] = remote
     after["updated_at"] = _now_iso()
 
     if not confirm:

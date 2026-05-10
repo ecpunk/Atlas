@@ -44,6 +44,7 @@ class Project(BaseModel):
     concept_doc: str | None = Field(None)
     gdrive_folder: Optional[str] = None
     code_repo: Optional[str] = None
+    remote: Optional[str] = None
     local_paths: list[str] = Field(default_factory=list)
 
     depends_on: list[TypedRef] = Field(default_factory=list)

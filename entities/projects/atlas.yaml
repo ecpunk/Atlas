@@ -10,6 +10,8 @@ summary: |
 category: vocab:lifecycle_categories:current
 status: vocab:project_statuses:in_progress
 concept_doc: docs/kb/Projects/Atlas/10-CONCEPT/ATLAS.md
+code_repo: /opt/stack/atlas-store
+remote: https://github.com/ecpunk/Atlas.git
 domain_tags:
   - kb
   - infrastructure
@@ -70,10 +72,11 @@ open_items:
     created: "2026-05-10"
     resolved: "2026-05-10"
   - id: "4"
-    description: "Project and Service schemas have no remote field. atlas-public has a GitHub remote (ecpunk/Atlas) that is invisible to the canonical store and has not been synced since initial release. Evaluate: add remote: Optional[str] to Project+Service schemas, add a compliance rule flagging projects with repos but no declared remote, and establish a sync workflow for atlas-public."
+    description: "Completed: Added remote field to Project and Service schemas, added a compliance rule for code_repo-without-remote, and documented atlas-public sync workflow in PUBLIC.md."
     created: "2026-05-10"
+    resolved: "2026-05-10"
 
-last_done: "2026-05-10: Atlas MCP session reliability restored (stale proxy worker refresh + strict 4-step gate), concept_doc coverage completed for all project entities, and 40-OUTPUT regenerated from current store state."
-next_action: "Phase 8 continued: add remote field to Project/Service schemas (item 4), then close house-remodel retired gdrive stub cleanup (item 2)."
+last_done: "2026-05-10: Added remote visibility support (Project/Service schema + write API + compliance rule), captured Atlas public mirror remote in canonical metadata, and documented sync workflow in PUBLIC.md."
+next_action: "Phase 8 continued: close house-remodel retired gdrive stub cleanup (item 2), then implement loop closure and intelligent escalation flow wiring."
 created_at: 2026-05-08T15:27:11Z
-updated_at: 2026-05-10T19:05:00Z
+updated_at: 2026-05-10T20:20:00Z

@@ -147,6 +147,47 @@ def _parse_field_value_definition(raw: str) -> tuple[str, Any, str]:
     raise ValueError("field_value check_definition must be a string or mapping")
 
 
+def _parse_field_present_if_present_definition(raw: str) -> tuple[str, str]:
+    parsed = _parse_definition(raw)
+
+    if isinstance(parsed, dict):
+        trigger_field = (
+            parsed.get("trigger_field")
+            or parsed.get("if_field")
+            or parsed.get("when_field")
+        )
+        required_field = (
+            parsed.get("required_field")
+            or parsed.get("then_field")
+        )
+
+        if isinstance(trigger_field, str) and isinstance(required_field, str):
+            trigger = trigger_field.strip()
+            required = required_field.strip()
+            if trigger and required:
+                return trigger, required
+
+        raise ValueError(
+            "field_present_if_present check_definition requires trigger_field and required_field"
+        )
+
+    if isinstance(parsed, str):
+        text = parsed.strip()
+        if "->" not in text:
+            raise ValueError("field_present_if_present string definition must use '->'")
+
+        trigger_raw, required_raw = text.split("->", 1)
+        trigger = trigger_raw.strip()
+        required = required_raw.strip()
+        if not trigger or not required:
+            raise ValueError(
+                "field_present_if_present definition must include trigger and required field names"
+            )
+        return trigger, required
+
+    raise ValueError("field_present_if_present check_definition must be a string or mapping")
+
+
 def _resolve_vocab_ref(value: Any) -> VocabRef | None:
     if isinstance(value, VocabRef):
         return value
@@ -244,6 +285,46 @@ def _check_field_value(entity: BaseModel, check_definition: str) -> CheckResult:
     return ("pass" if matched else "fail", detail, evidence)
 
 
+def _check_field_present_if_present(entity: BaseModel, check_definition: str) -> CheckResult:
+    trigger_field, required_field = _parse_field_present_if_present_definition(check_definition)
+
+    trigger_value = getattr(entity, trigger_field, _MISSING)
+    if trigger_value is _MISSING:
+        return (
+            "fail",
+            f"Trigger field '{trigger_field}' not found on entity.",
+            f"{trigger_field}=missing",
+        )
+
+    if _is_blank(trigger_value):
+        return (
+            "pass",
+            f"Rule not applicable because trigger field '{trigger_field}' is empty.",
+            f"{trigger_field}={_render_value(trigger_value)}",
+        )
+
+    required_value = getattr(entity, required_field, _MISSING)
+    if required_value is _MISSING:
+        return (
+            "fail",
+            f"Required field '{required_field}' not found on entity.",
+            f"{required_field}=missing; trigger={trigger_field}",
+        )
+
+    if _is_blank(required_value):
+        return (
+            "fail",
+            f"Field '{required_field}' must be set when '{trigger_field}' is set.",
+            f"{trigger_field}={_render_value(trigger_value)}; {required_field}={_render_value(required_value)}",
+        )
+
+    return (
+        "pass",
+        f"Field '{required_field}' is present when '{trigger_field}' is set.",
+        f"{trigger_field}={_render_value(trigger_value)}; {required_field}={_render_value(required_value)}",
+    )
+
+
 def _check_vocab_ref_valid(
     entity: BaseModel,
     check_definition: str,
@@ -304,6 +385,8 @@ def _evaluate_rule(rule: Rule, entity: BaseModel, vocab_store: dict[str, Any]) -
         return _check_field_present(entity, rule.check_definition)
     if kind == "field_value":
         return _check_field_value(entity, rule.check_definition)
+    if kind == "field_present_if_present":
+        return _check_field_present_if_present(entity, rule.check_definition)
     if kind == "vocab_ref_valid":
         return _check_vocab_ref_valid(entity, rule.check_definition, vocab_store)
     if kind in {"llm_evaluated", "manual"}:

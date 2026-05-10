@@ -20,6 +20,7 @@ def _flatten_summary(summary: str) -> str:
 def _render_project(project: Project) -> list[str]:
     drive_folder = project.gdrive_folder if project.gdrive_folder else "n/a"
     code_repo = project.code_repo if project.code_repo else "n/a"
+    remote = project.remote if project.remote else "n/a"
     domain_tags = ", ".join(project.domain_tags) if project.domain_tags else "n/a"
 
     return [
@@ -30,6 +31,7 @@ def _render_project(project: Project) -> list[str]:
         f"- **Summary:** {_flatten_summary(project.summary)}",
         f"- **Drive folder:** {drive_folder}",
         f"- **Code repo:** {code_repo}",
+        f"- **Remote:** {remote}",
         "",
     ]
 
