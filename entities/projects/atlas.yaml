@@ -51,8 +51,12 @@ phases:
       (min_plan_number grandfathering for genesis/phases/source-docs rules; PLAN-001 through PLAN-009 frontmatter added).
   - id: "8"
     name: Operational layer
-    status: not_started
-    notes: "Daily brief, drift detection, schedule mgmt, intelligent escalation, loop closure, resource budget enforcement."
+    status: partial
+    notes: |
+      Drift detection + auto-remediation implemented: drift_runner.py parses coverage reports, remediate.py
+      dispatches auto/propose/flag tiers. drift_report.py generator → Drift Report.md in 40-OUTPUT/.
+      atlas-drift.service/.timer installed, running daily 06:00 UTC. staging/ dir for propose-tier stubs.
+      Remaining: daily brief, loop closure, intelligent escalation, resource budget enforcement.
 
 open_items:
   - id: "1"
@@ -69,7 +73,8 @@ open_items:
     description: "Project and Service schemas have no remote field. atlas-public has a GitHub remote (ecpunk/Atlas) that is invisible to the canonical store and has not been synced since initial release. Evaluate: add remote: Optional[str] to Project+Service schemas, add a compliance rule flagging projects with repos but no declared remote, and establish a sync workflow for atlas-public."
     created: "2026-05-10"
 
-last_done: "2026-05-10: Plan compliance fixes — min_plan_number grandfathering for genesis/phases/source-docs rules, frontmatter added to PLAN-001 through PLAN-009. Plan Compliance Report: 0 failures."
-next_action: "Evaluate remote field for Project/Service schemas (item 4) or begin Phase 8 (daily brief / loop closure)."
+last_done: "2026-05-10: Phase 8 drift detection + remediation — drift_runner, remediate, drift_report generator,\
+  \ atlas-drift.service/.timer. 30 drift records detected (1 auto, 29 propose). Timer active."
+next_action: "Phase 8 continued: daily brief generator or remote field for Project/Service schemas (item 4)."
 created_at: 2026-05-08T15:27:11Z
-updated_at: 2026-05-10T01:30:00Z
+updated_at: 2026-05-10T03:45:00Z
