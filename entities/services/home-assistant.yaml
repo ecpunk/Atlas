@@ -1,20 +1,22 @@
 id: home-assistant
 name: Home Assistant
-summary: |
-  Home Assistant runtime providing local home automation orchestration and UI.
+summary: 'Home Assistant runtime providing local home automation orchestration and
+  UI.
+
+  '
 service_type: vocab:service_types:docker_container
 lifecycle: vocab:service_lifecycles:running
 host: server:um790
 deployment_path: /opt/stack/services/apps/homeassistant/
 port: 8123
-health_endpoint: http://127.0.0.1:8123/
+health_endpoint: https://127.0.0.1:8123/
 systemd_unit: null
 owned_by: project:home-assistant
 depends_on: []
 last_health_check: null
 last_health_status: vocab:health_statuses:unknown
 failure_modes:
-  - deployment metadata incomplete — backfill in future plan
+- deployment metadata incomplete — backfill in future plan
 resource_budget_ram_mb: null
-created_at: 2026-05-08T01:45:00Z
-updated_at: 2026-05-08T01:45:00Z
+created_at: 2026-05-08 01:45:00+00:00
+updated_at: '2026-05-10T17:12:32Z'
