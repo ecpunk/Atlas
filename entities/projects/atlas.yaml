@@ -63,7 +63,7 @@ open_items:
     description: "9 projects have local concept docs but no atlas-store entity: CNC Air Blaster, Cognitive Substrate, Dev Framework Extension, Hardware Information, Home Command, Jarvis, Module Library, Operator Kernel, Paradigm Shift."
     created: "2026-05-09"
   - id: "2"
-    description: "house-remodel.yaml: gdrive_folder field is a stub (schema requires non-empty string). No concept doc authored."
+    description: "house-remodel.yaml: gdrive_folder field is a retired stub value. Concept doc coverage is now complete; remaining cleanup is replacing retired:gdrive path with current ownership metadata."
     created: "2026-05-09"
   - id: "3"
     description: "5 plan compliance failures: plan docs missing required frontmatter (Plan number, model, run order) and Genesis alignment sections. Fix: add frontmatter to each plan doc or update plan_check schema."
@@ -73,8 +73,7 @@ open_items:
     description: "Project and Service schemas have no remote field. atlas-public has a GitHub remote (ecpunk/Atlas) that is invisible to the canonical store and has not been synced since initial release. Evaluate: add remote: Optional[str] to Project+Service schemas, add a compliance rule flagging projects with repos but no declared remote, and establish a sync workflow for atlas-public."
     created: "2026-05-10"
 
-last_done: "2026-05-10: Phase 8 drift detection + remediation — drift_runner, remediate, drift_report generator,\
-  \ atlas-drift.service/.timer. 30 drift records detected (1 auto, 29 propose). Timer active."
-next_action: "Phase 8 continued: daily brief generator or remote field for Project/Service schemas (item 4)."
+last_done: "2026-05-10: Atlas MCP session reliability restored (stale proxy worker refresh + strict 4-step gate), concept_doc coverage completed for all project entities, and 40-OUTPUT regenerated from current store state."
+next_action: "Phase 8 continued: add remote field to Project/Service schemas (item 4), then close house-remodel retired gdrive stub cleanup (item 2)."
 created_at: 2026-05-08T15:27:11Z
-updated_at: 2026-05-10T03:45:00Z
+updated_at: 2026-05-10T19:05:00Z
