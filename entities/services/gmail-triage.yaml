@@ -1,20 +1,22 @@
 id: gmail-triage
 name: Gmail Triage
-summary: |
-  Gmail processing workflow with batch run mode and a companion dashboard UI.
+summary: 'Gmail processing workflow with batch run mode and a companion dashboard
+  UI.
+
+  '
 service_type: vocab:service_types:docker_container
 lifecycle: vocab:service_lifecycles:maintained
 host: server:um790
 deployment_path: /opt/stack/services/apps/gmail-triage/
 port: 8093
 health_endpoint: http://127.0.0.1:8093/
-systemd_unit: gmail-triage.service
+systemd_unit: gmail-triage.timer
 owned_by: project:gmail-triage
 depends_on: []
 last_health_check: null
 last_health_status: vocab:health_statuses:unknown
 failure_modes:
-  - batch worker may be inactive while dashboard remains up
+- batch worker may be inactive while dashboard remains up
 resource_budget_ram_mb: 512
-created_at: 2026-05-08T01:45:00Z
-updated_at: 2026-05-08T01:45:00Z
+created_at: 2026-05-08 01:45:00+00:00
+updated_at: '2026-05-10T17:12:32Z'
