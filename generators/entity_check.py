@@ -14,7 +14,7 @@ from schemas.vocabulary import Vocabulary
 NAME = "entity_check"
 INPUTS = ["rule:*"]
 OUTPUTS = [
-    "/opt/stack/services/gdrive-projects/Projects/Current/Atlas/40-OUTPUT/Entity Compliance Report.md"
+    "/opt/stack/services/docs/kb/Projects/Atlas/40-OUTPUT/Entity Compliance Report.md"
 ]
 
 _ENTITY_SUFFIX = "_entity"

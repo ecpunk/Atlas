@@ -7,7 +7,7 @@ from schemas.project import Project
 NAME = "atlas_status"
 INPUTS = ["project:atlas"]
 OUTPUTS = [
-    "/opt/stack/services/gdrive-projects/Projects/Current/Atlas/40-OUTPUT/Atlas Status.md"
+    "/opt/stack/services/docs/kb/Projects/Atlas/40-OUTPUT/Atlas Status.md"
 ]
 
 _STATUS_SYMBOL = {

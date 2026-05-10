@@ -1,0 +1,20 @@
+id: service-docker-container-name-present
+name: Docker service must declare container_name
+description: |
+  Every docker_container service must declare container_name so health probes
+  and restart ops can reference the live container without manual lookup.
+scope: vocab:rule_scopes:service
+severity: vocab:rule_severities:warn
+applies_to: service_entity:docker_container
+check_kind: vocab:rule_check_kinds:field_present
+check_definition: container_name
+fix_tier: vocab:rule_fix_tiers:flag
+fix_action: null
+enforcement_point: vocab:enforcement_points:all
+on_violation: |
+  Add container_name to the service entity. The value should match the
+  container name in docker-compose.yml or the docker run --name argument.
+  Use: `container_name: <name>`
+authored_by: operator
+created_at: 2025-05-10T00:00:00Z
+updated_at: 2025-05-10T00:00:00Z

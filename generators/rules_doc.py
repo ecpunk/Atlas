@@ -5,7 +5,7 @@ from schemas.vocabulary import Vocabulary
 
 NAME = "rules_doc"
 INPUTS = ["rule:*"]
-OUTPUTS = ["/opt/stack/services/gdrive-projects/Projects/Current/Atlas/40-OUTPUT/Rules.md"]
+OUTPUTS = ["/opt/stack/services/docs/kb/Projects/Atlas/40-OUTPUT/Rules.md"]
 
 HEADER = "AUTO-GENERATED from atlas-store/entities/rules/*.yaml - do not hand-edit."
 

@@ -11,7 +11,7 @@ from schemas.rule import Rule
 NAME = "plan_check"
 INPUTS = ["rule:*"]
 OUTPUTS = [
-    "/opt/stack/services/gdrive-projects/Projects/Current/Atlas/40-OUTPUT/Plan Compliance Report.md"
+    "/opt/stack/services/docs/kb/Projects/Atlas/40-OUTPUT/Plan Compliance Report.md"
 ]
 
 _PLAN_ROOT = Path("/opt/stack/services/docs/kb/Projects/Atlas/20-DESIGN")

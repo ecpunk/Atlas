@@ -4,7 +4,7 @@ from schemas.server import Server
 
 NAME = "servers_index"
 INPUTS = ["server:*"]
-OUTPUTS = ["/opt/stack/services/gdrive-projects/Projects/Current/Atlas/40-OUTPUT/Servers Index.md"]
+OUTPUTS = ["/opt/stack/services/docs/kb/Projects/Atlas/40-OUTPUT/Servers Index.md"]
 
 HEADER = "AUTO-GENERATED from atlas-store/entities/servers/*.yaml -- do not hand-edit."
 

@@ -9,7 +9,7 @@ from schemas.vocabulary import Vocabulary
 NAME = "project_index"
 INPUTS = ["project:*"]
 OUTPUTS = [
-    "/opt/stack/services/gdrive-projects/Projects/Current/Atlas/40-OUTPUT/Project Index (generated).md"
+    "/opt/stack/services/docs/kb/Projects/Atlas/40-OUTPUT/Project Index (generated).md"
 ]
 
 

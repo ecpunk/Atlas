@@ -38,6 +38,11 @@ class Service(BaseModel):
     owned_by: TypedRef
     depends_on: list[TypedRef] = Field(default_factory=list)
 
+    # Docker-specific operational metadata (applies to docker_container service_type)
+    container_name: Optional[str] = None   # docker container name for health / restart ops
+    restartable: Optional[bool] = None     # whether ops scripts may restart this container
+    tier: Optional[str] = None            # operational tier: "critical", "standard", "optional"
+
     last_health_check: Optional[datetime] = None
     last_health_status: Optional[VocabRef] = None
 

@@ -1,0 +1,19 @@
+id: service-docker-restartable-declared
+name: Docker service must declare restartable
+description: |
+  Every docker_container service must declare restartable (true or false) so
+  ops scripts know whether automated restarts are permitted.
+scope: vocab:rule_scopes:service
+severity: vocab:rule_severities:warn
+applies_to: service_entity:docker_container
+check_kind: vocab:rule_check_kinds:field_present
+check_definition: restartable
+fix_tier: vocab:rule_fix_tiers:flag
+fix_action: null
+enforcement_point: vocab:enforcement_points:all
+on_violation: |
+  Add `restartable: true` or `restartable: false` to the service entity.
+  Default to false when uncertain.
+authored_by: operator
+created_at: 2025-05-10T00:00:00Z
+updated_at: 2025-05-10T00:00:00Z

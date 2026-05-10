@@ -1,0 +1,19 @@
+id: service-docker-tier-declared
+name: Docker service must declare operational tier
+description: |
+  Every docker_container service must declare an operational tier
+  (critical, standard, optional) to drive alert routing and restart policy.
+scope: vocab:rule_scopes:service
+severity: vocab:rule_severities:warn
+applies_to: service_entity:docker_container
+check_kind: vocab:rule_check_kinds:field_present
+check_definition: tier
+fix_tier: vocab:rule_fix_tiers:flag
+fix_action: null
+enforcement_point: vocab:enforcement_points:all
+on_violation: |
+  Add `tier: critical|standard|optional` to the service entity.
+  critical = must be running; standard = degraded if down; optional = best-effort.
+authored_by: operator
+created_at: 2025-05-10T00:00:00Z
+updated_at: 2025-05-10T00:00:00Z

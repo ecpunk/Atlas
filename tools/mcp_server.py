@@ -645,10 +645,12 @@ def check_drift(service_id: str = "", force: bool = False) -> list[dict[str, Any
 
 if __name__ == "__main__":
     import uvicorn
+    from starlette.applications import Starlette
     from starlette.middleware.base import BaseHTTPMiddleware
     from starlette.middleware.cors import CORSMiddleware
     from starlette.requests import Request
-    from starlette.responses import JSONResponse
+    from starlette.responses import JSONResponse, Response
+    from starlette.routing import Mount, Route
 
     expected_api_key = _api_key()
 
@@ -668,10 +670,39 @@ if __name__ == "__main__":
                 return JSONResponse({"error": "Unauthorized"}, status_code=401)
             return await call_next(request)
 
+    async def services_rest(request: Request) -> JSONResponse:
+        """GET /services — returns all service entities as a JSON object keyed by id.
+
+        Intended for machine consumers (e.g. catalog.py) that need structured
+        data without navigating the MCP streamable-http protocol.
+        """
+        import json as _json
+        from datetime import datetime as _dt
+        store = _get_store()
+        services = store.get("service", {})
+        result: dict[str, Any] = {}
+        for sid, service in sorted(services.items()):
+            s = _model_to_dict(service)
+            result[sid] = s
+
+        def _default(obj: Any) -> Any:
+            if isinstance(obj, _dt):
+                return obj.isoformat()
+            raise TypeError(f"Object of type {type(obj)} is not JSON serializable")
+
+        return Response(
+            content=_json.dumps(result, default=_default),
+            media_type="application/json",
+        )
+
     host = os.environ.get("ATLAS_MCP_HOST", DEFAULT_HOST)
     port = int(os.environ.get("ATLAS_MCP_PORT", str(DEFAULT_PORT)))
 
-    app = mcp.streamable_http_app()
+    mcp_app = mcp.streamable_http_app()
+    app = Starlette(routes=[
+        Route("/services", services_rest, methods=["GET"]),
+        Mount("/", mcp_app),
+    ])
     app.add_middleware(ApiKeyMiddleware)
     app.add_middleware(
         CORSMiddleware,
