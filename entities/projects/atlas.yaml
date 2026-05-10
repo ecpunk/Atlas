@@ -42,16 +42,13 @@ phases:
     notes: "add_project, update_project, add_service, update_service, retire_service — propose-confirm pattern."
   - id: "7"
     name: Generation pipeline
-    status: partial
+    status: done
     notes: |
       Post-commit hook live. All generators write to git-backed docs/kb/Projects/Atlas/40-OUTPUT/.
-      ATLAS_OUTPUT_DIR indirection removed — generators write directly, no env var rewrite.
-      atlas_status generator added. plan_check.py _PLAN_ROOT updated to docs/kb/.
-      Ring 0/1 schema: ServiceAuth model, auth + network_binding + container_name + restartable + tier fields added.
-      7 new entity_check rules (mcp_http auth/network_binding, failure_modes, docker container_name/restartable/tier, consolidation-target).
-      /services REST endpoint on atlas-mcp for machine consumers (catalog.py).
-      catalog.py reads Atlas MCP primary with catalog.json gap-fill fallback.
-      5 plan compliance failures remain: plan docs missing frontmatter (Plan number, model, run order) and Genesis sections.
+      ATLAS_OUTPUT_DIR indirection removed. Ring 0/1 schema consolidated (ServiceAuth, auth, network_binding,
+      container_name, restartable, tier). 10 new compliance rules. /services REST endpoint for machine consumers.
+      catalog.py reads Atlas MCP primary with catalog.json gap-fill fallback. Plan Compliance Report: 0 failures
+      (min_plan_number grandfathering for genesis/phases/source-docs rules; PLAN-001 through PLAN-009 frontmatter added).
   - id: "8"
     name: Operational layer
     status: not_started
