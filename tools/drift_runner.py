@@ -33,7 +33,7 @@ def _table_rows(text: str, section_heading: str) -> list[list[str]]:
     """Extract non-header rows from the markdown table under section_heading."""
     # Find the section
     pattern = re.compile(
-        rf"^## {re.escape(section_heading)}\b.*?(?=^## |\Z)",
+        rf"^## {re.escape(section_heading)}.*?(?=^## |\Z)",
         re.MULTILINE | re.DOTALL,
     )
     match = pattern.search(text)
