@@ -12,9 +12,11 @@ Returns a list of per-service drift reports.
 from __future__ import annotations
 
 import socket
+import ssl
 import subprocess
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 from pathlib import Path
 from typing import Any
@@ -69,8 +71,17 @@ def _probe_port(port: int) -> dict[str, Any]:
 def _probe_http(url: str) -> dict[str, Any]:
     try:
         req = urllib.request.Request(url, method="GET")
-        with urllib.request.urlopen(req, timeout=HTTP_TIMEOUT) as resp:
-            status = resp.status
+        scheme = urllib.parse.urlparse(url).scheme.lower()
+        if scheme == "https":
+            # Liveness probe only: allow self-signed/private certs to avoid false drift.
+            ctx = ssl.create_default_context()
+            ctx.check_hostname = False
+            ctx.verify_mode = ssl.CERT_NONE
+            with urllib.request.urlopen(req, timeout=HTTP_TIMEOUT, context=ctx) as resp:
+                status = resp.status
+        else:
+            with urllib.request.urlopen(req, timeout=HTTP_TIMEOUT) as resp:
+                status = resp.status
     except urllib.error.HTTPError as exc:
         status = exc.code
     except (urllib.error.URLError, OSError, TimeoutError):
@@ -129,7 +140,16 @@ def run_probes(service_id: str = "") -> list[dict[str, Any]]:
 
         health_endpoint = svc_dict.get("health_endpoint")
         if health_endpoint:
-            probes.append(_probe_http(health_endpoint))
+            if sid == "atlas-mcp":
+                # Avoid self-probe deadlock: check_drift runs inside atlas-mcp.
+                probes.append({
+                    "type": "health_endpoint",
+                    "expected": "not-5xx/unreachable",
+                    "actual": "skipped-self-probe",
+                    "pass": True,
+                })
+            else:
+                probes.append(_probe_http(health_endpoint))
 
         drift = any(not p["pass"] for p in probes)
         results.append({

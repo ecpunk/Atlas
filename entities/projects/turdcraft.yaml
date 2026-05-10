@@ -5,6 +5,7 @@ summary: |
   Operator to enrich.
 category: vocab:lifecycle_categories:live
 status: vocab:project_statuses:installed
+concept_doc: docs/kb/Projects/Turdcraft/10-CONCEPT/TURDCRAFT_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Live/Turdcraft/
 code_repo: /opt/stack/services/apps/minecraft-turdcraft
 domain_tags:

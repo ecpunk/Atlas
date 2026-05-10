@@ -553,26 +553,32 @@ def retire_service(id: str, confirm: bool = False) -> dict[str, Any]:
 
 DEFAULT_OUTPUTS_DIR = REPO_ROOT / "outputs"
 DEFAULT_KB_DOC_ROOT = Path("/opt/stack/services/docs/kb")
+DEFAULT_KB_OUTPUT_DIR = DEFAULT_KB_DOC_ROOT / "Projects" / "Atlas" / "40-OUTPUT"
 
 
 @mcp.tool()
 def get_output(name: str) -> str:
-    """Read a generated output file from atlas-store/outputs/.
+    """Read a generated output file from Atlas output directories.
 
     Pass the filename exactly as it appears (e.g. 'Service Catalog.md',
     'Rules.md', 'Project Index (generated).md'). Returns the file content.
     """
-    outputs_dir = Path(os.environ.get("ATLAS_OUTPUT_DIR", str(DEFAULT_OUTPUTS_DIR)))
-    target = (outputs_dir / name).resolve()
-    # Guard against path traversal
-    if not str(target).startswith(str(outputs_dir.resolve())):
-        raise ValueError(f"Invalid output name: {name!r}")
-    if not target.exists():
-        raise FileNotFoundError(
-            f"Output '{name}' not found in {outputs_dir}. "
-            f"Run pipeline.py --write with ATLAS_OUTPUT_DIR set to regenerate."
-        )
-    return target.read_text(encoding="utf-8")
+    legacy_outputs_dir = Path(os.environ.get("ATLAS_OUTPUT_DIR", str(DEFAULT_OUTPUTS_DIR))).resolve()
+    kb_outputs_dir = Path(os.environ.get("ATLAS_KB_OUTPUT_DIR", str(DEFAULT_KB_OUTPUT_DIR))).resolve()
+
+    search_roots = [kb_outputs_dir, legacy_outputs_dir]
+    for root in search_roots:
+        target = (root / name).resolve()
+        # Guard against path traversal for each root.
+        if not str(target).startswith(str(root)):
+            raise ValueError(f"Invalid output name: {name!r}")
+        if target.exists():
+            return target.read_text(encoding="utf-8")
+
+    raise FileNotFoundError(
+        f"Output '{name}' not found. Searched: {kb_outputs_dir}, {legacy_outputs_dir}. "
+        "Run the Atlas pipeline generation step to refresh outputs."
+    )
 
 
 @mcp.tool()
@@ -650,7 +656,7 @@ if __name__ == "__main__":
     from starlette.middleware.cors import CORSMiddleware
     from starlette.requests import Request
     from starlette.responses import JSONResponse, Response
-    from starlette.routing import Mount, Route
+    from starlette.routing import Route
 
     expected_api_key = _api_key()
 

@@ -5,6 +5,7 @@ summary: |
   Retained under Reference/Archived/Vac Orchestrator for historical reference.
 category: vocab:lifecycle_categories:archive
 status: vocab:project_statuses:archived
+concept_doc: docs/kb/Projects/Vac Orchestrator/10-CONCEPT/VAC_ORCHESTRATOR_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Archive/Vac Orchestrator/
 domain_tags:
   - home

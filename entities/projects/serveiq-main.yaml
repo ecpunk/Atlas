@@ -5,6 +5,7 @@ summary: |
   Operator to enrich.
 category: vocab:lifecycle_categories:live
 status: vocab:project_statuses:installed
+concept_doc: docs/kb/Projects/ServeIQ Main/10-CONCEPT/SERVEIQ_MAIN_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Live/ServeIQ/
 code_repo: /opt/stack/services/apps/serveiq
 domain_tags:
