@@ -698,11 +698,13 @@ if __name__ == "__main__":
     host = os.environ.get("ATLAS_MCP_HOST", DEFAULT_HOST)
     port = int(os.environ.get("ATLAS_MCP_PORT", str(DEFAULT_PORT)))
 
-    mcp_app = mcp.streamable_http_app()
-    app = Starlette(routes=[
-        Route("/services", services_rest, methods=["GET"]),
-        Mount("/", mcp_app),
-    ])
+    async def oauth_resource_metadata(request: Request) -> JSONResponse:
+        base = str(request.base_url).rstrip("/")
+        return JSONResponse({"resource": base, "authorization_servers": []})
+
+    app = mcp.streamable_http_app()
+    app.routes.insert(0, Route("/.well-known/oauth-protected-resource", oauth_resource_metadata, methods=["GET"]))
+    app.routes.insert(0, Route("/services", services_rest, methods=["GET"]))
     app.add_middleware(ApiKeyMiddleware)
     app.add_middleware(
         CORSMiddleware,
