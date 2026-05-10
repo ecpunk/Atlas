@@ -42,7 +42,7 @@ class Project(BaseModel):
     blocked_on: Optional[str] = None
 
     concept_doc: str | None = Field(None)
-    gdrive_folder: str = Field(..., min_length=1)
+    gdrive_folder: Optional[str] = None
     code_repo: Optional[str] = None
     local_paths: list[str] = Field(default_factory=list)
 
