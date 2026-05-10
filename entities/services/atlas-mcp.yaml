@@ -1,19 +1,26 @@
 id: atlas-mcp
 name: Atlas MCP
-summary: |
-  MCP server exposing the Atlas canonical entity store. 19 tools: 11 read
+summary: 'MCP server exposing the Atlas canonical entity store. 19 tools: 11 read
+
   (get/list for projects, services, servers, agents, rules, vocabularies,
+
   stack_summary), 5 write (add_project, update_project, add_service,
+
   update_service, retire_service — propose-confirm), 3 bridge
+
   (get_output, get_kb_doc, check_drift). Write tools use propose-confirm pattern.
+
   check_drift runs reality probes against non-retired service entities.
+
   get_output reads atlas-store/outputs/; get_kb_doc reads services/docs/kb/.
+
+  '
 service_type: vocab:service_types:mcp_http
 lifecycle: vocab:service_lifecycles:running
 host: server:um790
 deployment_path: /opt/stack/atlas-store/tools/mcp_server.py
 port: 8105
-health_endpoint: http://192.168.1.150:8105/mcp
+health_endpoint: http://127.0.0.1:8105/mcp
 systemd_unit: atlas-mcp.service
 network_binding: lan
 auth:
@@ -27,8 +34,8 @@ depends_on: []
 last_health_check: null
 last_health_status: vocab:health_statuses:ok
 failure_modes:
-  - store load fails if atlas-store entities contain schema validation errors
-  - port conflict if leftover test process is running on 8105 (systemctl restart atlas-mcp)
+- store load fails if atlas-store entities contain schema validation errors
+- port conflict if leftover test process is running on 8105 (systemctl restart atlas-mcp)
 resource_budget_ram_mb: 256
-created_at: 2026-05-09T00:00:00Z
-updated_at: 2026-05-09T00:00:00Z
+created_at: 2026-05-09 00:00:00+00:00
+updated_at: '2026-05-10T17:12:28Z'
