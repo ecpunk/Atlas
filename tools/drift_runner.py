@@ -27,6 +27,7 @@ _OUTPUT_FILE_DIR = _OUTPUT_DIR  # same location; orphaned files live here
 KB_REPORT = _OUTPUT_DIR / "KB Coverage Report.md"
 CATALOG_REPORT = _OUTPUT_DIR / "Catalog Coverage Report.md"
 OUTPUT_REPORT = _OUTPUT_DIR / "Output Integrity Report.md"
+MONITORING_REPORT = _OUTPUT_DIR / "Monitoring Coverage Report.md"
 
 
 def _table_rows(text: str, section_heading: str) -> list[list[str]]:
@@ -137,11 +138,48 @@ def parse_output_integrity(report_path: Path = OUTPUT_REPORT) -> list[DriftRecor
     return records
 
 
+def parse_monitoring_coverage(report_path: Path = MONITORING_REPORT) -> list[DriftRecord]:
+    records: list[DriftRecord] = []
+    if not report_path.exists():
+        return records
+
+    text = report_path.read_text(encoding="utf-8")
+
+    for row in _table_rows(text, "Baseline Gaps (missing container_name or systemd_unit)"):
+        if len(row) < 3:
+            continue
+        service_id, stype, missing = row[0], row[1], row[2]
+        records.append(DriftRecord(
+            kind="monitoring_baseline_gap",
+            entity_type="service",
+            id=service_id,
+            detail=f"Service '{service_id}' ({stype}) missing baseline monitoring: {missing}",
+            fix_tier="flag",
+            extra={"service_type": stype, "missing": missing},
+        ))
+
+    for row in _table_rows(text, "Health Endpoint Gaps (has port, no health_endpoint)"):
+        if len(row) < 3:
+            continue
+        service_id, port, missing = row[0], row[1], row[2]
+        records.append(DriftRecord(
+            kind="monitoring_health_gap",
+            entity_type="service",
+            id=service_id,
+            detail=f"Service '{service_id}' has port {port} but is missing: {missing}",
+            fix_tier="flag",
+            extra={"port": port, "missing": missing},
+        ))
+
+    return records
+
+
 def collect_all() -> list[DriftRecord]:
     return (
         parse_kb_coverage()
         + parse_catalog_coverage()
         + parse_output_integrity()
+        + parse_monitoring_coverage()
     )
 
 

@@ -10,6 +10,8 @@ DRIFT_KINDS = Literal[
     "catalog_only_service",   # service in catalog.json with no atlas-store entity
     "broken_concept_doc",     # project entity concept_doc path does not exist on disk
     "orphaned_output_file",   # file in 40-OUTPUT/ not claimed by any generator
+    "monitoring_baseline_gap",  # running service missing container_name or systemd_unit
+    "monitoring_health_gap",    # running service has a port but no health_endpoint
 ]
 
 
