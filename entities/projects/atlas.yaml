@@ -67,8 +67,12 @@ open_items:
   - id: "3"
     description: "5 plan compliance failures: plan docs missing required frontmatter (Plan number, model, run order) and Genesis alignment sections. Fix: add frontmatter to each plan doc or update plan_check schema."
     created: "2026-05-10"
+    resolved: "2026-05-10"
+  - id: "4"
+    description: "Project and Service schemas have no remote field. atlas-public has a GitHub remote (ecpunk/Atlas) that is invisible to the canonical store and has not been synced since initial release. Evaluate: add remote: Optional[str] to Project+Service schemas, add a compliance rule flagging projects with repos but no declared remote, and establish a sync workflow for atlas-public."
+    created: "2026-05-10"
 
-last_done: "2026-05-10: Ring 0/1 consolidation (auth/network_binding schema, 4 MCP compliance rules, Ring 0 service entities self-describing), gdrive code retirement (generators, pipeline.py, symlink, doc refs), catalog.py Atlas-primary wire with /services REST endpoint, 3 docker compliance rules."
-next_action: "Fix 5 plan compliance failures (item 3) or begin Phase 8 (daily brief / loop closure)."
+last_done: "2026-05-10: Plan compliance fixes — min_plan_number grandfathering for genesis/phases/source-docs rules, frontmatter added to PLAN-001 through PLAN-009. Plan Compliance Report: 0 failures."
+next_action: "Evaluate remote field for Project/Service schemas (item 4) or begin Phase 8 (daily brief / loop closure)."
 created_at: 2026-05-08T15:27:11Z
 updated_at: 2026-05-10T01:30:00Z
