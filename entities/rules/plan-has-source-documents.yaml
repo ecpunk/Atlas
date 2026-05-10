@@ -13,6 +13,7 @@ fix_tier: vocab:rule_fix_tiers:propose
 fix_action: |
   Add a "Source documents" section with explicit file paths used in the
   Implementation Gate.
+min_plan_number: 2
 enforcement_point: vocab:enforcement_points:generation
 on_violation: |
   Mark the plan as non-compliant in the compliance report and show the missing

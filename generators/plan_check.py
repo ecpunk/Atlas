@@ -117,6 +117,12 @@ def _top_excerpt(text: str, line_count: int = 14) -> str:
     return "\n".join(text.splitlines()[:line_count]).strip()
 
 
+def _plan_number(plan_path: Path) -> int | None:
+    """Extract the numeric plan number from a filename like PLAN-007-foo.md."""
+    match = re.match(r"PLAN-0*(\d+)", plan_path.name)
+    return int(match.group(1)) if match else None
+
+
 def _parse_check(rule: Rule, plan_text: str, lines: list[str]) -> CheckResult:
     kind = rule.check_kind.value_id
 
@@ -286,8 +292,11 @@ def generate(store: dict) -> dict[str, str]:
         plan_text = plan_path.read_text(encoding="utf-8")
         lines = plan_text.splitlines()
 
+        plan_num = _plan_number(plan_path)
         plan_results: list[tuple[Rule, CheckResult]] = []
         for rule in plan_rules:
+            if rule.min_plan_number is not None and plan_num is not None and plan_num < rule.min_plan_number:
+                continue
             parsed = _parse_check(rule, plan_text, lines)
             plan_results.append((rule, parsed))
 

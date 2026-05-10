@@ -27,6 +27,8 @@ class Rule(BaseModel):
     enforcement_point: VocabRef
     on_violation: str = Field(..., min_length=1)
 
+    min_plan_number: Optional[int] = None
+
     authored_by: str = Field(..., min_length=1)
 
     created_at: datetime

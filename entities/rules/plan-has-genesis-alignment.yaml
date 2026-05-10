@@ -12,6 +12,7 @@ check_definition: |
   alignment)" or "Genesis Alignment Check"
 fix_tier: vocab:rule_fix_tiers:flag
 fix_action: null
+min_plan_number: 19
 enforcement_point: vocab:enforcement_points:generation
 on_violation: |
   Flag the plan for operator review in the compliance report; do not auto-remediate.

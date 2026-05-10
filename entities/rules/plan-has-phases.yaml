@@ -13,6 +13,7 @@ check_definition: |
 fix_tier: vocab:rule_fix_tiers:propose
 fix_action: |
   Add a "Phases" section and include at least one numbered phase subsection.
+min_plan_number: 3
 enforcement_point: vocab:enforcement_points:generation
 on_violation: |
   Mark the plan as non-compliant in the compliance report and identify missing
