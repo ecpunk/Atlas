@@ -2,7 +2,7 @@
 
 Atlas is a canonical, agent-facing control plane for the systems you operate.
 Agents, operators, automations, and dashboards read state, propose changes,
-and act through a single typed surface -- governed by rules, validated against
+and act through a single typed (for now) surface -- governed by rules, validated against
 schemas, and reconciled by a drift loop you do not have to write.
 
 ## The Problem Atlas Solves
