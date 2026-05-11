@@ -1,0 +1,15 @@
+id: conventions-skills-as-projects
+name: 'Convention: Skills as Projects'
+summary: Convention defining how Claude skills are bootstrapped as first-class Atlas
+  projects. Establishes folder shape (Jersey-Number layout with SKILL.md at 40-CONTENT,
+  optional 00-PROJECT-MANAGEMENT for skills that accumulate use-data), naming (skill-kebab-case
+  ID), required tag (claude-skill), and the source-of-truth/sync model between Atlas
+  KB and /mnt/skills/user filesystem. First adopter is skill-german-practice (2026-05-11).
+  Three existing skills pending bootstrap under this pattern.
+category: vocab:lifecycle_categories:current
+status: vocab:project_statuses:active
+concept_doc: docs/kb/Projects/conventions-skills-as-projects/10-CONCEPT/SKILLS_AS_PROJECTS_CONCEPT.md
+created_at: '2026-05-11T23:27:27Z'
+updated_at: '2026-05-11T23:27:27Z'
+domain_tags:
+- convention
