@@ -1,83 +1,98 @@
 id: atlas
 name: Atlas
-summary: |
-  Canonical definition store + generation pipeline + operational layer that
+summary: 'Canonical definition store + generation pipeline + operational layer that
+
   aggregates signals across the stack. Replaces hand-maintained five-file
+
   operating system (Start Here, Latest, Project Index, Standards, History) with
+
   views generated from a single source of truth. Owns lifecycle, schedule,
+
   drift detection, and AI agent routing. Greek titan metaphor - holds the
+
   structure that lets the stack scale without crushing the operator.
+
+  '
 category: vocab:lifecycle_categories:current
 status: vocab:project_statuses:in_progress
 concept_doc: docs/kb/Projects/Atlas/10-CONCEPT/ATLAS.md
 code_repo: /opt/stack/atlas-store
 remote: https://github.com/ecpunk/Atlas.git
 domain_tags:
-  - kb
-  - infrastructure
-  - operations
-
+- kb
+- infrastructure
+- operations
 phases:
-  - id: "1"
-    name: Schemas
-    status: done
-    notes: "Pydantic schemas, ADRs, worked examples."
-  - id: "2"
-    name: Store
-    status: done
-    notes: "Version-controlled YAML in atlas-store/. 91 entities. validate.py 0 failures."
-  - id: "3"
-    name: Read API
-    status: done
-    notes: "FastMCP port 8105, 19 tools. Wired to Copilot via .vscode/mcp.json. atlas-mcp.service active."
-  - id: "4"
-    name: First migration
-    status: done
-    notes: "Lifecycle categories vocabulary in store. Generation tooling built."
-  - id: "5"
-    name: Subsequent migrations
-    status: done
-    notes: "Service catalog, project metadata, audit dimensions, agent definitions, naming conventions."
-  - id: "6"
-    name: Write API
-    status: done
-    notes: "add_project, update_project, add_service, update_service, retire_service — propose-confirm pattern."
-  - id: "7"
-    name: Generation pipeline
-    status: done
-    notes: |
-      Post-commit hook live. All generators write to git-backed docs/kb/Projects/Atlas/40-OUTPUT/.
-      ATLAS_OUTPUT_DIR indirection removed. Ring 0/1 schema consolidated (ServiceAuth, auth, network_binding,
-      container_name, restartable, tier). 10 new compliance rules. /services REST endpoint for machine consumers.
-      catalog.py reads Atlas MCP primary with catalog.json gap-fill fallback. Plan Compliance Report: 0 failures
-      (min_plan_number grandfathering for genesis/phases/source-docs rules; PLAN-001 through PLAN-009 frontmatter added).
-  - id: "8"
-    name: Operational layer
-    status: partial
-    notes: |
-      Drift detection + auto-remediation implemented: drift_runner.py parses coverage reports, remediate.py
-      dispatches auto/propose/flag tiers. drift_report.py generator → Drift Report.md in 40-OUTPUT/.
-      atlas-drift.service/.timer installed, running daily 06:00 UTC. staging/ dir for propose-tier stubs.
-      Remaining: daily brief, loop closure, intelligent escalation, resource budget enforcement.
+- id: '1'
+  name: Schemas
+  status: done
+  notes: Pydantic schemas, ADRs, worked examples.
+- id: '2'
+  name: Store
+  status: done
+  notes: Version-controlled YAML in atlas-store/. 91 entities. validate.py 0 failures.
+- id: '3'
+  name: Read API
+  status: done
+  notes: FastMCP port 8105, 19 tools. Wired to Copilot via .vscode/mcp.json. atlas-mcp.service
+    active.
+- id: '4'
+  name: First migration
+  status: done
+  notes: Lifecycle categories vocabulary in store. Generation tooling built.
+- id: '5'
+  name: Subsequent migrations
+  status: done
+  notes: Service catalog, project metadata, audit dimensions, agent definitions, naming
+    conventions.
+- id: '6'
+  name: Write API
+  status: done
+  notes: add_project, update_project, add_service, update_service, retire_service
+    — propose-confirm pattern.
+- id: '7'
+  name: Generation pipeline
+  status: done
+  notes: 'Post-commit hook live. All generators write to git-backed docs/kb/Projects/Atlas/40-OUTPUT/.
 
-open_items:
-  - id: "1"
-    description: "9 projects have local concept docs but no atlas-store entity: CNC Air Blaster, Cognitive Substrate, Dev Framework Extension, Hardware Information, Home Command, Jarvis, Module Library, Operator Kernel, Paradigm Shift."
-    created: "2026-05-09"
-  - id: "2"
-    description: "Completed: house-remodel gdrive_folder retired stub replaced with ownership metadata (retired:owner=project:remodel-tracker)."
-    created: "2026-05-09"
-    resolved: "2026-05-10"
-  - id: "3"
-    description: "5 plan compliance failures: plan docs missing required frontmatter (Plan number, model, run order) and Genesis alignment sections. Fix: add frontmatter to each plan doc or update plan_check schema."
-    created: "2026-05-10"
-    resolved: "2026-05-10"
-  - id: "4"
-    description: "Completed: Added remote field to Project and Service schemas, added a compliance rule for code_repo-without-remote, and documented atlas-public sync workflow in PUBLIC.md."
-    created: "2026-05-10"
-    resolved: "2026-05-10"
+    ATLAS_OUTPUT_DIR indirection removed. Ring 0/1 schema consolidated (ServiceAuth,
+    auth, network_binding,
 
-last_done: "2026-05-10: Populated remote metadata for all repo-backed projects using local-monorepo ownership, then closed house-remodel retired gdrive stub cleanup with ownership metadata."
-next_action: "Phase 8 continued: implement loop closure and intelligent escalation flow wiring on top of the exception-first policy model."
-created_at: 2026-05-08T15:27:11Z
-updated_at: 2026-05-10T20:35:00Z
+    container_name, restartable, tier). 10 new compliance rules. /services REST endpoint
+    for machine consumers.
+
+    catalog.py reads Atlas MCP primary with catalog.json gap-fill fallback. Plan Compliance
+    Report: 0 failures
+
+    (min_plan_number grandfathering for genesis/phases/source-docs rules; PLAN-001
+    through PLAN-009 frontmatter added).
+
+    '
+- id: '8'
+  name: Operational layer
+  status: done
+  notes: 'Drift detection + auto-remediation implemented: drift_runner.py parses coverage
+    reports, remediate.py
+
+    dispatches auto/propose/flag tiers. drift_report.py generator → Drift Report.md
+    in 40-OUTPUT/.
+
+    atlas-drift.service/.timer installed, running daily 06:00 UTC. staging/ dir for
+    propose-tier stubs. Daily self-healing now includes compliance refresh, project_state_deltas
+    generation, canonical apply to project open_items, and in-run drift-report sync.
+
+    Phase 8 closed: loop-closure escalation packets compacted, class-policy defaults
+    calibrated/locked, resource-budget enforcement machine-signaled, and runtime drift
+    flags/loop open issues at zero in repeated smoke runs. Daily brief was intentionally
+    dropped as a requirement.
+
+    '
+open_items: []
+last_done: '2026-05-10: Closed Phase 8 operational layer: compacted loop decision
+  packets, locked calibrated class-policy defaults, kept drift/report sync in-run,
+  and validated zero drift flags plus zero open loop issues in repeated smoke runs.'
+next_action: Review PLAN-029 (docs/kb/Projects/Atlas/20-DESIGN/PLAN-029-mcp-public-exposure-procedure.md)
+  to close canonical public MCP exposure procedure gap; then continue Phase 8 item
+  4 (remote field for Project/Service schemas).
+created_at: 2026-05-08 15:27:11+00:00
+updated_at: '2026-05-11T18:14:35Z'
