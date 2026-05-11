@@ -12,4 +12,7 @@ status: vocab:project_statuses:active
 concept_doc: docs/kb/Projects/skill-german-practice/10-CONCEPT/SKILL_CONCEPT.md
 gdrive_folder: ''
 created_at: '2026-05-11T23:14:17Z'
-updated_at: '2026-05-11T23:14:17Z'
+updated_at: '2026-05-11T23:24:40Z'
+domain_tags:
+- claude-skill
+- language-learning
