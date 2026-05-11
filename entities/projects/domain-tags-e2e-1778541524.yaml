@@ -5,7 +5,7 @@ category: vocab:lifecycle_categories:defer
 status: vocab:project_statuses:concept
 concept_doc: docs/kb/Projects/Atlas/10-CONCEPT/ATLAS.md
 created_at: '2026-05-11T23:18:44Z'
-updated_at: '2026-05-11T23:18:44Z'
+updated_at: '2026-05-11T23:18:45Z'
 domain_tags:
 - ops
-- metadata
+- platform
