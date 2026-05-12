@@ -1,0 +1,16 @@
+id: minecraft-vanilla
+name: Minecraft Vanilla Server
+summary: Vanilla Minecraft runtime on UM790. Intentionally stopped by operator for
+  now; retained in maintained state for controlled restart later.
+service_type: vocab:service_types:docker_container
+lifecycle: vocab:service_lifecycles:maintained
+host: server:um790
+deployment_path: /opt/stack/services/apps/minecraft-vanilla/
+owned_by: project:minecraft-vanilla
+created_at: '2026-05-12T01:20:23Z'
+updated_at: '2026-05-12T01:20:23Z'
+container_name: minecraft-vanilla
+restartable: true
+tier: minecraft
+expected_state: operator_paused
+protected_high_use: false
