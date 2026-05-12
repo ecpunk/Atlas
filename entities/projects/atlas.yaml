@@ -87,12 +87,24 @@ phases:
     dropped as a requirement.
 
     '
-open_items: []
-last_done: '2026-05-10: Closed Phase 8 operational layer: compacted loop decision
-  packets, locked calibrated class-policy defaults, kept drift/report sync in-run,
-  and validated zero drift flags plus zero open loop issues in repeated smoke runs.'
-next_action: Review PLAN-029 (docs/kb/Projects/Atlas/20-DESIGN/PLAN-029-mcp-public-exposure-procedure.md)
-  to close canonical public MCP exposure procedure gap; then continue Phase 8 item
-  4 (remote field for Project/Service schemas).
+open_items:
+- id: auto:automation:timer-service-runner-state-contract
+  description: Automation contract report has failing rule `timer-service-runner-state-contract`
+    (Scheduled job must map to service, runner, and state artifact).
+  created: '2026-05-12'
+- id: auto:entity:service-failure-modes-present
+  description: Entity compliance has failing rule `service-failure-modes-present`
+    (Service must document failure modes).
+  created: '2026-05-12'
+- id: auto:entity:service-resource-budget-present
+  description: Entity compliance has failing rule `service-resource-budget-present`
+    (Service must declare resource budget).
+  created: '2026-05-12'
+last_done: '2026-05-12: Added trigger-first task intake canon and test protocol. Start
+  Here now includes Task Intake Default routing; TASK-INTAKE-NORMALIZATION-POLICY
+  and TASK-INTAKE-TEST-PROTOCOL are both committed in Atlas KB.'
+next_action: Run Scenario A from TASK-INTAKE-TEST-PROTOCOL with Claude reposting a
+  policy-rejection case, then verify second-agent handoff can continue from Atlas
+  canon only.
 created_at: 2026-05-08 15:27:11+00:00
-updated_at: '2026-05-11T19:39:35Z'
+updated_at: '2026-05-12T23:48:36Z'
