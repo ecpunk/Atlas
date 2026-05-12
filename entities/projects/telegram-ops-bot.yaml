@@ -9,12 +9,13 @@ category: vocab:lifecycle_categories:current
 status: vocab:project_statuses:in_progress
 concept_doc: docs/kb/Projects/Telegram Ops Bot/10-CONCEPT/TELEGRAM_OPS_BOT_CONCEPT.md
 created_at: '2026-05-12T00:20:03Z'
-updated_at: '2026-05-12T01:29:55Z'
+updated_at: '2026-05-12T01:41:01Z'
 domain_tags:
 - homelab
 - atlas
 - ops
-last_done: Implemented slash command surface (/status,/docker,/logs,/memory,/restart,/startc,/stop,/confirm,/cancel),
-  inline confirm/cancel callbacks, and richer tool result replies in apps/telegram-ops-bot.
-next_action: Provision BotFather token and deploy existing bot service with new slash
-  commands + inline confirmation UX.
+last_done: Provisioned .env with BotFather token + allowed user ID, generated confirm
+  HMAC secret, installed Python dependencies, validated config compile/smoke, installed/enabled/restarted
+  systemd service telegram-ops-bot, and verified active runtime.
+next_action: 'Run Telegram chat smoke: /start /whoami /status then test a confirm-gated
+  /restart on a safe container.'
