@@ -1,0 +1,11 @@
+id: cognitive-substrate
+name: Cognitive Substrate
+summary: |
+  Cognitive Substrate architecture and migration effort tracked in Atlas as a
+  canonical project entity tied to local concept documentation.
+category: vocab:lifecycle_categories:current
+status: vocab:project_statuses:concept
+concept_doc: docs/kb/Projects/Cognitive Substrate/10-CONCEPT/substrate-architecture.md
+gdrive_folder: "retired:owner=project:cognitive-substrate"
+created_at: 2026-05-10T21:22:00Z
+updated_at: 2026-05-10T21:22:00Z

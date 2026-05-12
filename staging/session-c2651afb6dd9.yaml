@@ -1,0 +1,24 @@
+id: session-c2651afb6dd9
+source: telegram-ops-bot
+timestamp: '2026-05-12T02:24:39Z'
+user_id: 8681549486
+transcript: callback:confirm:509c85fb6ea1
+tool_calls:
+- tool: docker_action
+  args:
+    action: restart
+    container: sabnzbd
+  result:
+    container: sabnzbd
+    action: restart
+    stdout: 'sabnzbd
+
+      '
+    stderr: ''
+    exit_code: 0
+    duration_seconds: 3.777
+    container_state: running
+    health_status: none
+entities_touched: []
+status: completed
+summary: 'Executed restart on sabnzbd: {"container":"sabnzbd","action":"restart","stdout":"sabnzbd\n","stderr":"","exit_code":0,"duration_seconds":3.777,"container_state":"running","health_s'

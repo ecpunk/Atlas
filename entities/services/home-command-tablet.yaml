@@ -9,6 +9,11 @@ deployment_path: /opt/stack/services/projects/home-command/
 port: 8094
 health_endpoint: http://127.0.0.1:8094/
 systemd_unit: null
+container_name: home-command
+restartable: true
+tier: ops
+expected_state: running_required
+protected_high_use: false
 owned_by: project:home-command-tablet
 depends_on: []
 last_health_check: null
@@ -17,4 +22,4 @@ failure_modes:
   - service naming differs from container name; verify naming alignment
 resource_budget_ram_mb: 512
 created_at: 2026-05-08T01:45:00Z
-updated_at: 2026-05-08T01:45:00Z
+updated_at: 2026-05-10T21:15:00Z

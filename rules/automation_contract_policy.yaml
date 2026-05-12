@@ -1,0 +1,83 @@
+version: 1
+defaults:
+  contract_class: state_required
+  retirement_status: active
+  retirement_note: ""
+  superseded_by: ""
+  state_path_patterns:
+    - automations/state
+    - state.json
+    - state.csv
+    - state.log
+    - index_meta.json
+
+timers:
+  alert-responder.timer:
+    contract_class: state_required
+  atlas-drift.timer:
+    contract_class: state_required
+  atlas-probe.timer:
+    contract_class: state_required
+  aws-cost-summary.timer:
+    contract_class: state_required
+  aws-iam-refinement-report.timer:
+    contract_class: state_required
+    state_path_patterns:
+      - automations/scripts/logs/aws_iam_refinement/latest.json
+      - latest.json
+  aws-monthly-checkpoint.timer:
+    contract_class: state_required
+    state_path_patterns:
+      - docs/guides/aws_learning_log.md
+      - checkpoint
+  aws-reliability-kpi.timer:
+    contract_class: state_required
+  aws-s3-critical-backup.timer:
+    contract_class: state_required
+    state_path_patterns:
+      - automations/scripts/logs/aws_critical_backup/latest.json
+      - latest.json
+  aws-snapshot-pack.timer:
+    contract_class: state_required
+  aws-weekly-restore-drill.timer:
+    contract_class: state_required
+    state_path_patterns:
+      - automations/scripts/logs/aws_restore_drill/latest.json
+      - latest.json
+  capability-inventory-refresh.timer:
+    contract_class: state_required
+  documentation-inventory-refresh.timer:
+    contract_class: state_required
+  gmail-triage.timer:
+    contract_class: state_required
+    state_path_patterns:
+      - data/state.json
+      - state.json
+  health-monitor.timer:
+    contract_class: state_required
+    retirement_status: candidate
+    retirement_note: "Legacy functional checks may be partially superseded by atlas-probe + alert-responder; keep only if unique checks remain."
+    superseded_by: atlas-probe.timer
+  host-environment-monitor.timer:
+    contract_class: state_required
+    retirement_status: candidate
+    retirement_note: "Review for merge into Atlas loop-closure/escalation pipeline once host checks are represented in canonical probes."
+  mc-playtime-weekly-reset.timer:
+    contract_class: state_required
+    state_path_patterns:
+      - data/minecraft/playtime.json
+      - playtime.json
+  minecraft-backup-vanilla.timer:
+    contract_class: state_required
+    state_path_patterns:
+      - automations/scripts/logs/mc_backup.log
+      - mc_backup.log
+  swap-trend-logger.timer:
+    contract_class: state_required
+    state_path_patterns:
+      - automations/scripts/logs/swap_trend/trend.csv
+      - trend.csv
+  thought-substrate-reindex.timer:
+    contract_class: state_required
+    state_path_patterns:
+      - index_meta.json

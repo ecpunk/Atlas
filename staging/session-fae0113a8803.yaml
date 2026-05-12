@@ -1,0 +1,9 @@
+id: session-fae0113a8803
+source: telegram-ops-bot
+timestamp: '2026-05-12T03:08:58Z'
+user_id: 8681549486
+transcript: callback:cancel:f7146b89f255
+tool_calls: []
+entities_touched: []
+status: aborted
+summary: Canceled pending action.

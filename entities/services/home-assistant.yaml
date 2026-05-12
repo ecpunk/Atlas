@@ -11,12 +11,17 @@ deployment_path: /opt/stack/services/apps/homeassistant/
 port: 8123
 health_endpoint: https://127.0.0.1:8123/
 systemd_unit: null
+container_name: homeassistant
+restartable: true
+tier: ops
+expected_state: running_required
+protected_high_use: false
 owned_by: project:home-assistant
 depends_on: []
 last_health_check: null
 last_health_status: vocab:health_statuses:unknown
 failure_modes:
 - deployment metadata incomplete — backfill in future plan
-resource_budget_ram_mb: null
+resource_budget_ram_mb: 1024
 created_at: 2026-05-08 01:45:00+00:00
-updated_at: '2026-05-10T17:12:32Z'
+updated_at: '2026-05-10T21:15:00Z'

@@ -12,6 +12,9 @@ DRIFT_KINDS = Literal[
     "orphaned_output_file",   # file in 40-OUTPUT/ not claimed by any generator
     "monitoring_baseline_gap",  # running service missing container_name or systemd_unit
     "monitoring_health_gap",    # running service has a port but no health_endpoint
+    "monitoring_resource_budget_gap",  # running service missing resource_budget policy metadata
+    "platform_probe_drift",  # atlas_probe_latest indicates runtime drift for a service
+    "legacy_stage3_alert",   # legacy operator-kernel stage3 engine emitted failing alert state
 ]
 
 

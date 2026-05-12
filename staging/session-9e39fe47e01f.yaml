@@ -1,0 +1,35 @@
+id: session-9e39fe47e01f
+source: telegram-ops-bot
+timestamp: '2026-05-12T03:10:51Z'
+user_id: 8681549486
+transcript: /status
+tool_calls:
+- tool: server_status
+  args: {}
+  result:
+    services:
+      plex: docker:running
+      sonarr: docker:running
+      radarr: docker:running
+      bazarr: docker:running
+      sabnzbd: docker:running
+    host:
+      uptime_seconds: 1500142.85
+      disk:
+      - path: /
+        total: 1004298338304
+        used: 187128283136
+        free: 775221714944
+      - path: /opt
+        total: 1004298338304
+        used: 187128283136
+        free: 775221714944
+entities_touched: []
+status: completed
+summary: 'Running services (5): bazarr, plex, radarr, sabnzbd, sonarr
+
+  Host uptime: 416.7h
+
+  Disk /: 722.0 GB free / 935.3 GB total
+
+  Disk /opt: 722.0 GB free / 935.3 GB total'

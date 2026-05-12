@@ -1,0 +1,19 @@
+id: project-open-items-no-completed-prefix
+name: Project open items must not include completed marker text
+description: |
+  Open items represent active work. Completed notes must be moved to last_done,
+  changelog artifacts, or resolved state instead of left in open_items text.
+scope: vocab:rule_scopes:project
+severity: vocab:rule_severities:warn
+applies_to: project_entity
+check_kind: vocab:rule_check_kinds:open_items_no_completed_prefix
+check_definition: "Completed:"
+fix_tier: vocab:rule_fix_tiers:flag
+fix_action: null
+enforcement_point: vocab:enforcement_points:all
+on_violation: |
+  Flag stale metadata: remove completed markers from manual open_items and
+  record completion in last_done or output artifacts.
+authored_by: operator
+created_at: 2026-05-10T21:05:00Z
+updated_at: 2026-05-10T21:05:00Z

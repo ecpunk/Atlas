@@ -1,0 +1,11 @@
+id: paradigm-shift
+name: Paradigm Shift
+summary: |
+  Paradigm Shift concept tracked in Atlas as a canonical project entity from
+  local concept documentation.
+category: vocab:lifecycle_categories:current
+status: vocab:project_statuses:concept
+concept_doc: docs/kb/Projects/Paradigm Shift/10-CONCEPT/PARADIGM_SHIFT_CONCEPT.md
+gdrive_folder: "retired:owner=project:paradigm-shift"
+created_at: 2026-05-10T21:31:00Z
+updated_at: 2026-05-10T21:31:00Z

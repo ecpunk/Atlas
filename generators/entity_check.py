@@ -188,6 +188,31 @@ def _parse_field_present_if_present_definition(raw: str) -> tuple[str, str]:
     raise ValueError("field_present_if_present check_definition must be a string or mapping")
 
 
+def _parse_open_items_no_completed_prefix_definition(raw: str) -> tuple[str, str]:
+    parsed = _parse_definition(raw)
+
+    marker = "Completed:"
+    auto_prefix = "auto:"
+
+    if isinstance(parsed, str):
+        text = parsed.strip()
+        if text:
+            marker = text
+        return marker, auto_prefix
+
+    if isinstance(parsed, dict):
+        marker_raw = parsed.get("marker") or parsed.get("completed_prefix") or parsed.get("value")
+        auto_prefix_raw = parsed.get("auto_prefix")
+
+        if isinstance(marker_raw, str) and marker_raw.strip():
+            marker = marker_raw.strip()
+        if isinstance(auto_prefix_raw, str) and auto_prefix_raw.strip():
+            auto_prefix = auto_prefix_raw.strip()
+        return marker, auto_prefix
+
+    return marker, auto_prefix
+
+
 def _resolve_vocab_ref(value: Any) -> VocabRef | None:
     if isinstance(value, VocabRef):
         return value
@@ -325,6 +350,48 @@ def _check_field_present_if_present(entity: BaseModel, check_definition: str) ->
     )
 
 
+def _check_open_items_no_completed_prefix(entity: BaseModel, check_definition: str) -> CheckResult:
+    marker, auto_prefix = _parse_open_items_no_completed_prefix_definition(check_definition)
+    open_items = getattr(entity, "open_items", _MISSING)
+
+    if open_items is _MISSING:
+        return (
+            "fail",
+            "Field 'open_items' not found on entity.",
+            "open_items=missing",
+        )
+
+    if _is_blank(open_items):
+        return (
+            "pass",
+            "No open items present.",
+            "open_items=[]",
+        )
+
+    offenders: list[str] = []
+    for item in open_items:
+        item_id = str(getattr(item, "id", ""))
+        if item_id.startswith(auto_prefix):
+            continue
+
+        description = str(getattr(item, "description", ""))
+        if marker in description:
+            offenders.append(item_id or "(missing-id)")
+
+    if offenders:
+        return (
+            "fail",
+            f"Manual open_items include completed marker '{marker}'.",
+            f"offenders={', '.join(offenders)}; marker={marker}; auto_prefix={auto_prefix}",
+        )
+
+    return (
+        "pass",
+        "Manual open_items do not include completed markers.",
+        f"marker={marker}; auto_prefix={auto_prefix}",
+    )
+
+
 def _check_vocab_ref_valid(
     entity: BaseModel,
     check_definition: str,
@@ -387,6 +454,8 @@ def _evaluate_rule(rule: Rule, entity: BaseModel, vocab_store: dict[str, Any]) -
         return _check_field_value(entity, rule.check_definition)
     if kind == "field_present_if_present":
         return _check_field_present_if_present(entity, rule.check_definition)
+    if kind == "open_items_no_completed_prefix":
+        return _check_open_items_no_completed_prefix(entity, rule.check_definition)
     if kind == "vocab_ref_valid":
         return _check_vocab_ref_valid(entity, rule.check_definition, vocab_store)
     if kind in {"llm_evaluated", "manual"}:

@@ -10,6 +10,11 @@ deployment_path: /opt/stack/services/projects/Remodel_Tracker/
 port: 8090
 health_endpoint: http://127.0.0.1:8090/api/v1
 systemd_unit: null
+container_name: remodel-tracker
+restartable: true
+tier: apps
+expected_state: running_required
+protected_high_use: false
 owned_by: project:remodel-tracker
 depends_on: []
 last_health_check: null
@@ -18,4 +23,4 @@ failure_modes:
   - container unavailable when local sqlite lock persists after crash
 resource_budget_ram_mb: 512
 created_at: 2026-05-08T01:45:00Z
-updated_at: 2026-05-08T01:45:00Z
+updated_at: 2026-05-10T21:15:00Z

@@ -1,0 +1,11 @@
+id: cnc-air-blaster
+name: CNC Air Blaster
+summary: |
+  CNC-powered air blaster concept tracked in Atlas as a canonical project entity
+  based on the local concept documentation.
+category: vocab:lifecycle_categories:current
+status: vocab:project_statuses:concept
+concept_doc: docs/kb/Projects/CNC Air Blaster/10-CONCEPT/CNC_AIR_BLASTER_CONCEPT.md
+gdrive_folder: "retired:owner=project:cnc-air-blaster"
+created_at: 2026-05-10T21:22:00Z
+updated_at: 2026-05-10T21:22:00Z

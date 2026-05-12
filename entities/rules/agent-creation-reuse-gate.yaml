@@ -1,0 +1,36 @@
+id: agent-creation-reuse-gate
+name: Agent Creation Reuse Gate
+description: |
+  Before introducing anything net-new, the agent must inventory the existing
+  namespace first. This governs creation acts (entities, names, tags,
+  conventions, and patterns) and complements discovery-first, which covers
+  system state.
+
+  Rules:
+  - Before creating a new entity, name, tag, convention, or pattern: check
+    what already exists in that same space.
+  - Prefer reuse when an existing option is sufficient.
+  - If net-new is still required, surface the create-new decision explicitly
+    with rationale and the namespace that was checked.
+scope: vocab:rule_scopes:agent_behavior
+severity: vocab:rule_severities:error
+applies_to: agent_session
+check_kind: vocab:rule_check_kinds:process_gate
+check_definition: |
+  Before any creation act: inventory existing items in the target namespace.
+  Reuse existing entities/names/tags/conventions/patterns when sufficient.
+  If creating net-new, explicitly state the create-new decision, rationale,
+  and the namespace checked.
+fix_tier: vocab:rule_fix_tiers:block
+fix_action: |
+  Stop. Inspect the existing namespace first.
+  Reuse an existing option when sufficient.
+  If net-new is still needed, surface the create-new decision with rationale
+  before proceeding.
+enforcement_point: vocab:enforcement_points:pre_action
+on_violation: |
+  Block the creation action. Perform namespace inventory and reuse evaluation
+  first, then surface any justified create-new decision before continuing.
+authored_by: operator
+created_at: 2026-05-11T23:00:32Z
+updated_at: 2026-05-11T23:00:32Z

@@ -23,6 +23,6 @@ last_health_check: null
 last_health_status: vocab:health_statuses:unknown
 failure_modes:
   - index drift if capture pipeline stalls
-resource_budget_ram_mb: null
+resource_budget_ram_mb: 1024
 created_at: 2026-05-08T01:45:00Z
 updated_at: 2026-05-09T00:00:00Z

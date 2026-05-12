@@ -32,6 +32,9 @@ _SYSTEMD_TYPES = {"systemd_unit", "mcp_http", "mcp_stdio", "fastapi"}
 # service_type values that are network-exposed (must have health_endpoint if port set)
 _NETWORK_TYPES = {"docker_container", "mcp_http", "fastapi", "nginx_vhost"}
 
+# Services that expose non-HTTP protocols on their main port; health_endpoint is not applicable.
+_NON_HTTP_HEALTH_EXEMPT_SERVICES = {"turdcraft"}
+
 _ACTIVE_LIFECYCLES = {"running", "degraded"}
 
 
@@ -43,7 +46,7 @@ def _lifecycle_id(service: Service) -> str:
     return service.lifecycle.value_id if service.lifecycle else ""
 
 
-def _score(service: Service) -> dict:
+def _score(service_id: str, service: Service) -> dict:
     """Return per-dimension coverage result for a service."""
     stype = _type_id(service)
     dims: dict[str, bool | None] = {}  # None = not applicable
@@ -62,7 +65,10 @@ def _score(service: Service) -> dict:
 
     # health_endpoint — required if service has a port AND is network-exposed
     if service.port and stype in _NETWORK_TYPES:
-        dims["health_endpoint"] = bool(service.health_endpoint)
+        if service_id in _NON_HTTP_HEALTH_EXEMPT_SERVICES:
+            dims["health_endpoint"] = None
+        else:
+            dims["health_endpoint"] = bool(service.health_endpoint)
     else:
         dims["health_endpoint"] = None
 
@@ -121,7 +127,7 @@ def generate(store: dict) -> dict[str, str]:
         if _lifecycle_id(svc) in _ACTIVE_LIFECYCLES
     }
 
-    scores = {sid: _score(svc) for sid, svc in active.items()}
+    scores = {sid: _score(sid, svc) for sid, svc in active.items()}
 
     # Sort: baseline gaps first, then by score ascending
     ordered = sorted(
@@ -154,7 +160,7 @@ def generate(store: dict) -> dict[str, str]:
         "|-----------|-----------|-----------|",
         "| `container_name` | docker_container | **Baseline** |",
         "| `systemd_unit` | systemd_unit, mcp_http, mcp_stdio, fastapi | **Baseline** |",
-        "| `health_endpoint` | any service with a `port` | **Health** |",
+        "| `health_endpoint` | any HTTP-reachable service with a `port` | **Health** |",
         "| `restartable` | docker_container | Warn |",
         "| `resource_budget` | all | Warn |",
         "| `tier` | docker_container | Warn |",

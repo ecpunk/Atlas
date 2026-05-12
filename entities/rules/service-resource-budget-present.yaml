@@ -1,0 +1,19 @@
+id: service-resource-budget-present
+name: Service must declare resource budget
+description: |
+  Every service entity must declare resource_budget_ram_mb so monitoring,
+  drift closure, and capacity policy checks have enforceable budget metadata.
+scope: vocab:rule_scopes:service
+severity: vocab:rule_severities:error
+applies_to: service_entity
+check_kind: vocab:rule_check_kinds:field_present
+check_definition: resource_budget_ram_mb
+fix_tier: vocab:rule_fix_tiers:flag
+fix_action: null
+enforcement_point: vocab:enforcement_points:all
+on_violation: |
+  Add a non-null integer `resource_budget_ram_mb` to the service entity.
+  Use conservative defaults if exact profiling is not available yet.
+authored_by: operator
+created_at: 2026-05-10T00:00:00Z
+updated_at: 2026-05-10T00:00:00Z

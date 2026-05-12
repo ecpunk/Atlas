@@ -1,0 +1,53 @@
+version: 1
+default_class: F
+
+class_policies:
+  A:
+    escalate_after_consecutive_runs: 1
+    cooldown_seconds: 3600
+    close_after_clean_runs: 1
+  B:
+    escalate_after_consecutive_runs: 3
+    cooldown_seconds: 21600
+    close_after_clean_runs: 1
+  C:
+    escalate_after_consecutive_runs: 3
+    cooldown_seconds: 21600
+    close_after_clean_runs: 2
+  D:
+    escalate_after_consecutive_runs: 3
+    cooldown_seconds: 86400
+    close_after_clean_runs: 2
+  E:
+    escalate_after_consecutive_runs: 9999
+    cooldown_seconds: 86400
+    close_after_clean_runs: 1
+  F:
+    escalate_after_consecutive_runs: 4
+    cooldown_seconds: 43200
+    close_after_clean_runs: 2
+
+mapping:
+  by_issue_kind:
+    drift_remediation_failure: A
+    project_state_sync_failure: A
+    platform_probe_drift: B
+    legacy_stage3_alert: C
+    monitoring_baseline_gap: F
+    monitoring_health_gap: F
+    monitoring_resource_budget_gap: B
+    kb_orphan_dir: F
+    catalog_only_service: F
+    broken_concept_doc: F
+    orphaned_output_file: F
+  by_policy_scope:
+    atlas_drift: A
+    governance_drift: F
+  by_target:
+    atlas-drift: A
+    refresh_compliance: A
+    generate_project_state_deltas: A
+    apply_project_state_deltas: A
+    turdcraft: D
+  by_target_prefix:
+    project_state_: A

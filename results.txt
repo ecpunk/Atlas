@@ -1,0 +1,81 @@
+/opt/stack/atlas-store/outputs/Rules.md:21:126:| Project must have Drive folder (`project-must-have-gdrive-folder`) | Project | Error | `project_entity` | Field Present | `gdrive_folder` | Flag | All |
+/opt/stack/atlas-store/outputs/Rules.md:114:23:**Check definition:** gdrive_folder
+/opt/stack/atlas-store/outputs/Rules.md:117:77:**On violation:** Block writes and generation outputs for the project until gdrive_folder is set; log an error in validation output.
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:95:36:| PASS | ai-hvac-balancer | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Current/AI HVAC Balancer/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:96:25:| PASS | atlas | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Current/Atlas/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:97:31:| PASS | aws-starter | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Current/AWS Starter/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:98:46:| PASS | build-and-design-navigator | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Current/Build & Design Navigator/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:99:41:| PASS | code-intelligence-mcp | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Current/Code Intelligence MCP/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:100:39:| PASS | deebot-pantry-clean | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Archive/Deebot Pantry Clean/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:101:41:| PASS | development-framework | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Current/Development Framework/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:102:39:| PASS | family-meal-planner | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Current/Family Meal Planner/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:103:32:| PASS | gmail-triage | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Live/Gmail Triage/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:104:40:| PASS | health-investigation | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Current/Health Investigation/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:105:34:| PASS | home-assistant | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Live/Home Assistant/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:106:39:| PASS | home-command-tablet | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Current/Home Command/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:107:33:| PASS | house-remodel | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Current/House Remodel/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:108:32:| PASS | jc4mp-server | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Archive/JC4MP Server/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:109:42:| PASS | knowledge-base-cleanup | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Current/Knowledge Base Cleanup/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:110:36:| PASS | knowledge-server | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Current/Knowledge-Server/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:111:29:| PASS | nas-build | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Current/NAS Build/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:112:28:| PASS | openclaw | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Archive/OpenClaw/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:113:30:| PASS | pat-patent | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Current/PAT Patent/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:114:37:| PASS | personal-ai-layer | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Current/Personal AI Layer/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:115:35:| PASS | remodel-tracker | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Live/Remodel Tracker/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:116:27:| PASS | serveiq | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Current/ServeIQ/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:117:32:| PASS | serveiq-demo | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Live/ServeIQ/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:118:32:| PASS | serveiq-main | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Live/ServeIQ/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:119:36:| PASS | smart-irrigation | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Archive/Smart Irrigation/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:120:36:| PASS | stargate-archive | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Current/Stargate Archive/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:121:30:| PASS | storefront | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Current/Storefront/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:122:30:| PASS | the-engine | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Current/The Engine/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:123:37:| PASS | thought-substrate | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Current/Thought Substrate/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:124:29:| PASS | turdcraft | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Live/Turdcraft/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:125:33:| PASS | um790-ops-mcp | Field 'gdrive_folder' is present. | gdrive_folder=Projects/Live/UM790-Ops-MCP/ |
+/opt/stack/atlas-store/outputs/Entity Compliance Report.md:126:36:| PASS | vac-orchestrator | Field 'gdrive_folder' is present. | gdrive_folder=gdrive-projects/Projects/Archive/Vac Orchestrator/ |
+/opt/stack/atlas-store/entities/projects/code-intelligence-mcp.yaml:12:1:gdrive_folder: gdrive-projects/Projects/Current/Code Intelligence MCP/
+/opt/stack/atlas-store/entities/projects/operator-kernel.yaml:9:1:gdrive_folder: "retired:owner=project:operator-kernel"
+/opt/stack/atlas-store/entities/projects/stargate-archive.yaml:10:1:gdrive_folder: gdrive-projects/Projects/Current/Stargate Archive/
+/opt/stack/atlas-store/entities/projects/family-meal-planner.yaml:11:1:gdrive_folder: gdrive-projects/Projects/Current/Family Meal Planner/
+/opt/stack/atlas-store/entities/projects/paradigm-shift.yaml:9:1:gdrive_folder: "retired:owner=project:paradigm-shift"
+/opt/stack/atlas-store/entities/projects/openclaw.yaml:9:1:gdrive_folder: gdrive-projects/Projects/Archive/OpenClaw/
+/opt/stack/atlas-store/entities/projects/pat-patent.yaml:10:1:gdrive_folder: gdrive-projects/Projects/Current/PAT Patent/
+/opt/stack/atlas-store/entities/projects/jarvis.yaml:9:1:gdrive_folder: "retired:owner=project:jarvis"
+/opt/stack/atlas-store/entities/projects/cognitive-substrate.yaml:9:1:gdrive_folder: "retired:owner=project:cognitive-substrate"
+/opt/stack/atlas-store/entities/projects/hardware-information.yaml:9:1:gdrive_folder: "retired:owner=project:hardware-information"
+/opt/stack/atlas-store/entities/projects/ai-hvac-balancer.yaml:10:1:gdrive_folder: gdrive-projects/Projects/Current/AI HVAC Balancer/
+/opt/stack/atlas-store/entities/projects/vac-orchestrator.yaml:9:1:gdrive_folder: gdrive-projects/Projects/Archive/Vac Orchestrator/
+/opt/stack/atlas-store/entities/projects/gmail-triage.yaml:9:1:gdrive_folder: gdrive-projects/Projects/Live/Gmail Triage/
+/opt/stack/atlas-store/entities/projects/the-engine.yaml:10:1:gdrive_folder: gdrive-projects/Projects/Current/The Engine/
+/opt/stack/atlas-store/entities/projects/serveiq-main.yaml:9:1:gdrive_folder: gdrive-projects/Projects/Live/ServeIQ/
+/opt/stack/atlas-store/entities/projects/jc4mp-server.yaml:9:1:gdrive_folder: gdrive-projects/Projects/Archive/JC4MP Server/
+/opt/stack/atlas-store/entities/projects/development-framework.yaml:11:1:gdrive_folder: gdrive-projects/Projects/Current/Development Framework/
+/opt/stack/atlas-store/entities/projects/home-assistant.yaml:9:1:gdrive_folder: gdrive-projects/Projects/Live/Home Assistant/
+/opt/stack/atlas-store/entities/projects/home-command.yaml:9:1:gdrive_folder: "retired:owner=project:home-command"
+/opt/stack/atlas-store/entities/projects/deebot-pantry-clean.yaml:9:1:gdrive_folder: gdrive-projects/Projects/Archive/Deebot Pantry Clean/
+/opt/stack/atlas-store/entities/projects/cnc-air-blaster.yaml:9:1:gdrive_folder: "retired:owner=project:cnc-air-blaster"
+/opt/stack/atlas-store/entities/projects/serveiq-demo.yaml:9:1:gdrive_folder: gdrive-projects/Projects/Live/ServeIQ/
+/opt/stack/atlas-store/entities/projects/module-library.yaml:9:1:gdrive_folder: "retired:owner=project:module-library"
+/opt/stack/atlas-store/entities/projects/knowledge-server.yaml:9:1:gdrive_folder: gdrive-projects/Projects/Current/Knowledge-Server/
+/opt/stack/atlas-store/entities/projects/turdcraft.yaml:9:1:gdrive_folder: gdrive-projects/Projects/Live/Turdcraft/
+/opt/stack/atlas-store/entities/projects/smart-irrigation.yaml:9:1:gdrive_folder: gdrive-projects/Projects/Archive/Smart Irrigation/
+/opt/stack/atlas-store/entities/projects/thought-substrate.yaml:9:1:gdrive_folder: gdrive-projects/Projects/Current/Thought Substrate/
+/opt/stack/atlas-store/entities/projects/remodel-tracker.yaml:9:1:gdrive_folder: gdrive-projects/Projects/Live/Remodel Tracker/
+/opt/stack/atlas-store/entities/projects/um790-ops-mcp.yaml:10:1:gdrive_folder: "Projects/Live/UM790-Ops-MCP/"
+/opt/stack/atlas-store/entities/projects/serveiq.yaml:12:1:gdrive_folder: gdrive-projects/Projects/Current/ServeIQ/
+/opt/stack/atlas-store/entities/projects/house-remodel.yaml:9:1:gdrive_folder: "retired:owner=project:remodel-tracker"
+/opt/stack/atlas-store/entities/projects/nas-build.yaml:10:1:gdrive_folder: gdrive-projects/Projects/Current/NAS Build/
+/opt/stack/atlas-store/entities/projects/home-command-tablet.yaml:9:1:gdrive_folder: gdrive-projects/Projects/Current/Home Command/
+/opt/stack/atlas-store/entities/projects/aws-starter.yaml:10:1:gdrive_folder: gdrive-projects/Projects/Current/AWS Starter/
+/opt/stack/atlas-store/entities/projects/build-and-design-navigator.yaml:10:1:gdrive_folder: gdrive-projects/Projects/Current/Build & Design Navigator/
+/opt/stack/atlas-store/entities/projects/health-investigation.yaml:10:1:gdrive_folder: gdrive-projects/Projects/Current/Health Investigation/
+/opt/stack/atlas-store/schemas/project.py:45:5:    gdrive_folder: Optional[str] = None
+/opt/stack/atlas-store/entities/projects/dev-framework-extension.yaml:9:1:gdrive_folder: "retired:owner=project:dev-framework-extension"
+/opt/stack/atlas-store/entities/projects/personal-ai-layer.yaml:10:1:gdrive_folder: gdrive-projects/Projects/Current/Personal AI Layer/
+/opt/stack/atlas-store/entities/projects/knowledge-base-cleanup.yaml:11:1:gdrive_folder: gdrive-projects/Projects/Current/Knowledge Base Cleanup/
+/opt/stack/atlas-store/entities/projects/storefront.yaml:10:1:gdrive_folder: gdrive-projects/Projects/Current/Storefront/
+/opt/stack/atlas-store/tools/mcp_server.py:144:65:- add_project(id, name, summary, category, status, concept_doc, gdrive_folder): add new project (autonomous)
+/opt/stack/atlas-store/tools/mcp_server.py:338:5:    gdrive_folder: str,
+/opt/stack/atlas-store/tools/mcp_server.py:347:5:    gdrive_folder: gdrive path, e.g. "gdrive:Jon's Projects/Projects/Current/Foo/" (optional; Drive retired as authoring surface 2026-05-09)
+/opt/stack/atlas-store/tools/mcp_server.py:361:10:        "gdrive_folder": gdrive_folder,
+/opt/stack/atlas-store/generators/project_index.py:21:28:    drive_folder = project.gdrive_folder if project.gdrive_folder else "n/a"

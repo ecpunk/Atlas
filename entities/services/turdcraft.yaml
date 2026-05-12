@@ -9,6 +9,11 @@ deployment_path: /opt/stack/services/apps/minecraft-turdcraft/
 port: 25565
 health_endpoint: null
 systemd_unit: null
+container_name: turdcraft
+restartable: true
+tier: minecraft
+expected_state: running_required
+protected_high_use: true
 owned_by: project:turdcraft
 depends_on: []
 last_health_check: null
@@ -17,4 +22,4 @@ failure_modes:
   - runtime world corruption risk after unclean shutdown
 resource_budget_ram_mb: 16384
 created_at: 2026-05-08T01:45:00Z
-updated_at: 2026-05-08T01:45:00Z
+updated_at: 2026-05-10T21:15:00Z

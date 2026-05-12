@@ -70,6 +70,15 @@ values:
     physical_location: null
     deprecated: false
     deprecated_reason: null
+  - id: open_items_no_completed_prefix
+    name: Open Items No Completed Prefix
+    description: Rule passes when manual open_items do not include completed marker text.
+    semantics: |
+      check_definition provides the marker string (default: Completed:). Items
+      with ids starting auto: are excluded from this check.
+    physical_location: null
+    deprecated: false
+    deprecated_reason: null
   - id: vocab_ref_valid
     name: Vocabulary Reference Valid
     description: Rule passes when a field contains a valid vocabulary reference.

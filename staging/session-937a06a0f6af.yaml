@@ -1,0 +1,35 @@
+id: session-937a06a0f6af
+source: telegram-ops-bot
+timestamp: '2026-05-12T03:08:26Z'
+user_id: 8681549486
+transcript: logs sabnzbd last 20
+tool_calls:
+- tool: route_telegram_intent_tool
+  args:
+    transcript: logs sabnzbd last 20
+  result:
+    intent: service_logs
+    side_effect: read
+    confidence: 0.97
+    action: ''
+    container: none
+    service: sabnzbd
+    lines: 20
+    reason: User requested logs for sabnzbd service with a specific line count of
+      20
+    model: claude-sonnet-4-6
+    tokens_in: 159
+    tokens_out: 98
+    error: false
+    cost_capped: false
+- tool: service_logs
+  args:
+    name: sabnzbd
+    lines: 20
+  result: '-- No entries --
+
+    '
+entities_touched:
+- router:llm
+status: completed
+summary: 'service_logs: "-- No entries --\n"'

@@ -43,6 +43,8 @@ class Service(BaseModel):
     container_name: Optional[str] = None   # docker container name for health / restart ops
     restartable: Optional[bool] = None     # whether ops scripts may restart this container
     tier: Optional[str] = None            # operational tier: "critical", "standard", "optional"
+    expected_state: Optional[str] = None  # "running_required", "allowed_stopped", "on_demand", "retired_ignore"
+    protected_high_use: Optional[bool] = None  # exclude from generic high-memory restart actions
     backup_unit: Optional[str] = None     # systemd unit name for backup job (e.g. "minecraft-backup-vanilla.service")
 
     last_health_check: Optional[datetime] = None

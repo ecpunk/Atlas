@@ -1,0 +1,40 @@
+id: session-c851ba444b6c
+source: telegram-ops-bot
+timestamp: '2026-05-12T03:30:09Z'
+user_id: 8681549486
+transcript: /cost
+tool_calls:
+- tool: llm_cost_summary_tool
+  args: {}
+  result:
+    model_candidates:
+    - claude-sonnet-4-6
+    - claude-sonnet-4-5
+    caller_id: atlas-plan-check
+    spend_state_file: /opt/stack/services/automations/state/llm_cost_gate.json
+    shared_gate_loaded: true
+    shared_gate_enabled: true
+    shared_gate_enforce: true
+    daily_spend:
+      date: '2026-05-12'
+      accumulated_usd: 0.0
+      call_count: 0
+      global_accumulated_usd: 0.002297
+      global_call_count: 2
+    run_spend:
+      tokens_in: 0
+      tokens_out: 0
+      est_usd: 0.0
+      max_usd: 1.0
+entities_touched:
+- router:llm
+status: completed
+summary: 'Model candidates: claude-sonnet-4-6, claude-sonnet-4-5
+
+  Caller: atlas-plan-check
+
+  Daily spend: $0.000000 (calls=0)
+
+  Global daily spend: $0.002297 (calls=2)
+
+  This process run: $0.000000'

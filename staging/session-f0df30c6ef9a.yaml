@@ -1,0 +1,29 @@
+id: session-f0df30c6ef9a
+source: telegram-ops-bot
+timestamp: '2026-05-12T01:44:42Z'
+user_id: 8681549486
+transcript: what is the status of the server
+tool_calls:
+- tool: server_status
+  args: {}
+  result:
+    services:
+      plex: docker:running
+      sonarr: docker:running
+      radarr: docker:running
+      bazarr: docker:running
+      sabnzbd: docker:running
+    host:
+      uptime_seconds: 1494973.52
+      disk:
+      - path: /
+        total: 1004298338304
+        used: 186341695488
+        free: 776008302592
+      - path: /opt
+        total: 1004298338304
+        used: 186341695488
+        free: 776008302592
+entities_touched: []
+status: completed
+summary: 'server_status: {"services":{"plex":"docker:running","sonarr":"docker:running","radarr":"docker:running","bazarr":"docker:running","sabnzbd":"docker:running"},"host":{"uptime_second'

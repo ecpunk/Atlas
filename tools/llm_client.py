@@ -1,12 +1,10 @@
 from __future__ import annotations
 
-import fcntl
 import json
 import logging
 import os
 import re
 import sys
-from datetime import date
 from pathlib import Path
 from typing import Any
 
@@ -22,7 +20,8 @@ _MODEL_PRICING_USD_PER_MTOKEN = {
 }
 _DEFAULT_MAX_USD = 1.00
 _DEFAULT_DAILY_MAX_USD = 3.00
-_SPEND_FILE = Path(__file__).parent.parent / ".atlas-spend.json"
+_DEFAULT_CALLER_ID = "atlas-plan-check"
+_DEFAULT_SHARED_LEDGER = "/opt/stack/services/automations/state/llm_cost_gate.json"
 
 _LOGGER = logging.getLogger("atlas.llm_client")
 if not _LOGGER.handlers:
@@ -32,130 +31,116 @@ if not _LOGGER.handlers:
 _LOGGER.setLevel(logging.INFO)
 
 
-def _load_max_usd() -> float:
-    raw_value = (os.environ.get("ATLAS_LLM_MAX_USD") or "").strip()
+def _load_positive_float(name: str, default: float) -> float:
+    raw_value = (os.environ.get(name) or "").strip()
     if not raw_value:
-        return _DEFAULT_MAX_USD
+        return default
 
     try:
         parsed = float(raw_value)
     except ValueError:
-        _LOGGER.warning(
-            "Invalid ATLAS_LLM_MAX_USD=%r; falling back to %.2f",
-            raw_value,
-            _DEFAULT_MAX_USD,
-        )
-        return _DEFAULT_MAX_USD
+        _LOGGER.warning("Invalid %s=%r; falling back to %.2f", name, raw_value, default)
+        return default
 
     if parsed <= 0:
-        _LOGGER.warning(
-            "Non-positive ATLAS_LLM_MAX_USD=%.4f; falling back to %.2f",
-            parsed,
-            _DEFAULT_MAX_USD,
-        )
-        return _DEFAULT_MAX_USD
+        _LOGGER.warning("Non-positive %s=%.4f; falling back to %.2f", name, parsed, default)
+        return default
 
     return parsed
 
 
-_ATLAS_LLM_MAX_USD = _load_max_usd()
+def _load_bool(name: str, default: bool) -> bool:
+    raw_value = (os.environ.get(name) or "").strip().lower()
+    if not raw_value:
+        return default
+    if raw_value in {"1", "true", "yes", "on"}:
+        return True
+    if raw_value in {"0", "false", "no", "off"}:
+        return False
+    _LOGGER.warning("Invalid boolean %s=%r; falling back to %s", name, raw_value, default)
+    return default
+
+
+def _load_int(name: str, default: int) -> int:
+    raw_value = (os.environ.get(name) or "").strip()
+    if not raw_value:
+        return default
+
+    try:
+        parsed = int(raw_value)
+    except ValueError:
+        _LOGGER.warning("Invalid integer %s=%r; falling back to %d", name, raw_value, default)
+        return default
+
+    if parsed < 0:
+        _LOGGER.warning("Negative %s=%d; falling back to %d", name, parsed, default)
+        return default
+
+    return parsed
+
+
+_ATLAS_LLM_MAX_USD = _load_positive_float("ATLAS_LLM_MAX_USD", _DEFAULT_MAX_USD)
+_ATLAS_LLM_DAILY_MAX_USD = _load_positive_float("ATLAS_LLM_DAILY_MAX_USD", _DEFAULT_DAILY_MAX_USD)
+_ATLAS_LLM_GLOBAL_DAILY_MAX_USD = _load_positive_float(
+    "ATLAS_LLM_GLOBAL_DAILY_MAX_USD",
+    _ATLAS_LLM_DAILY_MAX_USD,
+)
+_ATLAS_LLM_MAX_CALLS_PER_RUN = _load_int("ATLAS_LLM_MAX_CALLS_PER_RUN", 0)
+_ATLAS_LLM_CALLER_ID = (os.environ.get("ATLAS_LLM_CALLER_ID") or _DEFAULT_CALLER_ID).strip() or _DEFAULT_CALLER_ID
+
 _cost_tracker: dict[str, int | float] = {"tokens_in": 0, "tokens_out": 0, "est_usd": 0.0}
-_LOGGER.info("Loaded ATLAS_LLM_MAX_USD=%.2f", _ATLAS_LLM_MAX_USD)
+
+_SERVICES_LIB = Path(
+    os.environ.get(
+        "ATLAS_SHARED_AUTOMATIONS_LIB",
+        "/opt/stack/services/automations/lib",
+    )
+)
+if _SERVICES_LIB.exists() and str(_SERVICES_LIB) not in sys.path:
+    sys.path.insert(0, str(_SERVICES_LIB))
+
+try:
+    from llm_cost_gate import LlmCostPolicyGate  # type: ignore[import-not-found]
+except Exception as exc:  # noqa: BLE001
+    LlmCostPolicyGate = None  # type: ignore[assignment,misc]
+    _LOGGER.warning("Shared llm_cost_gate import failed; using process-only cap fallback: %s", exc)
 
 
-def _load_daily_max_usd() -> float:
-    raw_value = (os.environ.get("ATLAS_LLM_DAILY_MAX_USD") or "").strip()
-    if not raw_value:
-        return _DEFAULT_DAILY_MAX_USD
-    try:
-        parsed = float(raw_value)
-    except ValueError:
-        _LOGGER.warning(
-            "Invalid ATLAS_LLM_DAILY_MAX_USD=%r; falling back to %.2f",
-            raw_value,
-            _DEFAULT_DAILY_MAX_USD,
-        )
-        return _DEFAULT_DAILY_MAX_USD
-    if parsed <= 0:
-        _LOGGER.warning(
-            "Non-positive ATLAS_LLM_DAILY_MAX_USD=%.4f; falling back to %.2f",
-            parsed,
-            _DEFAULT_DAILY_MAX_USD,
-        )
-        return _DEFAULT_DAILY_MAX_USD
-    return parsed
+def _build_cost_gate() -> Any | None:
+    if LlmCostPolicyGate is None:
+        return None
+
+    policy = {
+        "enabled": _load_bool("ATLAS_LLM_COST_GATE_ENABLED", True),
+        "enforce": _load_bool("ATLAS_LLM_COST_GATE_ENFORCE", True),
+        "provider": "anthropic",
+        "global_daily_max_usd": _ATLAS_LLM_GLOBAL_DAILY_MAX_USD,
+        "caller_daily_max_usd": _ATLAS_LLM_DAILY_MAX_USD,
+        "caller_run_max_usd": _ATLAS_LLM_MAX_USD,
+        "caller_max_calls_per_run": _ATLAS_LLM_MAX_CALLS_PER_RUN,
+        "model_pricing_usd_per_mtoken": _MODEL_PRICING_USD_PER_MTOKEN,
+    }
+    ledger_path = os.environ.get("ATLAS_LLM_SPEND_STATE_FILE", _DEFAULT_SHARED_LEDGER)
+
+    gate = LlmCostPolicyGate(
+        caller_id=_ATLAS_LLM_CALLER_ID,
+        policy=policy,
+        state_file=ledger_path,
+        logger=_LOGGER,
+    )
+    _LOGGER.info(
+        "Loaded shared LLM cost gate caller=%s enforce=%s run_cap=%.2f caller_daily=%.2f global_daily=%.2f ledger=%s",
+        _ATLAS_LLM_CALLER_ID,
+        gate.enforce,
+        _ATLAS_LLM_MAX_USD,
+        _ATLAS_LLM_DAILY_MAX_USD,
+        _ATLAS_LLM_GLOBAL_DAILY_MAX_USD,
+        ledger_path,
+    )
+    return gate
 
 
-_ATLAS_LLM_DAILY_MAX_USD = _load_daily_max_usd()
-_LOGGER.info("Loaded ATLAS_LLM_DAILY_MAX_USD=%.2f", _ATLAS_LLM_DAILY_MAX_USD)
-
-
-def _read_daily_spend() -> float:
-    """Return accumulated spend today from the persistent spend file. Returns 0.0 if absent or stale."""
-    if not _SPEND_FILE.exists():
-        return 0.0
-    try:
-        with _SPEND_FILE.open("r", encoding="utf-8") as fh:
-            fcntl.flock(fh, fcntl.LOCK_SH)
-            try:
-                data = json.load(fh)
-            finally:
-                fcntl.flock(fh, fcntl.LOCK_UN)
-        if data.get("date") != str(date.today()):
-            return 0.0
-        return float(data.get("accumulated_usd", 0.0))
-    except Exception:  # noqa: BLE001
-        return 0.0
-
-
-def _update_daily_spend(usd_delta: float) -> None:
-    """Add usd_delta to the persistent daily spend file, creating or resetting if needed."""
-    today = str(date.today())
-    try:
-        # Open for read+write if file exists, else create read+write
-        if _SPEND_FILE.exists():
-            fh = _SPEND_FILE.open("r+", encoding="utf-8")
-        else:
-            fh = _SPEND_FILE.open("w+", encoding="utf-8")
-        with fh:
-            fcntl.flock(fh, fcntl.LOCK_EX)
-            try:
-                fh.seek(0)
-                raw = fh.read()
-                try:
-                    data = json.loads(raw) if raw.strip() else {}
-                except Exception:  # noqa: BLE001
-                    data = {}
-                if data.get("date") != today:
-                    data = {"date": today, "accumulated_usd": 0.0, "call_count": 0}
-                data["accumulated_usd"] = float(data.get("accumulated_usd", 0.0)) + usd_delta
-                data["call_count"] = int(data.get("call_count", 0)) + 1
-                fh.seek(0)
-                fh.truncate()
-                json.dump(data, fh, indent=2)
-                fh.write("\n")
-            finally:
-                fcntl.flock(fh, fcntl.LOCK_UN)
-    except Exception as exc:  # noqa: BLE001
-        _LOGGER.warning("Failed to update spend file: %s", exc)
-
-
-def get_daily_spend_summary() -> dict:
-    """Return today's persistent spend totals from the spend file."""
-    if not _SPEND_FILE.exists():
-        return {"date": str(date.today()), "accumulated_usd": 0.0, "call_count": 0}
-    try:
-        with _SPEND_FILE.open("r", encoding="utf-8") as fh:
-            fcntl.flock(fh, fcntl.LOCK_SH)
-            try:
-                data = json.load(fh)
-            finally:
-                fcntl.flock(fh, fcntl.LOCK_UN)
-        if data.get("date") != str(date.today()):
-            return {"date": str(date.today()), "accumulated_usd": 0.0, "call_count": 0}
-        return data
-    except Exception:  # noqa: BLE001
-        return {"date": str(date.today()), "accumulated_usd": 0.0, "call_count": 0}
+_COST_GATE = _build_cost_gate()
 
 
 def _model_candidates() -> list[str]:
@@ -235,6 +220,49 @@ def get_cost_summary() -> dict[str, int | float]:
     }
 
 
+def get_daily_spend_summary() -> dict:
+    if _COST_GATE is None:
+        return {"date": "", "accumulated_usd": 0.0, "call_count": 0}
+
+    summary = _COST_GATE.get_daily_summary()
+    return {
+        "date": summary.get("date", ""),
+        "accumulated_usd": float(summary.get("caller_usd", 0.0)),
+        "call_count": int(summary.get("caller_calls", 0)),
+        "global_accumulated_usd": float(summary.get("global_usd", 0.0)),
+        "global_call_count": int(summary.get("global_calls", 0)),
+    }
+
+
+def _cost_cap_result(model: str, evidence: str) -> dict[str, Any]:
+    return {
+        "fires": False,
+        "evidence": evidence,
+        "suggested_fix": None,
+        "model": model,
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "error": True,
+        "cost_capped": True,
+    }
+
+
+
+def get_llm_runtime_info() -> dict[str, Any]:
+    """Return LLM runtime model/cost state for operators."""
+    spend_state_file = os.environ.get("ATLAS_LLM_SPEND_STATE_FILE", _DEFAULT_SHARED_LEDGER)
+    return {
+        "model_candidates": _model_candidates(),
+        "caller_id": _ATLAS_LLM_CALLER_ID,
+        "spend_state_file": spend_state_file,
+        "shared_gate_loaded": _COST_GATE is not None,
+        "shared_gate_enabled": bool(getattr(_COST_GATE, "enabled", False)),
+        "shared_gate_enforce": bool(getattr(_COST_GATE, "enforce", False)),
+        "daily_spend": get_daily_spend_summary(),
+        "run_spend": get_cost_summary(),
+    }
+
+
 def evaluate_rule(system_prompt: str, user_content: str, rule_id: str) -> dict[str, Any]:
     models = _model_candidates()
     api_key = (os.environ.get("ANTHROPIC_API_KEY") or "").strip()
@@ -254,56 +282,83 @@ def evaluate_rule(system_prompt: str, user_content: str, rule_id: str) -> dict[s
 
     estimated_input_tokens = int((len(system_prompt) + len(user_content)) / 4)
 
-    # Cross-process daily cap check (persistent file, covers all pipeline.py invocations today)
-    daily_spend = _read_daily_spend()
-    if daily_spend + _estimate_call_cost(estimated_input_tokens, models[0]) > _ATLAS_LLM_DAILY_MAX_USD:
-        result = {
-            "fires": False,
-            "evidence": (
-                f"Daily cost cap exceeded: ${daily_spend:.2f} accumulated today, "
-                f"cap ${_ATLAS_LLM_DAILY_MAX_USD:.2f}"
-            ),
-            "suggested_fix": None,
-            "model": models[0],
-            "tokens_in": 0,
-            "tokens_out": 0,
-            "error": True,
-            "cost_capped": True,
-        }
-        _LOGGER.info(
-            "rule_id=%s fires=%s error=%s cost_capped=%s (daily) model=%s",
-            rule_id, False, True, True, models[0],
+    if _COST_GATE is not None:
+        gate_decision = _COST_GATE.preflight(
+            model=models[0],
+            provider="anthropic",
+            input_tokens_estimate=estimated_input_tokens,
         )
-        return result
+        if gate_decision.would_block:
+            _LOGGER.warning("rule_id=%s shadow_allow model=%s reason=%s", rule_id, models[0], gate_decision.reason)
+        if not gate_decision.allowed:
+            result = _cost_cap_result(models[0], gate_decision.reason)
+            _LOGGER.info(
+                "rule_id=%s fires=%s error=%s cost_capped=%s (shared-gate) model=%s",
+                rule_id,
+                False,
+                True,
+                True,
+                models[0],
+            )
+            return result
+    else:
+        projected_cost = float(_cost_tracker["est_usd"]) + _estimate_call_cost(estimated_input_tokens, models[0])
+        if projected_cost > _ATLAS_LLM_MAX_USD:
+            result = _cost_cap_result(
+                models[0],
+                "Cost cap exceeded: "
+                f"${float(_cost_tracker['est_usd']):.2f} accumulated, cap ${_ATLAS_LLM_MAX_USD:.2f}",
+            )
+            _LOGGER.info(
+                "rule_id=%s fires=%s error=%s cost_capped=%s (fallback) model=%s",
+                rule_id,
+                False,
+                True,
+                True,
+                models[0],
+            )
+            return result
 
     client = Anthropic(api_key=api_key)
     last_error: Exception | None = None
 
     for model in models:
-        projected_cost = float(_cost_tracker["est_usd"]) + _estimate_call_cost(estimated_input_tokens, model)
-        if projected_cost > _ATLAS_LLM_MAX_USD:
-            result = {
-                "fires": False,
-                "evidence": (
-                    "Cost cap exceeded: "
-                    f"${float(_cost_tracker['est_usd']):.2f} accumulated, cap ${_ATLAS_LLM_MAX_USD:.2f}"
-                ),
-                "suggested_fix": None,
-                "model": model,
-                "tokens_in": 0,
-                "tokens_out": 0,
-                "error": True,
-                "cost_capped": True,
-            }
-            _LOGGER.info(
-                "rule_id=%s fires=%s error=%s cost_capped=%s model=%s",
-                rule_id,
-                False,
-                True,
-                True,
-                model,
+        if _COST_GATE is not None and model != models[0]:
+            gate_decision = _COST_GATE.preflight(
+                model=model,
+                provider="anthropic",
+                input_tokens_estimate=estimated_input_tokens,
             )
-            return result
+            if gate_decision.would_block:
+                _LOGGER.warning("rule_id=%s shadow_allow model=%s reason=%s", rule_id, model, gate_decision.reason)
+            if not gate_decision.allowed:
+                result = _cost_cap_result(model, gate_decision.reason)
+                _LOGGER.info(
+                    "rule_id=%s fires=%s error=%s cost_capped=%s (shared-gate) model=%s",
+                    rule_id,
+                    False,
+                    True,
+                    True,
+                    model,
+                )
+                return result
+        elif _COST_GATE is None:
+            projected_cost = float(_cost_tracker["est_usd"]) + _estimate_call_cost(estimated_input_tokens, model)
+            if projected_cost > _ATLAS_LLM_MAX_USD:
+                result = _cost_cap_result(
+                    model,
+                    "Cost cap exceeded: "
+                    f"${float(_cost_tracker['est_usd']):.2f} accumulated, cap ${_ATLAS_LLM_MAX_USD:.2f}",
+                )
+                _LOGGER.info(
+                    "rule_id=%s fires=%s error=%s cost_capped=%s (fallback) model=%s",
+                    rule_id,
+                    False,
+                    True,
+                    True,
+                    model,
+                )
+                return result
 
         try:
             response = client.messages.create(
@@ -322,7 +377,14 @@ def evaluate_rule(system_prompt: str, user_content: str, rule_id: str) -> dict[s
             _cost_tracker["tokens_in"] = int(_cost_tracker["tokens_in"]) + tokens_in
             _cost_tracker["tokens_out"] = int(_cost_tracker["tokens_out"]) + tokens_out
             _cost_tracker["est_usd"] = float(_cost_tracker["est_usd"]) + call_est_usd
-            _update_daily_spend(call_est_usd)
+
+            if _COST_GATE is not None:
+                _COST_GATE.record_usage(
+                    model=model,
+                    provider="anthropic",
+                    tokens_in=tokens_in,
+                    tokens_out=tokens_out,
+                )
 
             result = {
                 "fires": bool(parsed["fires"]),
@@ -359,3 +421,162 @@ def evaluate_rule(system_prompt: str, user_content: str, rule_id: str) -> dict[s
     }
     _LOGGER.info("rule_id=%s fires=%s error=%s model=%s", rule_id, False, True, model_name)
     return result
+
+
+def _parse_intent_response_json(text: str) -> dict[str, Any]:
+    payload = json.loads(_strip_code_fence(text))
+    if not isinstance(payload, dict):
+        raise ValueError("LLM response is not a JSON object")
+
+    intent = str(payload.get("intent", "unknown")).strip().lower()
+    if intent not in {"server_status", "docker_status", "service_logs", "memory_check", "docker_action", "unknown", "clarify"}:
+        intent = "unknown"
+
+    side_effect = str(payload.get("side_effect", "none")).strip().lower()
+    if side_effect not in {"none", "read", "write"}:
+        side_effect = "none"
+
+    try:
+        confidence = float(payload.get("confidence", 0.0))
+    except (TypeError, ValueError):
+        confidence = 0.0
+    confidence = max(0.0, min(confidence, 1.0))
+
+    action = str(payload.get("action", "")).strip().lower()
+    if action not in {"", "restart", "start", "stop"}:
+        action = ""
+
+    container = str(payload.get("container", "")).strip().lower()
+    service = str(payload.get("service", "")).strip().lower()
+
+    try:
+        lines = int(payload.get("lines", 50))
+    except (TypeError, ValueError):
+        lines = 50
+    lines = max(1, min(lines, 500))
+
+    reason = str(payload.get("reason", "")).strip()
+
+    return {
+        "intent": intent,
+        "side_effect": side_effect,
+        "confidence": confidence,
+        "action": action,
+        "container": container,
+        "service": service,
+        "lines": lines,
+        "reason": reason,
+    }
+
+
+def route_telegram_intent(user_text: str, context_hint: str = "") -> dict[str, Any]:
+    system_prompt = (
+        "You are an intent router for a Telegram homelab ops bot. "
+        "Return ONLY JSON with keys: intent, side_effect, confidence, action, container, service, lines, reason. "
+        "Allowed intent: server_status, docker_status, service_logs, memory_check, docker_action, unknown, clarify. "
+        "Allowed side_effect: none, read, write. "
+        "For docker_action intent, action must be restart/start/stop and include container. "
+        "For service_logs intent, include service and optional lines (1-500, default 50). "
+        "Do not include markdown or prose outside JSON."
+    )
+
+    user_content = f"User text: {user_text}\\nContext: {context_hint or 'none'}"
+    models = _model_candidates()
+    api_key = (os.environ.get("ANTHROPIC_API_KEY") or "").strip()
+    if not api_key:
+        return {
+            "intent": "unknown",
+            "side_effect": "none",
+            "confidence": 0.0,
+            "action": "",
+            "container": "",
+            "service": "",
+            "lines": 50,
+            "reason": "LLM error: ANTHROPIC_API_KEY not set",
+            "model": models[0],
+            "tokens_in": 0,
+            "tokens_out": 0,
+            "error": True,
+            "cost_capped": False,
+        }
+
+    estimated_input_tokens = int((len(system_prompt) + len(user_content)) / 4)
+    if _COST_GATE is not None:
+        gate_decision = _COST_GATE.preflight(
+            model=models[0],
+            provider="anthropic",
+            input_tokens_estimate=estimated_input_tokens,
+        )
+        if gate_decision.would_block:
+            _LOGGER.warning("telegram-route shadow_allow model=%s reason=%s", models[0], gate_decision.reason)
+        if not gate_decision.allowed:
+            return {
+                "intent": "unknown",
+                "side_effect": "none",
+                "confidence": 0.0,
+                "action": "",
+                "container": "",
+                "service": "",
+                "lines": 50,
+                "reason": gate_decision.reason,
+                "model": models[0],
+                "tokens_in": 0,
+                "tokens_out": 0,
+                "error": True,
+                "cost_capped": True,
+            }
+
+    client = Anthropic(api_key=api_key)
+    last_error: Exception | None = None
+    for model in models:
+        try:
+            response = client.messages.create(
+                model=model,
+                max_tokens=350,
+                temperature=0,
+                system=system_prompt,
+                messages=[{"role": "user", "content": user_content}],
+            )
+            parsed = _parse_intent_response_json(_extract_text(response))
+            usage = getattr(response, "usage", None)
+            tokens_in = int(getattr(usage, "input_tokens", 0) or 0)
+            tokens_out = int(getattr(usage, "output_tokens", 0) or 0)
+            call_est_usd = _estimate_cost(tokens_in, tokens_out, model)
+
+            _cost_tracker["tokens_in"] = int(_cost_tracker["tokens_in"]) + tokens_in
+            _cost_tracker["tokens_out"] = int(_cost_tracker["tokens_out"]) + tokens_out
+            _cost_tracker["est_usd"] = float(_cost_tracker["est_usd"]) + call_est_usd
+            if _COST_GATE is not None:
+                _COST_GATE.record_usage(
+                    model=model,
+                    provider="anthropic",
+                    tokens_in=tokens_in,
+                    tokens_out=tokens_out,
+                )
+
+            return {
+                **parsed,
+                "model": model,
+                "tokens_in": tokens_in,
+                "tokens_out": tokens_out,
+                "error": False,
+                "cost_capped": False,
+            }
+        except Exception as exc:  # noqa: BLE001
+            last_error = exc
+
+    return {
+        "intent": "unknown",
+        "side_effect": "none",
+        "confidence": 0.0,
+        "action": "",
+        "container": "",
+        "service": "",
+        "lines": 50,
+        "reason": f"LLM error: {last_error}" if last_error else "LLM error: unknown error",
+        "model": models[0],
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "error": True,
+        "cost_capped": False,
+    }

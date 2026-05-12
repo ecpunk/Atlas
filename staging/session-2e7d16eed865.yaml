@@ -1,0 +1,10 @@
+id: session-2e7d16eed865
+source: telegram-ops-bot
+timestamp: '2026-05-12T03:08:57Z'
+user_id: 8681549486
+transcript: restart sabnzbd
+tool_calls: []
+entities_touched:
+- router:llm
+status: confirm-pending
+summary: Pending restart on sabnzbd.

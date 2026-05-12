@@ -1,0 +1,11 @@
+id: operator-kernel
+name: Operator Kernel
+summary: |
+  Operator Kernel project tracked in Atlas as a canonical project entity based
+  on local concept documentation.
+category: vocab:lifecycle_categories:current
+status: vocab:project_statuses:concept
+concept_doc: docs/kb/Projects/Operator Kernel/10-CONCEPT/OPERATOR_KERNEL_CONCEPT.md
+gdrive_folder: "retired:owner=project:operator-kernel"
+created_at: 2026-05-10T21:31:00Z
+updated_at: 2026-05-10T21:31:00Z

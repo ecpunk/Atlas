@@ -1,0 +1,11 @@
+id: hardware-information
+name: Hardware Information
+summary: |
+  Hardware Information project tracked in Atlas as a canonical project entity
+  from the local concept documentation.
+category: vocab:lifecycle_categories:current
+status: vocab:project_statuses:concept
+concept_doc: docs/kb/Projects/Hardware Information/10-CONCEPT/HARDWARE_INFORMATION_CONCEPT.md
+gdrive_folder: "retired:owner=project:hardware-information"
+created_at: 2026-05-10T21:28:00Z
+updated_at: 2026-05-10T21:28:00Z

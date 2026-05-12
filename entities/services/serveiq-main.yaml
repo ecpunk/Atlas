@@ -9,12 +9,17 @@ deployment_path: /opt/stack/services/apps/serveiq/
 port: 8097
 health_endpoint: http://127.0.0.1:8097/
 systemd_unit: null
+container_name: serveiq
+restartable: true
+tier: apps
+expected_state: running_required
+protected_high_use: false
 owned_by: project:serveiq-main
 depends_on: []
 last_health_check: null
 last_health_status: vocab:health_statuses:unknown
 failure_modes:
   - deployment metadata incomplete — backfill in future plan
-resource_budget_ram_mb: null
+resource_budget_ram_mb: 768
 created_at: 2026-05-08T01:45:00Z
-updated_at: 2026-05-08T01:45:00Z
+updated_at: 2026-05-10T21:15:00Z

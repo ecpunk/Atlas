@@ -1,0 +1,221 @@
+[
+  {
+    "kind": "kb_orphan_dir",
+    "entity_type": "project",
+    "id": "Code Intelligence MCP (Archive)",
+    "detail": "kb/Projects directory 'Code Intelligence MCP (Archive)' has no atlas-store entity (would be 'code-intelligence-mcp-archive')",
+    "fix_tier": "propose",
+    "normalized_id": "code-intelligence-mcp-archive",
+    "extra": {}
+  },
+  {
+    "kind": "kb_orphan_dir",
+    "entity_type": "project",
+    "id": "Module Library",
+    "detail": "kb/Projects directory 'Module Library' has no atlas-store entity (would be 'module-library')",
+    "fix_tier": "propose",
+    "normalized_id": "module-library",
+    "extra": {}
+  },
+  {
+    "kind": "kb_orphan_dir",
+    "entity_type": "project",
+    "id": "Operator Kernel",
+    "detail": "kb/Projects directory 'Operator Kernel' has no atlas-store entity (would be 'operator-kernel')",
+    "fix_tier": "propose",
+    "normalized_id": "operator-kernel",
+    "extra": {}
+  },
+  {
+    "kind": "kb_orphan_dir",
+    "entity_type": "project",
+    "id": "Paradigm Shift",
+    "detail": "kb/Projects directory 'Paradigm Shift' has no atlas-store entity (would be 'paradigm-shift')",
+    "fix_tier": "propose",
+    "normalized_id": "paradigm-shift",
+    "extra": {}
+  },
+  {
+    "kind": "kb_orphan_dir",
+    "entity_type": "project",
+    "id": "UM790-Knowledge-Server",
+    "detail": "kb/Projects directory 'UM790-Knowledge-Server' has no atlas-store entity (would be 'um790-knowledge-server')",
+    "fix_tier": "propose",
+    "normalized_id": "um790-knowledge-server",
+    "extra": {}
+  },
+  {
+    "kind": "catalog_only_service",
+    "entity_type": "service",
+    "id": "auth-gate",
+    "detail": "Service 'auth-gate' exists in catalog.json but has no atlas-store entity",
+    "fix_tier": "propose",
+    "normalized_id": "",
+    "extra": {}
+  },
+  {
+    "kind": "catalog_only_service",
+    "entity_type": "service",
+    "id": "bazarr",
+    "detail": "Service 'bazarr' exists in catalog.json but has no atlas-store entity",
+    "fix_tier": "propose",
+    "normalized_id": "",
+    "extra": {}
+  },
+  {
+    "kind": "catalog_only_service",
+    "entity_type": "service",
+    "id": "family-meal-planner",
+    "detail": "Service 'family-meal-planner' exists in catalog.json but has no atlas-store entity",
+    "fix_tier": "propose",
+    "normalized_id": "",
+    "extra": {}
+  },
+  {
+    "kind": "catalog_only_service",
+    "entity_type": "service",
+    "id": "foxden-womens-club",
+    "detail": "Service 'foxden-womens-club' exists in catalog.json but has no atlas-store entity",
+    "fix_tier": "propose",
+    "normalized_id": "",
+    "extra": {}
+  },
+  {
+    "kind": "catalog_only_service",
+    "entity_type": "service",
+    "id": "home-command",
+    "detail": "Service 'home-command' exists in catalog.json but has no atlas-store entity",
+    "fix_tier": "propose",
+    "normalized_id": "",
+    "extra": {}
+  },
+  {
+    "kind": "catalog_only_service",
+    "entity_type": "service",
+    "id": "homeassistant",
+    "detail": "Service 'homeassistant' exists in catalog.json but has no atlas-store entity",
+    "fix_tier": "propose",
+    "normalized_id": "",
+    "extra": {}
+  },
+  {
+    "kind": "catalog_only_service",
+    "entity_type": "service",
+    "id": "minecraft-control-panel",
+    "detail": "Service 'minecraft-control-panel' exists in catalog.json but has no atlas-store entity",
+    "fix_tier": "propose",
+    "normalized_id": "",
+    "extra": {}
+  },
+  {
+    "kind": "catalog_only_service",
+    "entity_type": "service",
+    "id": "minecraft-turdcraft",
+    "detail": "Service 'minecraft-turdcraft' exists in catalog.json but has no atlas-store entity",
+    "fix_tier": "propose",
+    "normalized_id": "",
+    "extra": {}
+  },
+  {
+    "kind": "catalog_only_service",
+    "entity_type": "service",
+    "id": "minecraft-vanilla",
+    "detail": "Service 'minecraft-vanilla' exists in catalog.json but has no atlas-store entity",
+    "fix_tier": "propose",
+    "normalized_id": "",
+    "extra": {}
+  },
+  {
+    "kind": "catalog_only_service",
+    "entity_type": "service",
+    "id": "ops-dashboard",
+    "detail": "Service 'ops-dashboard' exists in catalog.json but has no atlas-store entity",
+    "fix_tier": "propose",
+    "normalized_id": "",
+    "extra": {}
+  },
+  {
+    "kind": "catalog_only_service",
+    "entity_type": "service",
+    "id": "plex",
+    "detail": "Service 'plex' exists in catalog.json but has no atlas-store entity",
+    "fix_tier": "propose",
+    "normalized_id": "",
+    "extra": {}
+  },
+  {
+    "kind": "catalog_only_service",
+    "entity_type": "service",
+    "id": "radarr",
+    "detail": "Service 'radarr' exists in catalog.json but has no atlas-store entity",
+    "fix_tier": "propose",
+    "normalized_id": "",
+    "extra": {}
+  },
+  {
+    "kind": "catalog_only_service",
+    "entity_type": "service",
+    "id": "remodel-mcp",
+    "detail": "Service 'remodel-mcp' exists in catalog.json but has no atlas-store entity",
+    "fix_tier": "propose",
+    "normalized_id": "",
+    "extra": {}
+  },
+  {
+    "kind": "catalog_only_service",
+    "entity_type": "service",
+    "id": "sabnzbd",
+    "detail": "Service 'sabnzbd' exists in catalog.json but has no atlas-store entity",
+    "fix_tier": "propose",
+    "normalized_id": "",
+    "extra": {}
+  },
+  {
+    "kind": "catalog_only_service",
+    "entity_type": "service",
+    "id": "serveiq",
+    "detail": "Service 'serveiq' exists in catalog.json but has no atlas-store entity",
+    "fix_tier": "propose",
+    "normalized_id": "",
+    "extra": {}
+  },
+  {
+    "kind": "catalog_only_service",
+    "entity_type": "service",
+    "id": "sonarr",
+    "detail": "Service 'sonarr' exists in catalog.json but has no atlas-store entity",
+    "fix_tier": "propose",
+    "normalized_id": "",
+    "extra": {}
+  },
+  {
+    "kind": "catalog_only_service",
+    "entity_type": "service",
+    "id": "thought-substrate-mcp",
+    "detail": "Service 'thought-substrate-mcp' exists in catalog.json but has no atlas-store entity",
+    "fix_tier": "propose",
+    "normalized_id": "",
+    "extra": {}
+  },
+  {
+    "kind": "catalog_only_service",
+    "entity_type": "service",
+    "id": "voice-ingest",
+    "detail": "Service 'voice-ingest' exists in catalog.json but has no atlas-store entity",
+    "fix_tier": "propose",
+    "normalized_id": "",
+    "extra": {}
+  },
+  {
+    "kind": "monitoring_health_gap",
+    "entity_type": "service",
+    "id": "turdcraft",
+    "detail": "Service 'turdcraft' has port 25565 but is missing: health_endpoint",
+    "fix_tier": "flag",
+    "normalized_id": "",
+    "extra": {
+      "port": "25565",
+      "missing": "health_endpoint"
+    }
+  }
+]

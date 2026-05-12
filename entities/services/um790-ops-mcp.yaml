@@ -27,6 +27,6 @@ last_health_status: vocab:health_statuses:unknown
 failure_modes:
   - shell_exec timeout if UM790_OPS_TOOL_TIMEOUT_SECONDS is too low for the command
   - docker_action on non-existent container returns non-zero exit but does not raise
-resource_budget_ram_mb: null
+resource_budget_ram_mb: 256
 created_at: 2026-05-09T14:30:00Z
 updated_at: 2026-05-09T00:00:00Z

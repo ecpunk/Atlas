@@ -15,3 +15,8 @@ restartable: true
 tier: app
 expected_state: running
 protected_high_use: false
+failure_modes:
+  - Bot process down or polling loop stalled; recover with systemctl restart telegram-ops-bot.service.
+  - UM790 Ops MCP unreachable or timeout; read/write commands fail until backend connectivity is restored.
+  - Confirmation token expired before user confirms; user must re-issue command to generate a new token.
+resource_budget_ram_mb: 256

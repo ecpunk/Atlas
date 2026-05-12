@@ -1,0 +1,11 @@
+id: module-library
+name: Module Library
+summary: |
+  Module Library project tracked in Atlas as a canonical project entity from
+  the existing concept documentation.
+category: vocab:lifecycle_categories:current
+status: vocab:project_statuses:concept
+concept_doc: docs/kb/Projects/Module Library/10-CONCEPT/MODULE_LIBRARY_CONCEPT.md
+gdrive_folder: "retired:owner=project:module-library"
+created_at: 2026-05-10T21:31:00Z
+updated_at: 2026-05-10T21:31:00Z
