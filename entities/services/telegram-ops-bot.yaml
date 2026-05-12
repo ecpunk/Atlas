@@ -1,0 +1,16 @@
+id: telegram-ops-bot
+name: Telegram Ops Bot
+summary: Single-user Telegram operator surface for UM790 runtime with confirm-gated
+  writes and JSONL/YAML audit/session artifacts.
+service_type: vocab:service_types:systemd_unit
+lifecycle: vocab:service_lifecycles:running
+host: server:um790
+deployment_path: /opt/stack/services/apps/telegram-ops-bot
+owned_by: project:telegram-ops-bot
+created_at: '2026-05-12T01:54:55Z'
+updated_at: '2026-05-12T01:54:55Z'
+systemd_unit: telegram-ops-bot.service
+restartable: true
+tier: app
+expected_state: running
+protected_high_use: false
