@@ -1,0 +1,19 @@
+id: account-signal-engine
+name: Account Signal Engine
+summary: Weekly digest engine that monitors a named account list and delivers only
+  actionable signals (M&A, exec changes, breaches, hiring). Originated from a 2026-05-12
+  call with Hoyt McCuin about Google Alerts noise. Two-recipient MVP (Jon + Hoyt).
+  Built as engine because the shape is identical across SE users — only the account
+  list changes. Inherits Atlas's canonical-store / generation-pipeline / operational-layer
+  pattern via proposed intel/ sub-namespace. Four-stage cascade keeps LLM cost low
+  and provenance auditable.
+category: vocab:lifecycle_categories:current
+status: vocab:project_statuses:concept
+concept_doc: docs/kb/Projects/Account Signal Engine/10-CONCEPT/ACCOUNT_SIGNAL_ENGINE_CONCEPT.md
+created_at: '2026-05-12T20:42:59Z'
+updated_at: '2026-05-12T20:42:59Z'
+domain_tags:
+- software
+- intel
+- ai
+- se-tools
