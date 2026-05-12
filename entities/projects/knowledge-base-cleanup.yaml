@@ -1,16 +1,28 @@
 id: knowledge-base-cleanup
 name: Knowledge Base Cleanup
-summary: |
-  Restructure Jon's Projects knowledge base for Opus 4.7-era AI. Split Start
-  Here into a navigator + Operating Rules, retire OpenClaw references,
-  reconcile rclone/Operator Kernel mentions. Triggered when orientation skill
-  stalled post-retune. Phased approach, inventory already collected.
+summary: 'Reconcile the hand-maintained operating system (Start Here, Standards, The
+  Latest, Project Index, System Log, System Evolution) with post-Atlas reality. Primary
+  work item is Standards.md reconciliation — five sections identified as contradicting
+  Atlas behavior (Drive-era paths, project folder path policy, session-start instructions,
+  mandatory write targets for Latest/Index, Knowledge Server references). Secondary
+  items: Start Here verification, Thinking.md archive, CODEX_QUEUE.md status decision.
+  Original April 16 scope ("rewrite Start Here, fix two small files") expanded May
+  12 after Atlas materialized.'
 category: vocab:lifecycle_categories:current
 status: vocab:project_statuses:concept
 concept_doc: docs/kb/Projects/Knowledge Base Cleanup/10-CONCEPT/KNOWLEDGE_BASE_CLEANUP_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Current/Knowledge Base Cleanup/
 domain_tags:
-  - kb
-  - infrastructure
-created_at: 2026-05-08T15:27:11Z
-updated_at: 2026-05-08T15:27:11Z
+- kb
+- infrastructure
+created_at: 2026-05-08 15:27:11+00:00
+updated_at: '2026-05-12T23:55:09Z'
+last_done: 2026-05-12 — Concept doc rewritten and scope expanded. Standards.md reconciliation
+  added as primary task following write-rejection trigger during Account Signal Engine
+  session (path policy mismatch). Five stale sections in Standards identified and
+  captured. Normalized task record KBC-2026-05-12-001 created in 15-TASKS/TASK-INTAKE-LOG.md
+  per Task Intake Normalization Policy.
+next_action: Standards reconciliation session. Rewrite the five stale sections (remove
+  fully-superseded text; rewrite partially-relevant sections with transition notes).
+  Add header to Standards indicating durable vs in-flux sections. Then run Start Here
+  orientation verification, archive Thinking.md, and resolve CODEX_QUEUE.md.
