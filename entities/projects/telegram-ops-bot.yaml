@@ -9,13 +9,15 @@ category: vocab:lifecycle_categories:current
 status: vocab:project_statuses:in_progress
 concept_doc: docs/kb/Projects/Telegram Ops Bot/10-CONCEPT/TELEGRAM_OPS_BOT_CONCEPT.md
 created_at: '2026-05-12T00:20:03Z'
-updated_at: '2026-05-12T01:41:01Z'
+updated_at: '2026-05-12T01:55:18Z'
 domain_tags:
 - homelab
 - atlas
 - ops
-last_done: Provisioned .env with BotFather token + allowed user ID, generated confirm
-  HMAC secret, installed Python dependencies, validated config compile/smoke, installed/enabled/restarted
-  systemd service telegram-ops-bot, and verified active runtime.
-next_action: 'Run Telegram chat smoke: /start /whoami /status then test a confirm-gated
-  /restart on a safe container.'
+last_done: 'Step 2 started and completed core ownership registration: added telegram-ops-bot
+  service entity (systemd_unit, lifecycle running, deployment path, host, owner link)
+  and verified it appears in Atlas Service Catalog output. Step 1 baseline evidence
+  collected: service active, audit path active with read-route evidence.'
+next_action: Complete interactive Telegram smoke (read/write/cancel/auth paths) and
+  then backfill telegram-ops-bot service failure_modes + resource_budget_ram_mb fields
+  to clear compliance fails.
