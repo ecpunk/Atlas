@@ -9,16 +9,17 @@ category: vocab:lifecycle_categories:current
 status: vocab:project_statuses:in_progress
 concept_doc: docs/kb/Projects/Telegram Ops Bot/10-CONCEPT/TELEGRAM_OPS_BOT_CONCEPT.md
 created_at: '2026-05-12T00:20:03Z'
-updated_at: '2026-05-12T02:07:31Z'
+updated_at: '2026-05-12T02:25:19Z'
 domain_tags:
 - homelab
 - atlas
 - ops
-last_done: Verified audit evidence currently contains server_status completed route;
-  no docker_pending/docker_execute/cancel entries yet.
-next_action: Run one safe write test (/restart or /startc then confirm), one cancel
-  test, and (if possible) arrange a deny-path test via temporary allowlist toggle
-  or borrowed account.
-status_detail: Phase 1 baseline is partially validated. Runtime healthy and read route
-  evidence exists. Write/cancel/auth-deny paths not yet evidenced in audit due to
-  no additional restart execution and no second Telegram account for deny-path test.
+last_done: 'Validated post-fix audit capture: docker_pending at 2026-05-12T02:24:34Z
+  and docker_execute at 2026-05-12T02:24:39Z for /restart sabnzbd; container start
+  time matches execution.'
+next_action: Backfill telegram-ops-bot service failure_modes and resource budget fields
+  to clear compliance report, then re-check outputs.
+status_detail: 'Phase 1 baseline now validated for read route and confirm-gated write
+  execution. Audit includes docker_pending and docker_execute evidence aligned with
+  container restart timestamp. Remaining acceptance exception: auth-deny path not
+  tested due to single-account constraint.'
