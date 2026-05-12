@@ -12,9 +12,15 @@ category: vocab:lifecycle_categories:current
 status: vocab:project_statuses:active
 concept_doc: docs/kb/Projects/Mimecast/10-CONCEPT/MIMECAST_CONCEPT.md
 created_at: '2026-05-12T17:07:29Z'
-updated_at: '2026-05-12T17:07:29Z'
+updated_at: '2026-05-12T17:32:01Z'
 domain_tags:
 - career
 - comp
 - sales-engineering
 - mimecast
+status_detail: FY27 comp plan analyzed and captured. One open windfall exposure ($1.85M
+  deal) needs upstream management conversation.
+last_done: '2026-05-12: Project bootstrapped in Atlas — concept, status, FY26/FY27
+  plan full text, FY27 comp plan analysis. FY27 plan signed 2026-05-11.'
+next_action: Pre-emptive conversation with Mark Roe about $1.85M / 36mo deal before
+  SCC review is triggered automatically by comp processing.
