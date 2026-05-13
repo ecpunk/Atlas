@@ -1,0 +1,13 @@
+id: atlas-task-00b944adf7
+project_id: atlas
+title: Bootstrap open item auto:entity:service-failure-modes-present
+status: open
+priority: high
+task_type: migration
+next_action: Entity compliance has failing rule `service-failure-modes-present` (Service
+  must document failure modes).
+closure_test: Open item resolved and removed from project.open_items.
+source: bootstrap
+source_ref: project:atlas:open_item:auto:entity:service-failure-modes-present
+created_at: '2026-05-13T00:51:32Z'
+updated_at: '2026-05-13T00:51:32Z'
