@@ -1,13 +1,17 @@
 id: house-remodel
 name: House Remodel
-summary: |
-  Full remodel of 2200 sq ft home. Drywall, finishing, trim, fixtures across
+summary: 'Full remodel of 2200 sq ft home. Drywall, finishing, trim, fixtures across
+
   all rooms. Active daily/weekend work. Tasks managed in Remodel Tracker MCP.
+
+  '
 category: vocab:lifecycle_categories:current
 status: vocab:project_statuses:in_progress
 concept_doc: docs/kb/Projects/House Remodel/10-CONCEPT/HOUSE_REMODEL_CONCEPT.md
-gdrive_folder: "retired:owner=project:remodel-tracker"
+gdrive_folder: retired:owner=project:remodel-tracker
 domain_tags:
-  - home
-created_at: 2026-05-08T15:27:11Z
-updated_at: 2026-05-10T20:35:00Z
+- home
+created_at: 2026-05-08 15:27:11+00:00
+updated_at: '2026-05-13T01:05:04Z'
+next_action: Define the immediate next action for this project and decompose follow-on
+  work into canonical tasks.
