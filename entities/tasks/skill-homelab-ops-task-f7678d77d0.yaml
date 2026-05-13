@@ -1,0 +1,14 @@
+id: skill-homelab-ops-task-f7678d77d0
+project_id: skill-homelab-ops
+title: Bootstrap tracking gap for skill-homelab-ops
+status: open
+priority: medium
+task_type: tracking_gap
+next_action: Define the immediate next action for this project and decompose follow-on
+  work into canonical tasks.
+closure_test: Project has a current next_action and at least one maintained canonical
+  task.
+source: bootstrap
+source_ref: project:skill-homelab-ops:task_tracking_gap
+created_at: '2026-05-13T01:03:44Z'
+updated_at: '2026-05-13T01:03:44Z'
