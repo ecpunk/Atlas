@@ -1,0 +1,14 @@
+id: conventions-skills-as-projects-task-a3faec3e37
+project_id: conventions-skills-as-projects
+title: Bootstrap tracking gap for conventions-skills-as-projects
+status: open
+priority: medium
+task_type: tracking_gap
+next_action: Define the immediate next action for this project and decompose follow-on
+  work into canonical tasks.
+closure_test: Project has a current next_action and at least one maintained canonical
+  task.
+source: bootstrap
+source_ref: project:conventions-skills-as-projects:task_tracking_gap
+created_at: '2026-05-13T01:03:39Z'
+updated_at: '2026-05-13T01:03:39Z'
