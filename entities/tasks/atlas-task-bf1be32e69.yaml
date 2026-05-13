@@ -1,0 +1,13 @@
+id: atlas-task-bf1be32e69
+project_id: atlas
+title: Bootstrap open item auto:automation:timer-service-runner-state-contract
+status: open
+priority: high
+task_type: migration
+next_action: Automation contract report has failing rule `timer-service-runner-state-contract`
+  (Scheduled job must map to service, runner, and state artifact).
+closure_test: Open item resolved and removed from project.open_items.
+source: bootstrap
+source_ref: project:atlas:open_item:auto:automation:timer-service-runner-state-contract
+created_at: '2026-05-13T00:51:31Z'
+updated_at: '2026-05-13T00:51:31Z'
