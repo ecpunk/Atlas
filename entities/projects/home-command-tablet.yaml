@@ -1,8 +1,10 @@
 id: home-command-tablet
 name: Home Command Tablet
-summary: |
-  Home Command tablet API project and runtime.
+summary: 'Home Command tablet API project and runtime.
+
   Operator to enrich.
+
+  '
 category: vocab:lifecycle_categories:current
 status: vocab:project_statuses:in_progress
 concept_doc: docs/kb/Projects/Home Command Tablet/10-CONCEPT/HOME_COMMAND_TABLET_CONCEPT.md
@@ -10,7 +12,9 @@ gdrive_folder: gdrive-projects/Projects/Current/Home Command/
 code_repo: /opt/stack/services/projects/home-command
 remote: local-monorepo:/opt/stack/services
 domain_tags:
-  - homelab
-  - home
-created_at: 2026-05-08T02:05:13Z
-updated_at: 2026-05-10T19:10:29Z
+- homelab
+- home
+created_at: 2026-05-08 02:05:13+00:00
+updated_at: '2026-05-13T01:05:04Z'
+next_action: Define the immediate next action for this project and decompose follow-on
+  work into canonical tasks.
