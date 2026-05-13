@@ -1,16 +1,22 @@
 id: health-investigation
 name: Health Investigation
-summary: |
-  Root-cause investigation into multi-system symptoms spanning 20+ years, with
+summary: 'Root-cause investigation into multi-system symptoms spanning 20+ years,
+  with
+
   current focus on formal diagnosis, immune pathway validation, and VA claim
+
   support. Structured working docs and evidence tracking are active.
+
+  '
 category: vocab:lifecycle_categories:current
 status: vocab:project_statuses:active
 concept_doc: docs/kb/Projects/Health Investigation/10-CONCEPT/HEALTH_INVESTIGATION_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Current/Health Investigation/
 domain_tags:
-  - health
-  - research
-  - va
-created_at: 2026-05-08T15:27:11Z
-updated_at: 2026-05-08T15:27:11Z
+- health
+- research
+- va
+created_at: 2026-05-08 15:27:11+00:00
+updated_at: '2026-05-13T01:05:03Z'
+next_action: Define the immediate next action for this project and decompose follow-on
+  work into canonical tasks.
