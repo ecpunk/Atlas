@@ -1,0 +1,14 @@
+id: pat-patent-task-d1b25c8867
+project_id: pat-patent
+title: Bootstrap tracking gap for pat-patent
+status: open
+priority: medium
+task_type: tracking_gap
+next_action: Define the immediate next action for this project and decompose follow-on
+  work into canonical tasks.
+closure_test: Project has a current next_action and at least one maintained canonical
+  task.
+source: bootstrap
+source_ref: project:pat-patent:task_tracking_gap
+created_at: '2026-05-13T01:03:42Z'
+updated_at: '2026-05-13T01:03:42Z'
