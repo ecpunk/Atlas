@@ -1,0 +1,14 @@
+id: um790-ops-mcp-task-1f819159b6
+project_id: um790-ops-mcp
+title: Bootstrap tracking gap for um790-ops-mcp
+status: open
+priority: medium
+task_type: tracking_gap
+next_action: Define the immediate next action for this project and decompose follow-on
+  work into canonical tasks.
+closure_test: Project has a current next_action and at least one maintained canonical
+  task.
+source: bootstrap
+source_ref: project:um790-ops-mcp:task_tracking_gap
+created_at: '2026-05-13T01:03:46Z'
+updated_at: '2026-05-13T01:03:46Z'
