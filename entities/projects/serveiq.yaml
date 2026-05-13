@@ -1,17 +1,24 @@
 id: serveiq
 name: ServeIQ
-summary: |
-  AI-native volunteer coordination -> full ChMS platform for churches. 13
+summary: 'AI-native volunteer coordination -> full ChMS platform for churches. 13
+
   models, 12 routers, 9 LLM functions live. Voice assistant (Whisper + LLM),
+
   intelligence dashboard, weekly digest, feedback system. Phases 1-3C complete.
+
   Phase 4 next: auth, Stripe, provisioning. $49/mo flat pricing, free giving.
+
   Domain: serveiq.app.
+
+  '
 category: vocab:lifecycle_categories:current
 status: vocab:project_statuses:in_progress
 concept_doc: docs/kb/Projects/ServeIQ/10-CONCEPT/SERVEIQ_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Current/ServeIQ/
 domain_tags:
-  - software
-  - saas
-created_at: 2026-05-08T15:27:11Z
-updated_at: 2026-05-08T15:27:11Z
+- software
+- saas
+created_at: 2026-05-08 15:27:11+00:00
+updated_at: '2026-05-13T01:05:06Z'
+next_action: Define the immediate next action for this project and decompose follow-on
+  work into canonical tasks.
