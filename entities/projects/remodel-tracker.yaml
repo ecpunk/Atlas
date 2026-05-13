@@ -1,8 +1,10 @@
 id: remodel-tracker
 name: Remodel Tracker
-summary: |
-  Remodel Tracker application project for renovation workflows.
+summary: 'Remodel Tracker application project for renovation workflows.
+
   Operator to enrich.
+
+  '
 category: vocab:lifecycle_categories:live
 status: vocab:project_statuses:in_progress
 concept_doc: projects/Remodel_Tracker/REMODEL_TRACKER_SPEC.md
@@ -10,7 +12,9 @@ gdrive_folder: gdrive-projects/Projects/Live/Remodel Tracker/
 code_repo: /opt/stack/services/projects/Remodel_Tracker
 remote: local-monorepo:/opt/stack/services
 domain_tags:
-  - software
-  - homelab
-created_at: 2026-05-08T02:05:13Z
-updated_at: 2026-05-10T19:10:29Z
+- software
+- homelab
+created_at: 2026-05-08 02:05:13+00:00
+updated_at: '2026-05-13T01:05:05Z'
+next_action: Define the immediate next action for this project and decompose follow-on
+  work into canonical tasks.
