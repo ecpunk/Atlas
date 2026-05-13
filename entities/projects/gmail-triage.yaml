@@ -1,8 +1,10 @@
 id: gmail-triage
 name: Gmail Triage
-summary: |
-  Gmail triage automation and dashboard project running on UM790.
+summary: 'Gmail triage automation and dashboard project running on UM790.
+
   Operator to enrich.
+
+  '
 category: vocab:lifecycle_categories:live
 status: vocab:project_statuses:active
 concept_doc: docs/kb/Projects/Gmail Triage/10-CONCEPT/GMAIL_TRIAGE_CONCEPT.md
@@ -10,7 +12,9 @@ gdrive_folder: gdrive-projects/Projects/Live/Gmail Triage/
 code_repo: /opt/stack/services/apps/gmail-triage
 remote: local-monorepo:/opt/stack/services
 domain_tags:
-  - software
-  - automation
-created_at: 2026-05-08T02:05:13Z
-updated_at: 2026-05-10T19:10:29Z
+- software
+- automation
+created_at: 2026-05-08 02:05:13+00:00
+updated_at: '2026-05-13T01:05:03Z'
+next_action: Define the immediate next action for this project and decompose follow-on
+  work into canonical tasks.
