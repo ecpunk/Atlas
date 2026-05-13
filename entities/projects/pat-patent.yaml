@@ -1,15 +1,20 @@
 id: pat-patent
 name: PAT Patent
-summary: |
-  PII-Annihilating Tokenization - provisional patent filing for tokenization
+summary: 'PII-Annihilating Tokenization - provisional patent filing for tokenization
+
   architecture that enables systems to function without exposing raw personal
+
   data.
+
+  '
 category: vocab:lifecycle_categories:current
 status: vocab:project_statuses:active
 concept_doc: docs/kb/Projects/PAT Patent/10-CONCEPT/PAT_PATENT_CONCEPT.md
 gdrive_folder: gdrive-projects/Projects/Current/PAT Patent/
 domain_tags:
-  - ip
-  - legal
-created_at: 2026-05-08T15:27:11Z
-updated_at: 2026-05-08T15:27:11Z
+- ip
+- legal
+created_at: 2026-05-08 15:27:11+00:00
+updated_at: '2026-05-13T01:05:05Z'
+next_action: Define the immediate next action for this project and decompose follow-on
+  work into canonical tasks.
