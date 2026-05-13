@@ -1,0 +1,14 @@
+id: atlas-task-284982e547
+project_id: atlas
+title: Bootstrap next action for atlas
+status: open
+priority: medium
+task_type: migration
+next_action: Run Scenario A from TASK-INTAKE-TEST-PROTOCOL with Claude reposting a
+  policy-rejection case, then verify second-agent handoff can continue from Atlas
+  canon only.
+closure_test: Execution evidence captured and project next_action updated.
+source: bootstrap
+source_ref: project:atlas:next_action
+created_at: '2026-05-13T00:51:31Z'
+updated_at: '2026-05-13T00:51:31Z'
