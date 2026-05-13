@@ -1,0 +1,12 @@
+id: atlas-task-7f97123fd1
+project_id: atlas
+title: E2E deterministic intake test task
+status: open
+priority: high
+task_type: general
+next_action: Verify remote intake determinism for add task for Atlas.
+closure_test: Task appears once for duplicate request id and can be resolved.
+source: claude-ai
+created_at: '2026-05-13T00:52:19Z'
+updated_at: '2026-05-13T00:52:19Z'
+source_request_id: e2e-remote-determinism-001
