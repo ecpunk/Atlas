@@ -41,6 +41,9 @@ _KIND_LABEL = {
     "catalog_only_service": "Catalog-only service",
     "broken_concept_doc": "Broken concept_doc reference",
     "orphaned_output_file": "Orphaned output file",
+    "task_missing_next_action": "Task coverage: missing next_action",
+    "task_missing_open_work": "Task coverage: missing open canonical task",
+    "task_tracking_gap": "Task coverage: missing next_action and open task",
 }
 
 

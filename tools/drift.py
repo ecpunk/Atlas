@@ -15,6 +15,9 @@ DRIFT_KINDS = Literal[
     "monitoring_resource_budget_gap",  # running service missing resource_budget policy metadata
     "platform_probe_drift",  # atlas_probe_latest indicates runtime drift for a service
     "legacy_stage3_alert",   # legacy operator-kernel stage3 engine emitted failing alert state
+    "task_missing_next_action",  # active/in_progress project has no next_action
+    "task_missing_open_work",  # active/in_progress project has no open canonical task
+    "task_tracking_gap",  # active/in_progress project missing both next_action and open canonical task
 ]
 
 

@@ -1,0 +1,21 @@
+id: project-active-inprogress-task-coverage
+name: Active or in-progress projects must have canonical task coverage
+description: |
+  Projects with status active or in_progress must maintain executable task
+  tracking state so remote and local agents can query current work deterministically.
+scope: vocab:rule_scopes:project
+severity: vocab:rule_severities:error
+applies_to: project_entity
+check_kind: vocab:rule_check_kinds:process_gate
+check_definition: |
+  For status in {active, in_progress}, require either a non-empty next_action
+  or at least one canonical open task in entities/tasks.
+fix_tier: vocab:rule_fix_tiers:flag
+fix_action: null
+enforcement_point: vocab:enforcement_points:all
+on_violation: |
+  Create or update canonical task entities for the project and ensure a concrete
+  next_action exists or open canonical tasks exist before closing the session.
+authored_by: operator
+created_at: 2026-05-13T00:00:00Z
+updated_at: 2026-05-13T00:00:00Z

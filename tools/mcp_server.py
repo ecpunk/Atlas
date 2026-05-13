@@ -77,6 +77,56 @@ def _validate_domain_tags(domain_tags: list[str] | None) -> list[str] | None:
     return normalized
 
 
+_TASK_STATUS_VALUES = {"open", "in_progress", "blocked", "resolved", "deferred"}
+_TASK_PRIORITY_VALUES = {"critical", "high", "medium", "low"}
+
+
+def _slugify_token(value: str, fallback: str = "task") -> str:
+    token = re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
+    return token or fallback
+
+
+def _resolve_project_id(project: str) -> str:
+    store = _get_store()
+    projects = store.get("project", {})
+    if project in projects:
+        return project
+
+    matches = []
+    needle = project.strip().lower()
+    for project_id, model in projects.items():
+        payload = _model_to_dict(model)
+        if str(payload.get("name", "")).strip().lower() == needle:
+            matches.append(project_id)
+
+    if not matches:
+        raise ValueError(f"Project '{project}' not found by id or exact name.")
+    if len(matches) > 1:
+        raise ValueError(f"Project name '{project}' is ambiguous. Matching ids: {sorted(matches)}")
+    return matches[0]
+
+
+def _next_task_id(project_id: str, title: str, source: str, source_request_id: str) -> str:
+    tasks = _get_store().get("task", {})
+    if source_request_id:
+        stable_seed = f"{project_id}|{source}|{source_request_id}"
+        stable_suffix = hashlib.sha1(stable_seed.encode("utf-8")).hexdigest()[:10]
+        candidate = f"{project_id}-task-{stable_suffix}"
+        if candidate not in tasks:
+            return candidate
+
+    title_token = _slugify_token(title, fallback="task")[:24]
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S")
+    candidate = f"{project_id}-{title_token}-{stamp}"
+    if candidate not in tasks:
+        return candidate
+
+    nonce = 2
+    while f"{candidate}-{nonce}" in tasks:
+        nonce += 1
+    return f"{candidate}-{nonce}"
+
+
 def _git_commit(rel_path: str, message: str) -> dict[str, Any]:
     """Stage one file and commit it in REPO_ROOT. Returns {"ok": True} or {"error": ...}."""
     add = subprocess.run(
@@ -171,6 +221,13 @@ Write tools (propose-confirm pattern — preview first, then confirm=True to app
 - add_service(id, name, summary, service_type, lifecycle, deployment_path, ...): add new service (autonomous)
 - update_service(id, confirm?, lifecycle?, port?, ...): update service fields
 - retire_service(id, confirm?): set service lifecycle to retired
+- add_task(project, title, next_action, closure_test, ...): add canonical task (autonomous)
+- update_task(id, confirm?, status?, priority?, ...): update task fields
+
+Task query tools:
+- get_task(id): read one task
+- list_tasks(project?, status?, priority?, limit?): list tasks with optional filters
+- list_open_tasks(project?, limit?): list only open/in_progress/blocked tasks
 
 Use stack_summary() first when you need an overview of what's in the store.
 """
@@ -254,6 +311,67 @@ def get_project(id: str) -> dict[str, Any]:
         ids = sorted(projects.keys())
         raise ValueError(f"Project '{id}' not found. Known ids: {ids}")
     return _model_to_dict(project)
+
+
+@mcp.tool()
+def list_tasks(project: str = "", status: str = "", priority: str = "", limit: int = 200) -> list[dict[str, Any]]:
+    """List task entities. Optional filters: project (id or exact name), status, priority."""
+    if limit < 1 or limit > 1000:
+        raise ValueError("limit must be between 1 and 1000")
+    if status and status not in _TASK_STATUS_VALUES:
+        raise ValueError(f"status must be one of: {sorted(_TASK_STATUS_VALUES)}")
+    if priority and priority not in _TASK_PRIORITY_VALUES:
+        raise ValueError(f"priority must be one of: {sorted(_TASK_PRIORITY_VALUES)}")
+
+    project_id = _resolve_project_id(project) if project else ""
+
+    store = _get_store()
+    tasks = store.get("task", {})
+    result: list[dict[str, Any]] = []
+    for task_id, task in sorted(tasks.items()):
+        payload = _model_to_dict(task)
+        if project_id and payload.get("project_id") != project_id:
+            continue
+        if status and payload.get("status") != status:
+            continue
+        if priority and payload.get("priority") != priority:
+            continue
+
+        result.append(
+            {
+                "id": task_id,
+                "project_id": payload.get("project_id"),
+                "title": payload.get("title"),
+                "status": payload.get("status"),
+                "priority": payload.get("priority"),
+                "next_action": payload.get("next_action"),
+                "updated_at": payload.get("updated_at"),
+            }
+        )
+        if len(result) >= limit:
+            break
+    return result
+
+
+@mcp.tool()
+def list_open_tasks(project: str = "", limit: int = 200) -> list[dict[str, Any]]:
+    """List open task entities (status in open, in_progress, blocked)."""
+    open_states = {"open", "in_progress", "blocked"}
+    tasks = list_tasks(project=project, status="", priority="", limit=1000)
+    filtered = [task for task in tasks if task.get("status") in open_states]
+    return filtered[:limit]
+
+
+@mcp.tool()
+def get_task(id: str) -> dict[str, Any]:
+    """Return the full task entity for the given id."""
+    store = _get_store()
+    tasks = store.get("task", {})
+    task = tasks.get(id)
+    if task is None:
+        ids = sorted(tasks.keys())
+        raise ValueError(f"Task '{id}' not found. Known ids: {ids}")
+    return _model_to_dict(task)
 
 
 @mcp.tool()
@@ -660,6 +778,412 @@ def retire_service(id: str, confirm: bool = False) -> dict[str, Any]:
         }
 
     return _write_and_commit("services", id, after, f"chore: retire service {id} via Atlas Write API")
+
+
+@mcp.tool()
+def add_task(
+    project: str,
+    title: str,
+    next_action: str,
+    closure_test: str,
+    status: str = "open",
+    priority: str = "medium",
+    task_type: str = "general",
+    why_now: str = "",
+    owner_lane: str = "",
+    blocked_on: str = "",
+    blocked_by_task_ids: list[str] | None = None,
+    source: str = "manual",
+    source_ref: str = "",
+    source_request_id: str = "",
+    due_date: str = "",
+    notes: str = "",
+) -> dict[str, Any]:
+    """Add a canonical task entity. Project can be id or exact project name."""
+    if status not in _TASK_STATUS_VALUES:
+        raise ValueError(f"status must be one of: {sorted(_TASK_STATUS_VALUES)}")
+    if priority not in _TASK_PRIORITY_VALUES:
+        raise ValueError(f"priority must be one of: {sorted(_TASK_PRIORITY_VALUES)}")
+
+    project_id = _resolve_project_id(project)
+    normalized_source = _slugify_token(source, fallback="manual")
+
+    store = _get_store()
+    tasks = store.get("task", {})
+    if source_request_id:
+        for existing_task in tasks.values():
+            payload = _model_to_dict(existing_task)
+            if (
+                payload.get("project_id") == project_id
+                and payload.get("source") == normalized_source
+                and payload.get("source_request_id") == source_request_id
+            ):
+                return {
+                    "ok": True,
+                    "idempotent": True,
+                    "task_id": payload.get("id"),
+                    "project_id": project_id,
+                    "task": payload,
+                }
+
+    task_id = _next_task_id(project_id, title, normalized_source, source_request_id)
+    now = _now_iso()
+
+    data: dict[str, Any] = {
+        "id": task_id,
+        "project_id": project_id,
+        "title": title,
+        "status": status,
+        "priority": priority,
+        "task_type": task_type,
+        "next_action": next_action,
+        "closure_test": closure_test,
+        "source": normalized_source,
+        "created_at": now,
+        "updated_at": now,
+    }
+    if why_now:
+        data["why_now"] = why_now
+    if owner_lane:
+        data["owner_lane"] = owner_lane
+    if blocked_on:
+        data["blocked_on"] = blocked_on
+    if blocked_by_task_ids:
+        data["blocked_by_task_ids"] = blocked_by_task_ids
+    if source_ref:
+        data["source_ref"] = source_ref
+    if source_request_id:
+        data["source_request_id"] = source_request_id
+    if due_date:
+        data["due_date"] = due_date
+    if notes:
+        data["notes"] = notes
+    if status == "resolved":
+        data["resolved_at"] = now
+
+    result = _write_and_commit("tasks", task_id, data, f"feat: add task {task_id} via Atlas Write API")
+    if "error" in result:
+        return result
+    return {
+        "ok": True,
+        "idempotent": False,
+        "task_id": task_id,
+        "project_id": project_id,
+        **result,
+    }
+
+
+@mcp.tool()
+def update_task(
+    id: str,
+    confirm: bool = False,
+    status: str = "",
+    priority: str = "",
+    title: str = "",
+    next_action: str = "",
+    closure_test: str = "",
+    owner_lane: str = "",
+    blocked_on: str = "",
+    notes: str = "",
+    due_date: str = "",
+) -> dict[str, Any]:
+    """Update fields on an existing task entity via propose-confirm pattern."""
+    store = _get_store()
+    tasks = store.get("task", {})
+    if id not in tasks:
+        raise ValueError(f"Task '{id}' not found. Known ids: {sorted(tasks.keys())}")
+
+    rel_path = f"entities/tasks/{id}.yaml"
+    abs_path = REPO_ROOT / rel_path
+    current_data: dict[str, Any] = yaml.safe_load(abs_path.read_text(encoding="utf-8")) or {}
+    after = dict(current_data)
+
+    if status:
+        if status not in _TASK_STATUS_VALUES:
+            raise ValueError(f"status must be one of: {sorted(_TASK_STATUS_VALUES)}")
+        after["status"] = status
+    if priority:
+        if priority not in _TASK_PRIORITY_VALUES:
+            raise ValueError(f"priority must be one of: {sorted(_TASK_PRIORITY_VALUES)}")
+        after["priority"] = priority
+    if title:
+        after["title"] = title
+    if next_action:
+        after["next_action"] = next_action
+    if closure_test:
+        after["closure_test"] = closure_test
+    if owner_lane:
+        after["owner_lane"] = owner_lane
+    if blocked_on:
+        after["blocked_on"] = blocked_on
+    if notes:
+        after["notes"] = notes
+    if due_date:
+        after["due_date"] = due_date
+
+    effective_status = after.get("status", "open")
+    if effective_status == "resolved":
+        after["resolved_at"] = _now_iso()
+    else:
+        after.pop("resolved_at", None)
+
+    after["updated_at"] = _now_iso()
+
+    if not confirm:
+        return {
+            "action": "preview",
+            "id": id,
+            "before": current_data,
+            "after": after,
+            "note": "Call update_task(id=..., confirm=True, ...) with the same args to apply.",
+        }
+
+    return _write_and_commit("tasks", id, after, f"chore: update task {id} via Atlas Write API")
+
+
+@mcp.tool()
+def bootstrap_tasks_from_projects(project: str = "", confirm: bool = False, limit: int = 500) -> dict[str, Any]:
+    """Backfill canonical tasks from project next_action and open_items fields.
+
+    project: optional project id or exact name to scope bootstrap
+    confirm: preview by default; set True to write tasks
+    """
+    if limit < 1 or limit > 2000:
+        raise ValueError("limit must be between 1 and 2000")
+
+    target_project_id = _resolve_project_id(project) if project else ""
+
+    store = _get_store()
+    projects = store.get("project", {})
+    task_store = store.get("task", {})
+
+    existing_refs: set[str] = set()
+    for task_model in task_store.values():
+        payload = _model_to_dict(task_model)
+        source_ref = payload.get("source_ref")
+        if isinstance(source_ref, str) and source_ref:
+            existing_refs.add(source_ref)
+
+    proposals: list[dict[str, Any]] = []
+    for project_id, project_model in sorted(projects.items()):
+        if target_project_id and project_id != target_project_id:
+            continue
+
+        payload = _model_to_dict(project_model)
+        status_value = str(payload.get("status", {}).get("value_id", "")).strip()
+        next_action = str(payload.get("next_action") or "").strip()
+        open_items = payload.get("open_items", []) or []
+        if next_action:
+            source_ref = f"project:{project_id}:next_action"
+            if source_ref not in existing_refs:
+                proposals.append(
+                    {
+                        "project_id": project_id,
+                        "title": f"Bootstrap next action for {project_id}",
+                        "next_action": next_action,
+                        "closure_test": "Execution evidence captured and project next_action updated.",
+                        "priority": "medium",
+                        "status": "open",
+                        "task_type": "migration",
+                        "source": "bootstrap",
+                        "source_ref": source_ref,
+                    }
+                )
+
+        for item in open_items:
+            item_id = str(item.get("id") or "").strip()
+            item_desc = str(item.get("description") or "").strip()
+            if not item_id or not item_desc:
+                continue
+            source_ref = f"project:{project_id}:open_item:{item_id}"
+            if source_ref in existing_refs:
+                continue
+            proposals.append(
+                {
+                    "project_id": project_id,
+                    "title": f"Bootstrap open item {item_id}",
+                    "next_action": item_desc,
+                    "closure_test": "Open item resolved and removed from project.open_items.",
+                    "priority": "high",
+                    "status": "open",
+                    "task_type": "migration",
+                    "source": "bootstrap",
+                    "source_ref": source_ref,
+                }
+            )
+
+        # Seed a minimum tracking task when an active/in_progress project has
+        # no canonical next_action and no open items to bootstrap from.
+        if status_value in {"active", "in_progress"} and not next_action and not open_items:
+            source_ref = f"project:{project_id}:task_tracking_gap"
+            if source_ref not in existing_refs:
+                proposals.append(
+                    {
+                        "project_id": project_id,
+                        "title": f"Bootstrap tracking gap for {project_id}",
+                        "next_action": (
+                            "Define the immediate next action for this project and "
+                            "decompose follow-on work into canonical tasks."
+                        ),
+                        "closure_test": (
+                            "Project has a current next_action and at least one "
+                            "maintained canonical task."
+                        ),
+                        "priority": "medium",
+                        "status": "open",
+                        "task_type": "tracking_gap",
+                        "source": "bootstrap",
+                        "source_ref": source_ref,
+                    }
+                )
+
+        if len(proposals) >= limit:
+            break
+
+    preview = {
+        "action": "preview" if not confirm else "apply",
+        "count": len(proposals),
+        "sample": proposals[:20],
+    }
+    if not confirm:
+        preview["note"] = "Call bootstrap_tasks_from_projects(confirm=True) to apply."
+        return preview
+
+    created: list[str] = []
+    errors: list[dict[str, Any]] = []
+    for proposal in proposals:
+        task_id = _next_task_id(
+            proposal["project_id"],
+            proposal["title"],
+            proposal["source"],
+            proposal["source_ref"],
+        )
+        now = _now_iso()
+        data = {
+            "id": task_id,
+            "project_id": proposal["project_id"],
+            "title": proposal["title"],
+            "status": proposal["status"],
+            "priority": proposal["priority"],
+            "task_type": proposal["task_type"],
+            "next_action": proposal["next_action"],
+            "closure_test": proposal["closure_test"],
+            "source": proposal["source"],
+            "source_ref": proposal["source_ref"],
+            "created_at": now,
+            "updated_at": now,
+        }
+        result = _write_and_commit("tasks", task_id, data, f"feat: bootstrap task {task_id} via Atlas Write API")
+        if "error" in result:
+            errors.append({"task_id": task_id, "error": result["error"]})
+        else:
+            created.append(task_id)
+
+    return {
+        "action": "apply",
+        "requested": len(proposals),
+        "created": len(created),
+        "failed": len(errors),
+        "created_task_ids": created,
+        "errors": errors,
+    }
+
+
+@mcp.tool()
+def sync_project_next_actions_from_tasks(project: str = "", confirm: bool = False, limit: int = 200) -> dict[str, Any]:
+    """Backfill empty project next_action values from canonical open tasks.
+
+    Selects the most recently updated open task per project and copies its
+    next_action into the project entity when project next_action is empty.
+    """
+    if limit < 1 or limit > 1000:
+        raise ValueError("limit must be between 1 and 1000")
+
+    target_project_id = _resolve_project_id(project) if project else ""
+    store = _get_store()
+    projects = store.get("project", {})
+    tasks = store.get("task", {})
+
+    open_states = {"open", "in_progress", "blocked"}
+    tasks_by_project: dict[str, list[dict[str, Any]]] = {}
+    for task_model in tasks.values():
+        payload = _model_to_dict(task_model)
+        if payload.get("status") not in open_states:
+            continue
+        project_id = str(payload.get("project_id") or "").strip()
+        if not project_id:
+            continue
+        tasks_by_project.setdefault(project_id, []).append(payload)
+
+    proposals: list[dict[str, str]] = []
+    for project_id, project_model in sorted(projects.items()):
+        if target_project_id and project_id != target_project_id:
+            continue
+        payload = _model_to_dict(project_model)
+        status_value = str(payload.get("status", {}).get("value_id", "")).strip()
+        if status_value not in {"active", "in_progress"}:
+            continue
+
+        current_next = str(payload.get("next_action") or "").strip()
+        if current_next:
+            continue
+
+        project_tasks = tasks_by_project.get(project_id, [])
+        if not project_tasks:
+            continue
+
+        project_tasks.sort(key=lambda item: str(item.get("updated_at") or ""), reverse=True)
+        chosen = project_tasks[0]
+        chosen_next = str(chosen.get("next_action") or "").strip()
+        if not chosen_next:
+            continue
+
+        proposals.append(
+            {
+                "project_id": project_id,
+                "task_id": str(chosen.get("id") or ""),
+                "next_action": chosen_next,
+            }
+        )
+        if len(proposals) >= limit:
+            break
+
+    if not confirm:
+        return {
+            "action": "preview",
+            "count": len(proposals),
+            "sample": proposals[:20],
+            "note": "Call sync_project_next_actions_from_tasks(confirm=True) to apply.",
+        }
+
+    updated: list[str] = []
+    errors: list[dict[str, Any]] = []
+    for proposal in proposals:
+        project_id = proposal["project_id"]
+        rel_path = f"entities/projects/{project_id}.yaml"
+        abs_path = REPO_ROOT / rel_path
+        current_data: dict[str, Any] = yaml.safe_load(abs_path.read_text(encoding="utf-8")) or {}
+        current_data["next_action"] = proposal["next_action"]
+        current_data["updated_at"] = _now_iso()
+        result = _write_and_commit(
+            "projects",
+            project_id,
+            current_data,
+            f"chore: sync project next_action for {project_id} from task {proposal['task_id']}",
+        )
+        if "error" in result:
+            errors.append({"project_id": project_id, "error": result["error"]})
+        else:
+            updated.append(project_id)
+
+    return {
+        "action": "apply",
+        "requested": len(proposals),
+        "updated": len(updated),
+        "failed": len(errors),
+        "updated_projects": updated,
+        "errors": errors,
+    }
 
 
 DEFAULT_OUTPUTS_DIR = REPO_ROOT / "outputs"

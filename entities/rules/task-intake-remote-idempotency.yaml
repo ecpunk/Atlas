@@ -1,0 +1,22 @@
+id: task-intake-remote-idempotency
+name: Remote task intake must be idempotent by request id
+description: |
+  Remote clients creating tasks should provide source_request_id so retries do
+  not create duplicates. Atlas task write behavior must return existing task for
+  replayed request ids in the same project/source context.
+scope: vocab:rule_scopes:operational
+severity: vocab:rule_severities:warn
+applies_to: agent_session
+check_kind: vocab:rule_check_kinds:process_gate
+check_definition: |
+  add_task calls from remote channels include source and source_request_id,
+  and repeated requests reuse the same task id.
+fix_tier: vocab:rule_fix_tiers:flag
+fix_action: null
+enforcement_point: vocab:enforcement_points:all
+on_violation: |
+  Require remote client adapters to pass source_request_id and validate
+  idempotent add_task behavior before production rollout.
+authored_by: operator
+created_at: 2026-05-13T00:00:00Z
+updated_at: 2026-05-13T00:00:00Z

@@ -21,6 +21,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from tools.drift import DriftRecord
+from tools.store import load_store
 
 _OUTPUT_DIR = Path("/opt/stack/services/docs/kb/Projects/Atlas/40-OUTPUT")
 _OUTPUT_FILE_DIR = _OUTPUT_DIR  # same location; orphaned files live here
@@ -303,6 +304,84 @@ def parse_legacy_stage3_alerts(state_path: Path = LEGACY_STAGE3_STATE) -> list[D
     return records
 
 
+def parse_task_coverage() -> list[DriftRecord]:
+    """Emit task tracking drift for active/in_progress projects.
+
+    Rule intent:
+    - active/in_progress projects should have a current next_action
+    - active/in_progress projects should have at least one canonical open task
+    """
+    records: list[DriftRecord] = []
+    try:
+        store = load_store(REPO_ROOT)
+    except Exception:
+        return records
+
+    projects = store.get("project", {})
+    tasks = store.get("task", {})
+
+    open_states = {"open", "in_progress", "blocked"}
+    open_task_count: dict[str, int] = {}
+    for model in tasks.values():
+        status = getattr(model, "status", "")
+        if status not in open_states:
+            continue
+        project_id = getattr(model, "project_id", "")
+        if not project_id:
+            continue
+        open_task_count[project_id] = open_task_count.get(project_id, 0) + 1
+
+    for project_id, model in projects.items():
+        status_ref = getattr(model, "status", None)
+        status = getattr(status_ref, "value_id", "")
+        if status not in {"active", "in_progress"}:
+            continue
+
+        next_action = str(getattr(model, "next_action", "") or "").strip()
+        open_count = int(open_task_count.get(project_id, 0))
+
+        if not next_action and open_count == 0:
+            records.append(
+                DriftRecord(
+                    kind="task_tracking_gap",
+                    entity_type="project",
+                    id=project_id,
+                    detail=(
+                        f"Project '{project_id}' is {status} but has neither next_action nor open canonical tasks"
+                    ),
+                    fix_tier="flag",
+                    extra={"status": status, "open_task_count": open_count},
+                )
+            )
+            continue
+
+        if not next_action:
+            records.append(
+                DriftRecord(
+                    kind="task_missing_next_action",
+                    entity_type="project",
+                    id=project_id,
+                    detail=f"Project '{project_id}' is {status} but next_action is empty",
+                    fix_tier="flag",
+                    extra={"status": status, "open_task_count": open_count},
+                )
+            )
+
+        if open_count == 0:
+            records.append(
+                DriftRecord(
+                    kind="task_missing_open_work",
+                    entity_type="project",
+                    id=project_id,
+                    detail=f"Project '{project_id}' is {status} but has no open canonical tasks",
+                    fix_tier="flag",
+                    extra={"status": status},
+                )
+            )
+
+    return records
+
+
 def collect_all() -> list[DriftRecord]:
     return (
         parse_kb_coverage()
@@ -311,6 +390,7 @@ def collect_all() -> list[DriftRecord]:
         + parse_monitoring_coverage()
         + parse_probe_drift()
         + parse_legacy_stage3_alerts()
+        + parse_task_coverage()
     )
 
 
