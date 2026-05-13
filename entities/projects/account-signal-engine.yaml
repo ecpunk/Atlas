@@ -11,20 +11,14 @@ category: vocab:lifecycle_categories:current
 status: vocab:project_statuses:concept
 concept_doc: docs/kb/Projects/Account Signal Engine/10-CONCEPT/ACCOUNT_SIGNAL_ENGINE_CONCEPT.md
 created_at: '2026-05-12T20:42:59Z'
-updated_at: '2026-05-12T23:55:31Z'
+updated_at: '2026-05-13T00:31:05Z'
 domain_tags:
 - software
 - intel
 - ai
 - se-tools
-last_done: 2026-05-12 — Concept doc written. Originated from a call with Hoyt McCuin
-  about Google Alerts noise. Three-layer architecture decided, mirroring Atlas pattern.
-  Four-stage cascade locked (deterministic source/heuristic filtering → batched LLM
-  triage → digest synthesis), with SEC 8-K bypassing LLM triage since Item codes already
-  classify. v1 source list set, signal taxonomy locked (mna, exec_change, breach;
-  hiring_delta deferred). POV scope narrowed to one account / one source (EDGAR) /
-  one signal type / one recipient. Project entity registered.
-next_action: Step 2 of sequencing — schema design for `account`, `source`, `signal`
-  entity types under proposed intel/ sub-namespace. Hand-write one example of each.
-  Pick the POV account from Hoyt's list (must be a public company with active 8-K
-  filings).
+last_done: '2026-05-13: Converted concept-doc Open Decisions into canonical normalized
+  task records (ASE-2026-05-13-001..005) at Projects/Account Signal Engine/15-TASKS/TASK-INTAKE-LOG.md
+  to close narrative-vs-queue modeling gap.'
+next_action: 'Execute ASE-2026-05-13-001 and ASE-2026-05-13-004 first: lock namespace
+  and select POV account, then proceed with schema examples for account/source/signal.'
