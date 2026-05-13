@@ -1,0 +1,15 @@
+id: knowledge-base-cleanup-task-023e40ceb4
+project_id: knowledge-base-cleanup
+title: Bootstrap next action for knowledge-base-cleanup
+status: open
+priority: medium
+task_type: migration
+next_action: Standards reconciliation session. Rewrite the five stale sections (remove
+  fully-superseded text; rewrite partially-relevant sections with transition notes).
+  Add header to Standards indicating durable vs in-flux sections. Then run Start Here
+  orientation verification, archive Thinking.md, and resolve CODEX_QUEUE.md.
+closure_test: Execution evidence captured and project next_action updated.
+source: bootstrap
+source_ref: project:knowledge-base-cleanup:next_action
+created_at: '2026-05-13T00:51:33Z'
+updated_at: '2026-05-13T00:51:33Z'
