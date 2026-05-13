@@ -1,0 +1,13 @@
+id: telegram-ops-bot-task-80ec0e8d78
+project_id: telegram-ops-bot
+title: Bootstrap next action for telegram-ops-bot
+status: open
+priority: medium
+task_type: migration
+next_action: Backfill telegram-ops-bot service failure_modes and resource budget fields
+  to clear compliance report, then re-check outputs.
+closure_test: Execution evidence captured and project next_action updated.
+source: bootstrap
+source_ref: project:telegram-ops-bot:next_action
+created_at: '2026-05-13T00:51:34Z'
+updated_at: '2026-05-13T00:51:34Z'
