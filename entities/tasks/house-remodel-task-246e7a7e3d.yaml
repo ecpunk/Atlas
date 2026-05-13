@@ -1,0 +1,14 @@
+id: house-remodel-task-246e7a7e3d
+project_id: house-remodel
+title: Bootstrap tracking gap for house-remodel
+status: open
+priority: medium
+task_type: tracking_gap
+next_action: Define the immediate next action for this project and decompose follow-on
+  work into canonical tasks.
+closure_test: Project has a current next_action and at least one maintained canonical
+  task.
+source: bootstrap
+source_ref: project:house-remodel:task_tracking_gap
+created_at: '2026-05-13T01:03:41Z'
+updated_at: '2026-05-13T01:03:41Z'
