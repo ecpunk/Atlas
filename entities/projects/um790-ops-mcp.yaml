@@ -1,18 +1,23 @@
 id: um790-ops-mcp
 name: UM790 Ops MCP
-summary: |
-  Local ops MCP server providing shell execution, docker lifecycle management,
+summary: 'Local ops MCP server providing shell execution, docker lifecycle management,
+
   service health, and log access. Permanent home for ops tooling migrated out
+
   of knowledge-server as part of the pre-Atlas compensation retirement track.
+
+  '
 category: vocab:lifecycle_categories:live
 status: vocab:project_statuses:active
-concept_doc: "/opt/stack/services/projects/um790-ops-mcp/README.md"
-gdrive_folder: "Projects/Live/UM790-Ops-MCP/"
+concept_doc: /opt/stack/services/projects/um790-ops-mcp/README.md
+gdrive_folder: Projects/Live/UM790-Ops-MCP/
 code_repo: /opt/stack/services/projects/um790-ops-mcp
 remote: local-monorepo:/opt/stack/services
-created_at: 2026-05-09T14:30:00Z
+created_at: 2026-05-09 14:30:00+00:00
 domain_tags:
-  - infrastructure
-  - mcp
-  - operations
-updated_at: 2026-05-10T19:10:29Z
+- infrastructure
+- mcp
+- operations
+updated_at: '2026-05-13T01:05:09Z'
+next_action: Define the immediate next action for this project and decompose follow-on
+  work into canonical tasks.
