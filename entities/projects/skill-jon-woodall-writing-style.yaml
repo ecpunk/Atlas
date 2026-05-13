@@ -10,7 +10,9 @@ category: vocab:lifecycle_categories:current
 status: vocab:project_statuses:active
 concept_doc: docs/kb/Projects/skill-jon-woodall-writing-style/10-CONCEPT/SKILL_CONCEPT.md
 created_at: '2026-05-11T23:46:17Z'
-updated_at: '2026-05-11T23:46:17Z'
+updated_at: '2026-05-13T01:05:07Z'
 domain_tags:
 - claude-skill
 - writing
+next_action: Define the immediate next action for this project and decompose follow-on
+  work into canonical tasks.
