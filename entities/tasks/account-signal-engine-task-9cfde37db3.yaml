@@ -1,0 +1,13 @@
+id: account-signal-engine-task-9cfde37db3
+project_id: account-signal-engine
+title: Bootstrap next action for account-signal-engine
+status: open
+priority: medium
+task_type: migration
+next_action: 'Execute ASE-2026-05-13-001 and ASE-2026-05-13-004 first: lock namespace
+  and select POV account, then proceed with schema examples for account/source/signal.'
+closure_test: Execution evidence captured and project next_action updated.
+source: bootstrap
+source_ref: project:account-signal-engine:next_action
+created_at: '2026-05-13T00:51:30Z'
+updated_at: '2026-05-13T00:51:30Z'
